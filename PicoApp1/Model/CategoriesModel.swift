@@ -1,11 +1,11 @@
 import SwiftUI
 
-// تعريف البيانات لكل فئة
+// تعريف بيانات الفئة
 struct Category: Identifiable {
-    let id = UUID()
-    let title: String
-    let imageName: String
-    let color: Color
+    let id = UUID() // معرف فريد
+    let title: String // عنوان الفئة
+    let imageName: String // اسم الصورة
+    let color: Color // اللون الخاص بالفئة
     let shadowColor: Color // لون الظل
     let shadowRadius: CGFloat // قوة الظل
 }

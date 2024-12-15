@@ -11,9 +11,9 @@ struct CategoryCardView: View {
     var body: some View {
         VStack {
             Text(title)
-                .font(.headline)
-                .foregroundColor(.white)
-            
+                .font(.largeTitle) // تغيير الخط إلى SF Arabic وحجم 50
+            .fontWeight(.bold) // جعل النص Bold
+            .foregroundColor(.white) // لون الن
             Image(imageName)
                 .resizable()
                 .scaledToFit()

@@ -32,32 +32,46 @@ struct CategoriesView: View {
     // استخدام ViewModel لتحميل البيانات
     @ObservedObject var viewModel = CategoriesViewModel()
     
-    var body: some View {
-        ZStack {
-            Color.BG.edgesIgnoringSafeArea(.all) // خلفية الصفحة
-            
-            VStack {
-                Spacer()
-                
-                // عرض الفئات باستخدام ForEach
-                HStack(spacing: 44) {
-                    ForEach(viewModel.categories) { category in
-                        CategoryCardView(
-                            title: category.title,
-                            imageName: category.imageName,
-                            color: category.color,
-                            shadowColor: category.shadowColor,
-                            shadowRadius: category.shadowRadius
-                        )
-                    }
-                }
-                
-                Spacer()
-            }
-            
-        }
-    }
-}
+    
+     var body: some View {
+         ZStack {
+             Color.BG.edgesIgnoringSafeArea(.all) // خلفية الصفحة
+             
+             VStack {
+                 // إضافة صورة قبل الفئات
+                 HStack {
+                     Spacer()
+                     Image("cloud") // الصورة التي تظهر قبل الفئات
+                         .resizable()
+                         .scaledToFit()
+                         .frame(width:724 , height: 126)
+                     
+                     
+                     Spacer()
+                 }
+                 
+                 Spacer()
+                 
+                 // عرض الفئات باستخدام ForEach
+                 HStack(spacing: 44) {
+                     ForEach(viewModel.categories) { category in
+                         CategoryCardView(
+                             title: category.title,
+                             imageName: category.imageName,
+                             color: category.color,
+                             shadowColor: category.shadowColor,
+                             shadowRadius: category.shadowRadius
+                         )
+                     }
+                 }
+                 
+                 Spacer()
+             }
+             
+         }
+     }
+ }
+
 
 // المعاينة
 struct CategoriesView_Previews: PreviewProvider {

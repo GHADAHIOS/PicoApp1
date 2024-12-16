@@ -138,7 +138,7 @@ struct CategoriesRow: View {
             // البطاقة الأولى
             CategoryCardView(
                 title: "Space",
-                imageName: "image1",
+                imageName: "space",
                 color: Color.brave,
                 shadowColor: Color.brave,
                 shadowRadius: 10
@@ -156,7 +156,7 @@ struct CategoriesRow: View {
             // البطاقة الثالثة
             CategoryCardView(
                 title: "Animals",
-                imageName: "image3",
+                imageName: "animal",
                 color: Color.shine,
                 shadowColor: Color.shine,
                 shadowRadius: 10

@@ -7,12 +7,36 @@
 
 import SwiftUI
 
-struct splashviwe: View {
+struct SplashView: View {
+    
+    @State var isActive: Bool = false
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            if self.isActive {
+//                CategoryCardView(title: Pico, imageName: "Pico", color: "BG", shadowColor: true, shadowRadius: CGFloat)
+            } else {
+                Rectangle()
+                    .background(Color.BG)
+                Image("pico")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 288.04, height: 549.11)
+            }
+        }
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                withAnimation {
+                    self.isActive = true
+                }
+            }
+        }
     }
+        
 }
 
-#Preview {
-    splashviwe()
+struct SplashView_Previews: PreviewProvider {
+    static var previews: some View {
+        SplashView()
+    }
 }

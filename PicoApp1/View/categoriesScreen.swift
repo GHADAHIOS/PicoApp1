@@ -7,7 +7,9 @@ struct CategoriesScreen: View {
     @State private var recognitionTask: SFSpeechRecognitionTask?
     @State private var recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
     @State private var audioEngine = AVAudioEngine()
-    
+    @State private var navigateToDrawings: Bool = false // التحكم في التنقل
+    @State private var selectedColor: Color = .white // اللون الافتراضي للكروت
+
     var body: some View {
         ZStack {
             // خلفية الصفحة
@@ -75,14 +77,36 @@ struct CategoriesScreen: View {
 
                 // الكروت الثلاثة في المنتصف
                 HStack(spacing: 20) {
-                    categoryCard(title: "Space", imageName: "space", color: Color.brave)
-                    categoryCard(title: "Nature", imageName: "food", color: Color.hope)
-                    categoryCard(title: "Animals", imageName: "animal", color: Color.shine)
+                    Button(action: {
+                        selectedColor = .orange // لون الفضاء
+                        navigateToDrawings = true
+                    }) {
+                        categoryCard(title: "Space", imageName: "space", color: Color.brave)
+                    }
+                    Button(action: {
+                        selectedColor = .blue // لون الطبيعة
+                        navigateToDrawings = true
+                    }) {
+                        categoryCard(title: "Nature", imageName: "food", color: Color.hope)
+                    }
+                    Button(action: {
+                        selectedColor = .yellow // لون الحيوانات
+                        navigateToDrawings = true
+                    }) {
+                        categoryCard(title: "Animals", imageName: "animal", color: Color.shine)
+                    }
                 }
                 .padding(.bottom, 78)
 
                 Spacer()
             }
+
+            // التنقل إلى صفحة DrawingsScreen
+            NavigationLink(
+                destination: DrawingsScreen(cardColor: selectedColor),
+                isActive: $navigateToDrawings,
+                label: { EmptyView() }
+            )
         }
         .onAppear { setupSpeechRecognition() } // إعداد ميزة التحكم الصوتي عند فتح الصفحة
         .onDisappear { stopListening() } // إيقاف الاستماع عند مغادرة الصفحة
@@ -165,11 +189,14 @@ struct CategoriesScreen: View {
     
     private func handleVoiceCommand(_ command: String) {
         if command.contains(isArabic ? "فضاء" : "space") {
-            print(isArabic ? "انتقال إلى صفحة الفضاء" : "Navigating to Space page")
+            selectedColor = .orange
+            navigateToDrawings = true
         } else if command.contains(isArabic ? "طبيعة" : "nature") {
-            print(isArabic ? "انتقال إلى صفحة الطبيعة" : "Navigating to Nature page")
+            selectedColor = .blue
+            navigateToDrawings = true
         } else if command.contains(isArabic ? "حيوانات" : "animals") {
-            print(isArabic ? "انتقال إلى صفحة الحيوانات" : "Navigating to Animals page")
+            selectedColor = .yellow
+            navigateToDrawings = true
         } else if command.contains(isArabic ? "عربي" : "arabic") || command.contains(isArabic ? "إنجليزي" : "english") {
             toggleLanguage()
         }
@@ -182,7 +209,6 @@ struct CategoriesScreen: View {
         print("Language switched to \(isArabic ? "Arabic" : "English")")
     }
 }
-
 // MARK: - Preview
 struct CategoriesScreen_Previews: PreviewProvider {
     static var previews: some View {

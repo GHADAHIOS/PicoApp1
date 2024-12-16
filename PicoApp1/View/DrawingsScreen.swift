@@ -12,27 +12,36 @@ struct DrawingsScreen: View {
             VStack {
                 // القسم العلوي: السحابة + زر اللغة + الشخصية
                 HStack {
-                    // زر تغيير اللغة
-                    Button(action: {
-                        isArabic.toggle() // تبديل حالة اللغة
-                    }) {
-                        ZStack {
-                            Circle()
-                                .fill(Color.inspire) // لون رمادي شفاف
-                                .frame(width: 77, height: 73)
-                                .offset(x: 2, y: 2)
+                    // زر تغيير اللغة مع النص
+                    VStack {
+                        Button(action: {
+                            isArabic.toggle() // تبديل حالة اللغة
+                        }) {
+                            ZStack {
+                                Circle()
+                                    .fill(Color.inspire) // لون رمادي شفاف
+                                    .frame(width: 77, height: 73)
+                                    .offset(x: 2, y: 2)
 
-                            Circle()
-                                .fill(Color.binspire)
-                                .frame(width: 77, height: 73)
-                                .padding(.all, 5)
+                                Circle()
+                                    .fill(Color.binspire)
+                                    .frame(width: 77, height: 73)
+                                    .padding(.all, 5)
 
-                            Image(systemName: "circle.grid.2x2")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 44, height: 44)
-                                .foregroundColor(.white)
+                                Image(systemName: "circle.grid.2x2")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 44, height: 44)
+                                    .foregroundColor(.white)
+                            }
                         }
+                        
+                        // النص تحت الزر
+                        Text("Category")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .foregroundColor(.black)
+                            .padding(.top, 5) // مسافة صغيرة بين الزر والنص
                     }
                     .padding(.leading, 25)
                     .padding(.top, -100)

@@ -1,8 +1,13 @@
 import SwiftUI
+import Speech
 
 struct CategoriesScreen: View {
     @State private var isArabic: Bool = true // حالة اللغة (عربي/إنجليزي)
-
+    @State private var speechRecognizer: SFSpeechRecognizer? // التعرف الصوتي
+    @State private var recognitionTask: SFSpeechRecognitionTask?
+    @State private var recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
+    @State private var audioEngine = AVAudioEngine()
+    
     var body: some View {
         ZStack {
             // خلفية الصفحة
@@ -14,10 +19,11 @@ struct CategoriesScreen: View {
                     // زر تغيير اللغة على اليسار
                     Button(action: {
                         isArabic.toggle() // تغيير حالة اللغة عند الضغط
+                        toggleLanguage() // تغيير اللغة في التعرف الصوتي
                     }) {
                         ZStack {
                             Circle()
-                                .fill(Color.inspire) // لون رمادي شفاف
+                                .fill(Color.inspire)
                                 .frame(width: 77, height: 73)
                                 .offset(x: 2, y: 2)
 
@@ -26,7 +32,6 @@ struct CategoriesScreen: View {
                                 .frame(width: 77, height: 73)
                                 .padding(.all, 5)
 
-                            // أيقونة "العالم"
                             Image(systemName: "globe")
                                 .resizable()
                                 .scaledToFit()
@@ -34,15 +39,14 @@ struct CategoriesScreen: View {
                                 .foregroundColor(.white)
                         }
                     }
-                    .padding(.leading, 25) // مسافة من اليسار
+                    .padding(.leading, 25)
                     .padding(.top, -100)
 
                     Spacer()
 
                     // صورة السحابة مع الشخصية
                     HStack {
-                        // صورة الشخصية
-                        Image("Pico") // استبدل "character" باسم الصورة الخاصة بك
+                        Image("Pico")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 115, height: 115)
@@ -55,82 +59,127 @@ struct CategoriesScreen: View {
                                 .frame(width: 880.0, height: 326)
                                 .offset(x: -80, y: -20)
 
-                            // النص على السحابة
-                            Text("Say the category you would like to color") // النص داخل السحابة
-                                .font(.title) // حجم الخط
-                                .fontWeight(.semibold) // الخط عريض
+                            Text(isArabic ? "قل اسم الفئة للانتقال" : "Say the category you would like to color")
+                                .font(.title)
+                                .fontWeight(.semibold)
                                 .foregroundColor(.font1)
-                                .multilineTextAlignment(.center) // محاذاة النص إلى الوسط
-                                .padding(.horizontal, 50) // مسافة أفقية لضمان أن النص لا يخرج عن السحابة
-                                .offset(x: -80, y: -20) // تعديل ارتفاع النص ليتوسط السحابة
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal, 50)
+                                .offset(x: -80, y: -20)
                         }
                     }
                 }
-                .padding(.top, -30) // مسافة من الأعلى
+                .padding(.top, -30)
 
                 Spacer()
 
                 // الكروت الثلاثة في المنتصف
                 HStack(spacing: 20) {
-                    // البطاقة الأولى
-                    VStack {
-                        Text("Space")
-                            .font(.largeTitle) // حجم الخط كبير
-                            .fontWeight(.bold) // Bold
-                            .foregroundColor(.white) // لون النص
-
-                        Image("space")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 241.26, height: 213) // تعديل الحجم
-                            .padding()
-                    }
-                    .frame(width: 340, height: 400) // أبعاد البطاقة
-                    .background(Color.brave) // لون الخلفية
-                    .cornerRadius(18) // زوايا مستديرة
-                    .shadow(color: Color.brave.opacity(0.5), radius: 10, x: 0, y: 3) // ظل
-
-                    // البطاقة الثانية
-                    VStack {
-                        Text("Nature")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-
-                        Image("food")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 241.26, height: 213)
-                            .padding()
-                    }
-                    .frame(width: 340, height: 400)
-                    .background(Color.hope)
-                    .cornerRadius(18)
-                    .shadow(color: Color.hope.opacity(0.5), radius: 10, x: 0, y: 3)
-
-                    // البطاقة الثالثة
-                    VStack {
-                        Text("Animals")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-
-                        Image("animal")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 241.26, height: 213)
-                            .padding()
-                    }
-                    .frame(width: 340, height: 400)
-                    .background(Color.shine)
-                    .cornerRadius(18)
-                    .shadow(color: Color.shine.opacity(0.5), radius: 10, x: 0, y: 3)
+                    categoryCard(title: "Space", imageName: "space", color: Color.brave)
+                    categoryCard(title: "Nature", imageName: "food", color: Color.hope)
+                    categoryCard(title: "Animals", imageName: "animal", color: Color.shine)
                 }
                 .padding(.bottom, 78)
 
                 Spacer()
             }
         }
+        .onAppear { setupSpeechRecognition() } // إعداد ميزة التحكم الصوتي عند فتح الصفحة
+        .onDisappear { stopListening() } // إيقاف الاستماع عند مغادرة الصفحة
+    }
+    
+    private func categoryCard(title: String, imageName: String, color: Color) -> some View {
+        VStack {
+            Text(title)
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .foregroundColor(.white)
+
+            Image(imageName)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 241.26, height: 213)
+                .padding()
+        }
+        .frame(width: 340, height: 400)
+        .background(color)
+        .cornerRadius(18)
+        .shadow(color: color.opacity(0.5), radius: 10, x: 0, y: 3)
+    }
+
+    // MARK: - Speech Recognition Setup
+    private func setupSpeechRecognition() {
+        SFSpeechRecognizer.requestAuthorization { status in
+            if status == .authorized {
+                self.speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: isArabic ? "ar-SA" : "en-US"))
+                startListening() // بدء الاستماع مباشرة
+            } else {
+                print("Speech recognition authorization failed.")
+            }
+        }
+    }
+    
+    private func startListening() {
+        guard let recognizer = speechRecognizer, recognizer.isAvailable else {
+            print("Speech recognizer is not available.")
+            return
+        }
+        
+        let inputNode = audioEngine.inputNode
+        recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
+        
+        inputNode.installTap(onBus: 0, bufferSize: 1024, format: inputNode.outputFormat(forBus: 0)) { buffer, _ in
+            self.recognitionRequest.append(buffer)
+        }
+        
+        audioEngine.prepare()
+        do {
+            try audioEngine.start()
+        } catch {
+            print("Audio engine could not start: \(error.localizedDescription)")
+        }
+        
+        recognitionTask = recognizer.recognitionTask(with: recognitionRequest) { result, error in
+            if let result = result {
+                let command = result.bestTranscription.formattedString.lowercased()
+                handleVoiceCommand(command)
+            }
+            
+            if error != nil || result?.isFinal == true {
+                self.restartListening() // إعادة تشغيل الاستماع إذا توقف
+            }
+        }
+    }
+    
+    private func stopListening() {
+        audioEngine.stop()
+        audioEngine.inputNode.removeTap(onBus: 0)
+        recognitionTask?.cancel()
+        recognitionTask = nil
+    }
+    
+    private func restartListening() {
+        stopListening()
+        startListening()
+    }
+    
+    private func handleVoiceCommand(_ command: String) {
+        if command.contains(isArabic ? "فضاء" : "space") {
+            print(isArabic ? "انتقال إلى صفحة الفضاء" : "Navigating to Space page")
+        } else if command.contains(isArabic ? "طبيعة" : "nature") {
+            print(isArabic ? "انتقال إلى صفحة الطبيعة" : "Navigating to Nature page")
+        } else if command.contains(isArabic ? "حيوانات" : "animals") {
+            print(isArabic ? "انتقال إلى صفحة الحيوانات" : "Navigating to Animals page")
+        } else if command.contains(isArabic ? "عربي" : "arabic") || command.contains(isArabic ? "إنجليزي" : "english") {
+            toggleLanguage()
+        }
+    }
+    
+    private func toggleLanguage() {
+        isArabic.toggle()
+        stopListening()
+        setupSpeechRecognition()
+        print("Language switched to \(isArabic ? "Arabic" : "English")")
     }
 }
 

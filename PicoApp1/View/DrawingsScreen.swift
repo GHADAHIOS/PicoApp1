@@ -27,7 +27,7 @@ struct DrawingsScreen: View {
                                 .frame(width: 77, height: 73)
                                 .padding(.all, 5)
 
-                            Image(systemName: "globe")
+                            Image(systemName: "circle.grid.2x2")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 44, height: 44)

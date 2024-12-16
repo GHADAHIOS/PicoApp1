@@ -18,28 +18,37 @@ struct CategoriesScreen: View {
             VStack {
                 // القسم العلوي: السحابة + زر اللغة + الشخصية
                 HStack {
-                    // زر تغيير اللغة على اليسار
-                    Button(action: {
-                        isArabic.toggle() // تغيير حالة اللغة عند الضغط
-                        toggleLanguage() // تغيير اللغة في التعرف الصوتي
-                    }) {
-                        ZStack {
-                            Circle()
-                                .fill(Color.inspire)
-                                .frame(width: 77, height: 73)
-                                .offset(x: 2, y: 2)
+                    // زر تغيير اللغة على اليسار مع النص
+                    VStack {
+                        Button(action: {
+                            isArabic.toggle() // تغيير حالة اللغة عند الضغط
+                            toggleLanguage() // تغيير اللغة في التعرف الصوتي
+                        }) {
+                            ZStack {
+                                Circle()
+                                    .fill(Color.inspire)
+                                    .frame(width: 77, height: 73)
+                                    .offset(x: 2, y: 2)
 
-                            Circle()
-                                .fill(Color.binspire)
-                                .frame(width: 77, height: 73)
-                                .padding(.all, 5)
+                                Circle()
+                                    .fill(Color.binspire)
+                                    .frame(width: 77, height: 73)
+                                    .padding(.all, 5)
 
-                            Image(systemName: "globe")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 44, height: 44)
-                                .foregroundColor(.white)
+                                Image(systemName: "globe")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 44, height: 44)
+                                    .foregroundColor(.white)
+                            }
                         }
+
+                        // النص تحت الزر
+                        Text("ENG")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .foregroundColor(.black)
+                            .padding(.top, 5) // مسافة بين الزر والنص
                     }
                     .padding(.leading, 25)
                     .padding(.top, -100)

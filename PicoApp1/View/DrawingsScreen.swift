@@ -170,6 +170,6 @@ struct DrawingsScreen: View {
 // MARK: - Preview
 struct DrawingsScreen_Previews: PreviewProvider {
     static var previews: some View {
-        DrawingsScreen(cardColor: .yellow) // معاينة مع لون افتراضي
+        DrawingsScreen(cardColor: .shine) // معاينة مع لون افتراضي
     }
 }

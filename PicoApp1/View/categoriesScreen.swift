@@ -4,7 +4,7 @@ struct CategoriesScreen: View {
     @State private var isArabic: Bool = true // حالة اللغة (عربي/إنجليزي)
 
     var body: some View {
-        NavigationStack { // تأكد من تغليف محتوى الصفحة بـ NavigationStack
+        NavigationStack { // تأكد من تغليف المحتوى داخل NavigationStack
             ZStack {
                 // خلفية الصفحة
                 Color.BG.edgesIgnoringSafeArea(.all)
@@ -138,6 +138,8 @@ struct CategoriesScreen: View {
                     Spacer()
                 }
             }
+            .navigationBarBackButtonHidden(true) // إخفاء زر العودة
+            .navigationBarTitle("") // يمكنك تحديد عنوان مخصص إذا أردت
         }
     }
 }

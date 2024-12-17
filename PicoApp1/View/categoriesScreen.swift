@@ -1,10 +1,23 @@
 import SwiftUI
+import Speech
 
 struct CategoriesScreen: View {
     @State private var isArabic: Bool = true // حالة اللغة (عربي/إنجليزي)
+    @State private var isRecording = false
+    @State private var audioEngine = AVAudioEngine()
+    @State private var recognitionTask: SFSpeechRecognitionTask?
+    @State private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
+    
+    // الأوامر الصوتية المتاحة
+    let voiceCommands = ["فضاء", "طبيعة", "حيوانات"] // يمكنك إضافة المزيد إذا لزم الأمر
+
+    // حالات التنقل بين الشاشات
+    @State private var navigateToSpace = false
+    @State private var navigateToNature = false
+    @State private var navigateToAnimals = false
 
     var body: some View {
-        NavigationStack { // تأكد من تغليف المحتوى داخل NavigationStack
+        NavigationStack {
             ZStack {
                 // خلفية الصفحة
                 Color.BG.edgesIgnoringSafeArea(.all)
@@ -18,7 +31,7 @@ struct CategoriesScreen: View {
                         }) {
                             ZStack {
                                 Circle()
-                                    .fill(Color.inspire) // لون رمادي شفاف
+                                    .fill(Color.inspire)
                                     .frame(width: 77, height: 73)
                                     .offset(x: 2, y: 2)
 
@@ -27,7 +40,6 @@ struct CategoriesScreen: View {
                                     .frame(width: 77, height: 73)
                                     .padding(.all, 5)
 
-                                // أيقونة "العالم"
                                 Image(systemName: "globe")
                                     .resizable()
                                     .scaledToFit()
@@ -35,15 +47,13 @@ struct CategoriesScreen: View {
                                     .foregroundColor(.white)
                             }
                         }
-                        .padding(.leading, 25) // مسافة من اليسار
+                        .padding(.leading, 25)
                         .padding(.top, -100)
 
                         Spacer()
 
-                        // صورة السحابة مع الشخصية
                         HStack {
-                            // صورة الشخصية
-                            Image("Pico") // استبدل "character" باسم الصورة الخاصة بك
+                            Image("Pico")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 115, height: 115)
@@ -56,47 +66,44 @@ struct CategoriesScreen: View {
                                     .frame(width: 880.0, height: 326)
                                     .offset(x: -80, y: -20)
 
-                                // النص على السحابة
-                                Text("Say the category you would like to color") // النص داخل السحابة
-                                    .font(.title) // حجم الخط
-                                    .fontWeight(.semibold) // الخط عريض
+                                Text("قل الفئة التي تريد تلوينها")
+                                    .font(.title)
+                                    .fontWeight(.semibold)
                                     .foregroundColor(.font1)
-                                    .multilineTextAlignment(.center) // محاذاة النص إلى الوسط
-                                    .padding(.horizontal, 50) // مسافة أفقية لضمان أن النص لا يخرج عن السحابة
-                                    .offset(x: -80, y: -20) // تعديل ارتفاع النص ليتوسط السحابة
+                                    .multilineTextAlignment(.center)
+                                    .padding(.horizontal, 50)
+                                    .offset(x: -80, y: -20)
                             }
                         }
                     }
-                    .padding(.top, -30) // مسافة من الأعلى
+                    .padding(.top, -30)
 
                     Spacer()
 
                     // الكروت الثلاثة في المنتصف
                     HStack(spacing: 20) {
-                        // البطاقة الأولى
-                        NavigationLink(destination: DrawingsScreen3()) {
+                        NavigationLink(destination: DrawingsScreen3(), isActive: $navigateToSpace) {
                             VStack {
-                                Text("Space")
-                                    .font(.largeTitle) // حجم الخط كبير
-                                    .fontWeight(.bold) // Bold
-                                    .foregroundColor(.white) // لون النص
+                                Text("فضاء")
+                                    .font(.largeTitle)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.white)
 
                                 Image("space")
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: 241.26, height: 213) // تعديل الحجم
+                                    .frame(width: 241.26, height: 213)
                                     .padding()
                             }
-                            .frame(width: 340, height: 400) // أبعاد البطاقة
-                            .background(Color.brave) // لون الخلفية
-                            .cornerRadius(18) // زوايا مستديرة
-                            .shadow(color: Color.brave.opacity(0.5), radius: 10, x: 0, y: 3) // ظل
+                            .frame(width: 340, height: 400)
+                            .background(Color.brave)
+                            .cornerRadius(18)
+                            .shadow(color: Color.brave.opacity(0.5), radius: 10, x: 0, y: 3)
                         }
 
-                        // البطاقة الثانية
-                        NavigationLink(destination: DrawingsScreen2()) {
+                        NavigationLink(destination: DrawingsScreen2(), isActive: $navigateToNature) {
                             VStack {
-                                Text("Nature")
+                                Text("طبيعة")
                                     .font(.largeTitle)
                                     .fontWeight(.bold)
                                     .foregroundColor(.white)
@@ -113,10 +120,9 @@ struct CategoriesScreen: View {
                             .shadow(color: Color.hope.opacity(0.5), radius: 10, x: 0, y: 3)
                         }
 
-                        // البطاقة الثالثة
-                        NavigationLink(destination: DrawingsScreen()) {
+                        NavigationLink(destination: DrawingsScreen(), isActive: $navigateToAnimals) {
                             VStack {
-                                Text("Animals")
+                                Text("حيوانات")
                                     .font(.largeTitle)
                                     .fontWeight(.bold)
                                     .foregroundColor(.white)
@@ -138,12 +144,82 @@ struct CategoriesScreen: View {
                     Spacer()
                 }
             }
-            .navigationBarBackButtonHidden(true) // إخفاء زر العودة
-            .navigationBarTitle("") // يمكنك تحديد عنوان مخصص إذا أردت
+            .onAppear {
+                startListening() // بدء الاستماع عند فتح الشاشة
+            }
+            .navigationBarBackButtonHidden(true)
+            .navigationBarTitle("")
+        }
+    }
+
+    // بدء الاستماع للأوامر الصوتية
+    func startListening() {
+        SFSpeechRecognizer.requestAuthorization { authStatus in
+            if authStatus == .authorized {
+                do {
+                    try startAudioEngine()
+                } catch {
+                    print("Audio engine error: \(error)")
+                }
+            }
+        }
+    }
+
+    // تفعيل محرك الصوت وتحليل الصوت
+    func startAudioEngine() throws {
+        let recognizer = SFSpeechRecognizer(locale: Locale(identifier: "ar_SA"))!
+        recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
+        guard let recognitionRequest = recognitionRequest else { return }
+
+        recognitionRequest.shouldReportPartialResults = true
+
+        recognitionTask = recognizer.recognitionTask(with: recognitionRequest) { result, error in
+            if let result = result {
+                handleVoiceCommand(result.bestTranscription.formattedString)
+            }
+
+            if error != nil {
+                stopRecording()
+            }
+        }
+
+        let audioSession = AVAudioSession.sharedInstance()
+        try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
+        try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
+
+        let inputNode = audioEngine.inputNode
+        let recordingFormat = inputNode.outputFormat(forBus: 0)
+
+        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer, _) in
+            self.recognitionRequest?.append(buffer)
+        }
+
+        audioEngine.prepare()
+        try audioEngine.start()
+        isRecording = true
+    }
+
+    // إيقاف التسجيل
+    func stopRecording() {
+        audioEngine.stop()
+        recognitionRequest?.endAudio()
+        recognitionTask?.cancel()
+        recognitionTask = nil
+        recognitionRequest = nil
+        isRecording = false
+    }
+
+    // التعامل مع الأوامر الصوتية
+    func handleVoiceCommand(_ command: String) {
+        if command.contains("فضاء") {
+            navigateToSpace = true
+        } else if command.contains("طبيعة") {
+            navigateToNature = true
+        } else if command.contains("حيوانات") {
+            navigateToAnimals = true
         }
     }
 }
-
 // MARK: - Preview
 struct CategoriesScreen_Previews: PreviewProvider {
     static var previews: some View {

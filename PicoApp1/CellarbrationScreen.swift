@@ -31,16 +31,47 @@ struct CellarbrationScreen: View {
                             .frame(width: 50, height: 50)
                             .foregroundColor(.white) // لون الأيقونة
                     }
-                    .padding(.leading, 45.0)
+                  //  .padding(.leading, 45.0)
                     .overlay(
-                        Text("التلوين")
+                        Text("Catogory")
                             .font(.title2)
                             .fontWeight(.bold)
                             .foregroundColor(.black)
-                            .padding(.leading, 45.0)
+                           // .padding(.leading, 45.0)
                             .offset(y: 70) // تحريك النص تحت الدائرة
                     )
-                    Spacer(minLength:12)
+                  //  Spacer(minLength:12)
+                    
+                    // صورة السحابة مع الشخصية
+                    HStack {
+                        Image("Pico")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 115, height: 115)
+                            .offset(x: -0, y: 90)
+
+                        ZStack {
+                            Image("cloud")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 724.0, height: 326)
+                                .offset(x: -80, y: -20)
+                                .font(.title)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.font1)
+                                .multilineTextAlignment(.center)
+                                //.padding(50)
+                              //  .offset(x: -80, y: -20)
+                            
+                            Text( "Well done, genius! Keep going!")
+                                .font(.title)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.font1)
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal, 80)
+                                .offset(x: -70, y: -15)
+                    } //end of zstack
+                }
                     ZStack {
                         Circle()
                             .fill(Color.inspire) // لون رمادي شفاف
@@ -61,7 +92,7 @@ struct CellarbrationScreen: View {
                     }
                     .padding(.trailing, 45.0)
                     .overlay(
-                        Text("التلوين")
+                        Text("Colorings")
                             .font(.title2)
                             .fontWeight(.bold)
                             .foregroundColor(.black)
@@ -70,38 +101,7 @@ struct CellarbrationScreen: View {
                     )
                 } //end of hstack
                 
-                // صورة السحابة مع الشخصية
-                HStack {
-                    Image("Pico")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 115, height: 115)
-                        .offset(x: -80, y: 50)
-
-                    ZStack {
-                        Image("cloud")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 880.0, height: 326)
-                            .offset(x: -80, y: -20)
-                            .font(.title)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.font1)
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal, 50)
-                            .offset(x: -80, y: -20)
-                        
-                        Text( "Say the category you would like to color")
-                            .font(.title)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.font1)
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal, 80)
-                            .offset(x: -125, y: -30)
-                    
-                } //end of zstack
-            }
-            .padding(.top, -30)
+                .padding(.top, -100)
                 
                 
                 //button
@@ -221,7 +221,7 @@ struct CellarbrationScreen: View {
                     
                 }
 
-            }
+            } .padding(.bottom, 130)
            
             
         }

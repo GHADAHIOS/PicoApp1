@@ -9,7 +9,7 @@ struct CategoriesScreen: View {
     @State private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     
     // الأوامر الصوتية المتاحة
-    let voiceCommands = ["فضاء", "طبيعة", "حيوانات"] // يمكنك إضافة المزيد إذا لزم الأمر
+    let voiceCommands = ["فضاء", "طبيعة", "حيوانات", "تغيير اللغة", "change language"] // تم إضافة أمر تغيير اللغة
 
     // حالات التنقل بين الشاشات
     @State private var navigateToSpace = false
@@ -50,6 +50,14 @@ struct CategoriesScreen: View {
                         .padding(.leading, 25)
                         .padding(.top, -100)
 
+                        // النص أسفل زر تغيير اللغة
+                        VStack {
+                            Text(isArabic ? "تغيير اللغة" : "Change Language")
+                                .font(.headline)
+                                .foregroundColor(.font1)
+                                .padding(.top, 5)
+                        }
+
                         Spacer()
 
                         HStack {
@@ -66,7 +74,7 @@ struct CategoriesScreen: View {
                                     .frame(width: 880.0, height: 326)
                                     .offset(x: -80, y: -20)
 
-                                Text("قل الفئة التي تريد تلوينها")
+                                Text(isArabic ? "قل الفئة التي تريد تلوينها" : "Say the category you want to color")
                                     .font(.title)
                                     .fontWeight(.semibold)
                                     .foregroundColor(.font1)
@@ -84,7 +92,7 @@ struct CategoriesScreen: View {
                     HStack(spacing: 20) {
                         NavigationLink(destination: DrawingsScreen3(), isActive: $navigateToSpace) {
                             VStack {
-                                Text("فضاء")
+                                Text(isArabic ? "فضاء" : "Space")
                                     .font(.largeTitle)
                                     .fontWeight(.bold)
                                     .foregroundColor(.white)
@@ -103,7 +111,7 @@ struct CategoriesScreen: View {
 
                         NavigationLink(destination: DrawingsScreen2(), isActive: $navigateToNature) {
                             VStack {
-                                Text("طبيعة")
+                                Text(isArabic ? "طبيعة" : "Nature")
                                     .font(.largeTitle)
                                     .fontWeight(.bold)
                                     .foregroundColor(.white)
@@ -122,7 +130,7 @@ struct CategoriesScreen: View {
 
                         NavigationLink(destination: DrawingsScreen(), isActive: $navigateToAnimals) {
                             VStack {
-                                Text("حيوانات")
+                                Text(isArabic ? "حيوانات" : "Animals")
                                     .font(.largeTitle)
                                     .fontWeight(.bold)
                                     .foregroundColor(.white)
@@ -167,7 +175,7 @@ struct CategoriesScreen: View {
 
     // تفعيل محرك الصوت وتحليل الصوت
     func startAudioEngine() throws {
-        let recognizer = SFSpeechRecognizer(locale: Locale(identifier: "ar_SA"))!
+        let recognizer = SFSpeechRecognizer(locale: Locale(identifier: isArabic ? "ar_SA" : "en_US"))! // اللغة تتغير بناءً على الحالة
         recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
         guard let recognitionRequest = recognitionRequest else { return }
 
@@ -211,16 +219,17 @@ struct CategoriesScreen: View {
 
     // التعامل مع الأوامر الصوتية
     func handleVoiceCommand(_ command: String) {
-        if command.contains("فضاء") {
+        if command.contains("فضاء") || command.contains("space") {
             navigateToSpace = true
-        } else if command.contains("طبيعة") {
+        } else if command.contains("طبيعة") || command.contains("nature") {
             navigateToNature = true
-        } else if command.contains("حيوانات") {
+        } else if command.contains("حيوانات") || command.contains("animals") {
             navigateToAnimals = true
+        } else if command.contains("تغيير اللغة") || command.contains("change language") {
+            isArabic.toggle() // تغيير اللغة إذا تم التعرف على الأمر
         }
     }
-}
-// MARK: - Preview
+}// MARK: - Preview
 struct CategoriesScreen_Previews: PreviewProvider {
     static var previews: some View {
         CategoriesScreen()

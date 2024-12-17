@@ -73,58 +73,64 @@ struct CategoriesScreen: View {
                 // الكروت الثلاثة في المنتصف
                 HStack(spacing: 20) {
                     // البطاقة الأولى
-                    VStack {
-                        Text("Space")
-                            .font(.largeTitle) // حجم الخط كبير
-                            .fontWeight(.bold) // Bold
-                            .foregroundColor(.white) // لون النص
+                    NavigationLink(destination: DrawingsScreen3()) {
+                        VStack {
+                            Text("Space")
+                                .font(.largeTitle) // حجم الخط كبير
+                                .fontWeight(.bold) // Bold
+                                .foregroundColor(.white) // لون النص
 
-                        Image("space")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 241.26, height: 213) // تعديل الحجم
-                            .padding()
+                            Image("space")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 241.26, height: 213) // تعديل الحجم
+                                .padding()
+                        }
+                        .frame(width: 340, height: 400) // أبعاد البطاقة
+                        .background(Color.brave) // لون الخلفية
+                        .cornerRadius(18) // زوايا مستديرة
+                        .shadow(color: Color.brave.opacity(0.5), radius: 10, x: 0, y: 3) // ظل
                     }
-                    .frame(width: 340, height: 400) // أبعاد البطاقة
-                    .background(Color.brave) // لون الخلفية
-                    .cornerRadius(18) // زوايا مستديرة
-                    .shadow(color: Color.brave.opacity(0.5), radius: 10, x: 0, y: 3) // ظل
 
                     // البطاقة الثانية
-                    VStack {
-                        Text("Nature")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
+                    NavigationLink(destination: DrawingsScreen2()) {
+                        VStack {
+                            Text("Nature")
+                                .font(.largeTitle)
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
 
-                        Image("food")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 241.26, height: 213)
-                            .padding()
+                            Image("food")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 241.26, height: 213)
+                                .padding()
+                        }
+                        .frame(width: 340, height: 400)
+                        .background(Color.hope)
+                        .cornerRadius(18)
+                        .shadow(color: Color.hope.opacity(0.5), radius: 10, x: 0, y: 3)
                     }
-                    .frame(width: 340, height: 400)
-                    .background(Color.hope)
-                    .cornerRadius(18)
-                    .shadow(color: Color.hope.opacity(0.5), radius: 10, x: 0, y: 3)
 
                     // البطاقة الثالثة
-                    VStack {
-                        Text("Animals")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
+                    NavigationLink(destination: DrawingsScreen()) {
+                        VStack {
+                            Text("Animals")
+                                .font(.largeTitle)
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
 
-                        Image("animal")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 241.26, height: 213)
-                            .padding()
+                            Image("animal")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 241.26, height: 213)
+                                .padding()
+                        }
+                        .frame(width: 340, height: 400)
+                        .background(Color.shine)
+                        .cornerRadius(18)
+                        .shadow(color: Color.shine.opacity(0.5), radius: 10, x: 0, y: 3)
                     }
-                    .frame(width: 340, height: 400)
-                    .background(Color.shine)
-                    .cornerRadius(18)
-                    .shadow(color: Color.shine.opacity(0.5), radius: 10, x: 0, y: 3)
                 }
                 .padding(.bottom, 78)
 

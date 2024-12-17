@@ -2,7 +2,6 @@ import SwiftUI
 
 struct DrawingsScreen3: View {
     @State private var isArabic: Bool = true // حالة اللغة (عربي/إنجليزي)
-    var cardColor: Color // لون الكروت يتم استلامه عند التنقل من الصفحة السابقة
 
     var body: some View {
         ZStack {
@@ -82,9 +81,9 @@ struct DrawingsScreen3: View {
                     // الكارد الأول
                     ZStack {
                         RoundedRectangle(cornerRadius: 40)
-                            .fill(cardColor) // لون الكارت يعتمد على الفئة المختارة
+                            .fill(Color.brave) // استخدام لون brave مباشرة
                             .frame(width: 286, height: 350)
-                            .shadow(color: cardColor.opacity(0.2), radius: 5, x: 0, y: 2)
+                            .shadow(color: Color.brave.opacity(0.2), radius: 5, x: 0, y: 2)
 
                         VStack {
                             RoundedRectangle(cornerRadius: 20)
@@ -102,9 +101,9 @@ struct DrawingsScreen3: View {
                     // الكارد الثاني
                     ZStack {
                         RoundedRectangle(cornerRadius: 40)
-                            .fill(cardColor)
+                            .fill(Color.brave) // استخدام لون brave مباشرة
                             .frame(width: 286, height: 350)
-                            .shadow(color: cardColor.opacity(0.2), radius: 5, x: 0, y: 2)
+                            .shadow(color: Color.brave.opacity(0.2), radius: 5, x: 0, y: 2)
 
                         VStack {
                             RoundedRectangle(cornerRadius: 20)
@@ -122,9 +121,9 @@ struct DrawingsScreen3: View {
                     // الكارد الثالث
                     ZStack {
                         RoundedRectangle(cornerRadius: 40)
-                            .fill(cardColor)
+                            .fill(Color.brave) // استخدام لون brave مباشرة
                             .frame(width: 286, height: 350)
-                            .shadow(color: cardColor.opacity(0.2), radius: 5, x: 0, y: 2)
+                            .shadow(color: Color.brave.opacity(0.2), radius: 5, x: 0, y: 2)
 
                         VStack {
                             RoundedRectangle(cornerRadius: 20)
@@ -142,9 +141,9 @@ struct DrawingsScreen3: View {
                     // الكارد الرابع
                     ZStack {
                         RoundedRectangle(cornerRadius: 40)
-                            .fill(cardColor)
+                            .fill(Color.brave) // استخدام لون brave مباشرة
                             .frame(width: 286, height: 350)
-                            .shadow(color: cardColor.opacity(0.2), radius: 5, x: 0, y: 2)
+                            .shadow(color: Color.brave.opacity(0.2), radius: 5, x: 0, y: 2)
 
                         VStack {
                             RoundedRectangle(cornerRadius: 20)
@@ -170,6 +169,6 @@ struct DrawingsScreen3: View {
 // MARK: - Preview
 struct DrawingsScreen3_Previews: PreviewProvider {
     static var previews: some View {
-        DrawingsScreen3(cardColor: .brave) // معاينة مع لون افتراضي
+        DrawingsScreen3() // معاينة مع اللون brave مباشرة
     }
 }

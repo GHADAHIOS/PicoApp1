@@ -36,6 +36,8 @@ struct ColoringScreen: View {
                         }
                     }
 
+                    
+                    
                     Button {
                         // Action for "Undo" button
                     } label: {
@@ -123,7 +125,37 @@ struct ColoringScreen: View {
                 .padding(.leading, 25)
 
                 Spacer()
+                // صورة السحابة مع الشخصية
+                          ZStack {
+                              HStack {
+                                  Image("Pico")
+                                      .resizable()
+                                      .scaledToFit()
+                                      .frame(width: 115, height: 115)
+                                      .offset(x: 10, y: 30)
 
+                                  ZStack {
+                                      Image("cloud")
+                                          .resizable()
+                                          .scaledToFit()
+                                          .frame(width: 780.0, height: 326)
+                                          .offset(x: -50, y: -80)
+
+                                      Text("Say the number to color it")
+                                          .font(.title)
+                                          .fontWeight(.semibold)
+                                          .foregroundColor(.font1)
+                                          .multilineTextAlignment(.center)
+                                          .padding(.horizontal, 50)
+                                          .offset(x: -40, y: -80)
+                                  }
+                              }
+                              .padding(.top, -400)
+                              
+                              
+                              
+                          }
+                          
                 Button {
                     // Action for "Colorings" button
                 } label: {
@@ -152,6 +184,9 @@ struct ColoringScreen: View {
                 }
                 .padding(.trailing, 25)
                 .padding(.bottom, 550)
+                
+                
+                
             }
 
             HStack {

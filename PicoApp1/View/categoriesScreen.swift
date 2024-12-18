@@ -9,7 +9,7 @@ struct CategoriesScreen: View {
     @State private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     
     // الأوامر الصوتية المتاحة
-    let voiceCommands = ["فضاء", "طبيعة", "حيوانات", "تغيير اللغة", "change language"] // تم إضافة أمر تغيير اللغة
+    let voiceCommands = ["فضاء", "طبيعة", "حيوانات", "space", "nature", "animals", "تغيير اللغة", "change language"] // تم إضافة جميع الفئات باللغتين
 
     // حالات التنقل بين الشاشات
     @State private var navigateToSpace = false
@@ -25,38 +25,37 @@ struct CategoriesScreen: View {
                 VStack {
                     // القسم العلوي: السحابة + زر اللغة + الشخصية
                     HStack {
-                        // زر تغيير اللغة على اليسار
-                        Button(action: {
-                            isArabic.toggle() // تغيير حالة اللغة عند الضغط
-                        }) {
-                            ZStack {
-                                Circle()
-                                    .fill(Color.inspire)
-                                    .frame(width: 77, height: 73)
-                                    .offset(x: 2, y: 2)
+                        VStack(spacing: 5) {
+                            // زر تغيير اللغة
+                            Button(action: {
+                                isArabic.toggle() // تغيير حالة اللغة عند الضغط
+                            }) {
+                                ZStack {
+                                    Circle()
+                                        .fill(Color.inspire)
+                                        .frame(width: 77, height: 73)
+                                        .offset(x: 2, y: 2)
 
-                                Circle()
-                                    .fill(Color.binspire)
-                                    .frame(width: 77, height: 73)
-                                    .padding(.all, 5)
+                                    Circle()
+                                        .fill(Color.binspire)
+                                        .frame(width: 77, height: 73)
+                                        .padding(.all, 5)
 
-                                Image(systemName: "globe")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 44, height: 44)
-                                    .foregroundColor(.white)
+                                    Image(systemName: "globe")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 44, height: 44)
+                                        .foregroundColor(.white)
+                                }
                             }
-                        }
-                        .padding(.leading, 25)
-                        .padding(.top, -100)
 
-                        // النص أسفل زر تغيير اللغة
-                        VStack {
+                            // النص أسفل زر تغيير اللغة
                             Text(isArabic ? "تغيير اللغة" : "Change Language")
                                 .font(.headline)
                                 .foregroundColor(.font1)
-                                .padding(.top, 5)
                         }
+                        .padding(.leading, 25)
+                        .padding(.top, -100)
 
                         Spacer()
 
@@ -229,7 +228,9 @@ struct CategoriesScreen: View {
             isArabic.toggle() // تغيير اللغة إذا تم التعرف على الأمر
         }
     }
-}// MARK: - Preview
+}
+
+// MARK: - Preview
 struct CategoriesScreen_Previews: PreviewProvider {
     static var previews: some View {
         CategoriesScreen()

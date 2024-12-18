@@ -9,7 +9,7 @@ struct CategoriesScreen: View {
     @State private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     
     // الأوامر الصوتية المتاحة
-    let voiceCommands = ["فضاء", "طبيعة", "حيوانات", "space", "nature", "animals", "تغيير اللغة", "change language"] // تم إضافة جميع الفئات باللغتين
+    let voiceCommands = ["فضاء", "طعام", "حيوانات", "space", "Food", "animals", "English", "العربية"] // تم إضافة جميع الفئات باللغتين
 
     // حالات التنقل بين الشاشات
     @State private var navigateToSpace = false
@@ -50,7 +50,7 @@ struct CategoriesScreen: View {
                             }
 
                             // النص أسفل زر تغيير اللغة
-                            Text(isArabic ? "تغيير اللغة" : "Change Language")
+                            Text(isArabic ? "English" : "العربية")
                                 .font(.headline)
                                 .foregroundColor(.font1)
                         }
@@ -110,7 +110,7 @@ struct CategoriesScreen: View {
 
                         NavigationLink(destination: DrawingsScreen2(), isActive: $navigateToNature) {
                             VStack {
-                                Text(isArabic ? "طبيعة" : "Nature")
+                                Text(isArabic ? "طعام" : "Food")
                                     .font(.largeTitle)
                                     .fontWeight(.bold)
                                     .foregroundColor(.white)
@@ -220,11 +220,11 @@ struct CategoriesScreen: View {
     func handleVoiceCommand(_ command: String) {
         if command.contains("فضاء") || command.contains("space") {
             navigateToSpace = true
-        } else if command.contains("طبيعة") || command.contains("nature") {
+        } else if command.contains("طعام") || command.contains("Food") {
             navigateToNature = true
         } else if command.contains("حيوانات") || command.contains("animals") {
             navigateToAnimals = true
-        } else if command.contains("تغيير اللغة") || command.contains("change language") {
+        } else if command.contains("English") || command.contains("العربية") {
             isArabic.toggle() // تغيير اللغة إذا تم التعرف على الأمر
         }
     }

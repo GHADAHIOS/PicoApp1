@@ -7,13 +7,15 @@ struct DrawingsScreen: View {
     @State private var audioEngine = AVAudioEngine()
     @State private var recognitionTask: SFSpeechRecognitionTask?
     @State private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
-    
-    // التنقل بين الشاشات
+
+    @State private var navigateToCategories = false
     @State private var navigateToColoring1 = false
     @State private var navigateToColoring2 = false
     @State private var navigateToColoring3 = false
     @State private var navigateToColoring4 = false
-    @State private var navigateToCategories = false
+
+    // قائمة الأوامر الصوتية
+    let voiceCommands = ["واحد", "اثنان", "ثلاثة", "أربعة", "الفئات", "categories"]
 
     var body: some View {
         NavigationStack {
@@ -22,16 +24,16 @@ struct DrawingsScreen: View {
                 Color.BG.edgesIgnoringSafeArea(.all)
 
                 VStack {
-                    // القسم العلوي: السحابة + زر اللغة + الشخصية
+                    // القسم العلوي: زر تغيير اللغة + الشخصية
                     HStack {
-                        // زر تغيير اللغة مع النص
+                        // زر تغيير اللغة
                         VStack {
                             Button(action: {
                                 isArabic.toggle() // تبديل حالة اللغة
                             }) {
                                 ZStack {
                                     Circle()
-                                        .fill(Color.inspire) // لون رمادي شفاف
+                                        .fill(Color.inspire)
                                         .frame(width: 77, height: 73)
                                         .offset(x: 2, y: 2)
 
@@ -48,21 +50,19 @@ struct DrawingsScreen: View {
                                 }
                             }
                             
-                            // النص تحت الزر
                             Text(isArabic ? "الفئات" : "Categories")
                                 .font(.title2)
                                 .fontWeight(.bold)
                                 .foregroundColor(.black)
-                                .padding(.top, 5) // مسافة صغيرة بين الزر والنص
+                                .padding(.top, 5)
                         }
                         .padding(.leading, 25)
                         .padding(.top, -100)
 
                         Spacer()
 
-                        // السحابة مع الشخصية
+                        // الشخصية والسحابة
                         HStack {
-                            // الشخصية
                             Image("Pico")
                                 .resizable()
                                 .scaledToFit()
@@ -75,7 +75,6 @@ struct DrawingsScreen: View {
                                     .scaledToFit()
                                     .frame(width: 880.0, height: 326)
                                     .offset(x: -80, y: -20)
-                                // النص في السحابة
                                 Text(isArabic ? "قل رقم الرسم لتلوينه" : "Say a drawing number to color")
                                     .font(.title)
                                     .fontWeight(.semibold)
@@ -89,7 +88,7 @@ struct DrawingsScreen: View {
 
                     Spacer()
 
-                    // الكروت الكبيرة في منتصف الشاشة
+                    // الكروت
                     HStack(spacing: 10) {
                         ForEach(1...4, id: \.self) { number in
                             Button(action: {
@@ -122,7 +121,10 @@ struct DrawingsScreen: View {
                 }
             }
             .onAppear {
-                startListening() // بدء الاستماع عند فتح الشاشة
+                startListening() // بدء الاستماع للأوامر الصوتية
+            }
+            .navigationDestination(isPresented: $navigateToCategories) {
+                CategoriesScreen()
             }
             .navigationDestination(isPresented: $navigateToColoring1) {
                 ColoringScreen()
@@ -135,9 +137,6 @@ struct DrawingsScreen: View {
             }
             .navigationDestination(isPresented: $navigateToColoring4) {
                 ColoringScreen()
-            }
-            .navigationDestination(isPresented: $navigateToCategories) {
-                CategoriesScreen()
             }
         }
     }
@@ -214,13 +213,13 @@ struct DrawingsScreen: View {
     func handleVoiceCommand(_ command: String) {
         let lowercasedCommand = command.lowercased()
 
-        if lowercasedCommand.contains("1") || lowercasedCommand.contains("واحد") {
+        if lowercasedCommand.contains("واحد") || lowercasedCommand.contains("1") {
             navigateToColoring(number: 1)
-        } else if lowercasedCommand.contains("2") || lowercasedCommand.contains("اثنين") {
+        } else if lowercasedCommand.contains("اثنان") || lowercasedCommand.contains("2") {
             navigateToColoring(number: 2)
-        } else if lowercasedCommand.contains("3") || lowercasedCommand.contains("ثلاثة") {
+        } else if lowercasedCommand.contains("ثلاثة") || lowercasedCommand.contains("3") {
             navigateToColoring(number: 3)
-        } else if lowercasedCommand.contains("4") || lowercasedCommand.contains("أربعة") {
+        } else if lowercasedCommand.contains("أربعة") || lowercasedCommand.contains("4") {
             navigateToColoring(number: 4)
         } else if lowercasedCommand.contains("الفئات") || lowercasedCommand.contains("categories") {
             navigateToCategories = true

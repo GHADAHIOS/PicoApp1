@@ -9,27 +9,33 @@ import SwiftUI
 
 struct CellarbrationScreen: View {
     var body: some View {
-        ZStack{
+        ZStack {
             Color(.BG)
                 .ignoresSafeArea()
-            VStack{
-                HStack{
-                    ZStack {
-                        Circle()
-                            .fill(Color.inspire) // لون رمادي شفاف
-                            .frame(width: 100, height: 100) // حجم الدائرة
-                            .offset(x: 3, y: 3) // تحريك الدائرة لأسفل ولليمين قليلًا
-                        
-                        Circle()
-                            .fill(Color.binspire)
-                            .frame(width: 100, height: 100) // نفس الحجم كالدائرة السفلية
-                            .padding(.all, 5)
-                        // الأيقونة داخل الدائرة
-                        Image(systemName: "circle.grid.2x2")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 50, height: 50)
-                            .foregroundColor(.white) // لون الأيقونة
+            
+            VStack {
+                HStack {
+                    Button(action: {
+                        // Action for the first button
+                    }) {
+                        ZStack {
+                            Circle()
+                                .fill(Color.inspire) // لون رمادي شفاف
+                                .frame(width: 100, height: 100) // حجم الدائرة
+                                .offset(x: 3, y: 3) // تحريك الدائرة لأسفل ولليمين قليلًا
+                            
+                            Circle()
+                                .fill(Color.binspire)
+                                .frame(width: 100, height: 100) // نفس الحجم كالدائرة السفلية
+                                .padding(.all, 5)
+                            
+                            // الأيقونة داخل الدائرة
+                            Image(systemName: "circle.grid.2x2")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 50, height: 50)
+                                .foregroundColor(.white) // لون الأيقونة
+                        }
                     }
                     .padding(.leading, 25.0)
                     .overlay(
@@ -37,29 +43,31 @@ struct CellarbrationScreen: View {
                             .font(.title2)
                             .fontWeight(.bold)
                             .foregroundColor(.black)
-                           // .padding(.leading, 45.0)
-                            .offset(x: 10,y: 70) // تحريك النص تحت الدائرة
+                            .offset(x: 10, y: 70) // تحريك النص تحت الدائرة
                     )
-                    Spacer(minLength:12)
                     
-   
-                    ZStack {
-                        Circle()
-                            .fill(Color.inspire) // لون رمادي شفاف
-                            .frame(width: 100, height: 100) // حجم الدائرة
-                            .offset(x: 3, y: 3)
-                        
-                        Circle()
-                            .fill(Color.binspire)
-                            .frame(width: 100, height: 100) // نفس الحجم كالدائرة السفلية
-                        
-                        // الأيقونة داخل الدائرة
-                        Image(systemName: "paintbrush.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 50, height: 50)
-                            .foregroundColor(.white) // لون الأيقونة
-                        
+                    Spacer(minLength: 12)
+                    
+                    Button(action: {
+                        // Action for the second button
+                    }) {
+                        ZStack {
+                            Circle()
+                                .fill(Color.inspire) // لون رمادي شفاف
+                                .frame(width: 100, height: 100) // حجم الدائرة
+                                .offset(x: 3, y: 3)
+                            
+                            Circle()
+                                .fill(Color.binspire)
+                                .frame(width: 100, height: 100) // نفس الحجم كالدائرة السفلية
+                            
+                            // الأيقونة داخل الدائرة
+                            Image(systemName: "paintbrush.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 50, height: 50)
+                                .foregroundColor(.white) // لون الأيقونة
+                        }
                     }
                     .padding(.trailing, 45.0)
                     .overlay(
@@ -70,8 +78,9 @@ struct CellarbrationScreen: View {
                             .padding(.trailing, 45.0)
                             .offset(y: 70) // تحريك النص تحت الدائرة
                     )
-                } //end of hstack
+                } // نهاية HStack
                 .padding(.top, 30)
+                
                 ZStack {
                     // صورة السحابة مع الشخصية
                     HStack {
@@ -80,152 +89,162 @@ struct CellarbrationScreen: View {
                             .scaledToFit()
                             .frame(width: 115, height: 115)
                             .offset(x: -10, y: 40)
-
+                        
                         ZStack {
                             Image("cloud")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 780.0, height: 326)
                                 .offset(x: -90, y: -80)
-
-                            Text( "Well done, genius! Keep going!")
+                            
+                            Text("Well done, genius! Keep going!")
                                 .font(.title)
                                 .fontWeight(.semibold)
                                 .foregroundColor(.font1)
                                 .multilineTextAlignment(.center)
                                 .padding(.horizontal, 50)
                                 .offset(x: -90, y: -80)
+                        }
                     }
-                }
-                .padding(.top, -30)
+                    .padding(.top, -30)
                 }
                 .padding(.top, -100)
                 
-                
-                //button
-                ZStack {
-                    RoundedRectangle(cornerRadius: 18)
-                        .fill(Color.bhope) // لون رمادي شفاف
-                        .frame(width: 398, height: 90) // حجم الدائرة
-                        .offset(x: 4, y: 4)
-                    
-                    RoundedRectangle(cornerRadius: 18)
-                        .fill(Color.hope)                         .frame(width: 398, height:90)
-
-                HStack {
-                    
-                    Image(.image3)
-                        .resizable()
-                        .frame(width: 25.0, height: 25.0)
-                        .padding(.bottom, 50)
-                    HStack {
-                        Text( "Save")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .foregroundColor(Color.white)
-                            .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
-            
+                // زر الحفظ
+                Button(action: {
+                    // Action for the "Save" button
+                }) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 18)
+                            .fill(Color.bhope)
+                            .frame(width: 398, height: 90)
+                            .offset(x: 4, y: 4)
                         
-                        Image(systemName: "square.and.arrow.down")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 50, height: 50)
-                            .foregroundColor(.white)
-                            .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
-                    }.padding(.horizontal, 80)
-        
-                    Image(.image3)
-                        .resizable()
-                        .frame(width: 25.0, height: 25.0)
-                        .padding(.bottom, 50)
+                        RoundedRectangle(cornerRadius: 18)
+                            .fill(Color.hope)
+                            .frame(width: 398, height: 90)
+                        
+                        HStack {
+                            Image(.image3)
+                                .resizable()
+                                .frame(width: 25.0, height: 25.0)
+                                .padding(.bottom, 50)
+                            HStack {
+                                Text("Save")
+                                    .font(.largeTitle)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(Color.white)
+                                    .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
+                                
+                                Image(systemName: "square.and.arrow.down")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 50, height: 50)
+                                    .foregroundColor(.white)
+                                    .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
+                            }
+                            .padding(.horizontal, 80)
+                            
+                            Image(.image3)
+                                .resizable()
+                                .frame(width: 25.0, height: 25.0)
+                                .padding(.bottom, 50)
+                        }
                     }
-                    
                 }
                 
-                ZStack {
-                    RoundedRectangle(cornerRadius: 18)
-                        .fill(Color.inspire) // لون رمادي شفاف
-                        .frame(width: 398, height: 90) // حجم الدائرة
-                        .offset(x: 4, y: 4)
-                    
-                    RoundedRectangle(cornerRadius: 18)
-                        .fill(Color.binspire)                         .frame(width: 398, height:90)
-
-                HStack {
-                    
-                    Image(.image2)
-                        .resizable()
-                        .frame(width: 25.0, height: 25.0)
-                        .padding(.bottom, 50)
-                    HStack {
-                        Text( "Share")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .foregroundColor(Color.white)
-                            .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
-            
+                // زر المشاركة
+                Button(action: {
+                    // Action for the "Share" button
+                }) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 18)
+                            .fill(Color.inspire)
+                            .frame(width: 398, height: 90)
+                            .offset(x: 4, y: 4)
                         
-                        Image(systemName: "square.and.arrow.up")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 50, height: 50)
-                            .foregroundColor(.white)
-                            .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
-                    }.padding(.horizontal, 80)
-        
-                    Image(.image2)
-                        .resizable()
-                        .frame(width: 25.0, height: 25.0)
-                        .padding(.bottom, 50)
-                    }
-                    
-                }
-                ZStack {
-                    RoundedRectangle(cornerRadius: 18)
-                        .fill(Color.bBrave) // لون رمادي شفاف
-                        .frame(width: 398, height: 90) // حجم الدائرة
-                        .offset(x: 4, y: 4)
-                    
-                    RoundedRectangle(cornerRadius: 18)
-                        .fill(Color.brave)                         .frame(width: 398, height:90)
-
-                HStack {
-                    
-                    Image(.image1)
-                        .resizable()
-                        .frame(width: 25.0, height: 25.0)
-                        .padding(.bottom, 50)
-                    HStack {
-                        Text( "Delete")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .foregroundColor(Color.white)
-                            .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
-            
+                        RoundedRectangle(cornerRadius: 18)
+                            .fill(Color.binspire)
+                            .frame(width: 398, height: 90)
                         
-                        Image(systemName: "trash.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 50, height: 50)
-                            .foregroundColor(.white)
-                            .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
-                    }.padding(.horizontal, 80)
-        
-                    Image(.image1)
-                        .resizable()
-                        .frame(width: 25.0, height: 25.0)
-                        .padding(.bottom, 50)
+                        HStack {
+                            Image(.image2)
+                                .resizable()
+                                .frame(width: 25.0, height: 25.0)
+                                .padding(.bottom, 50)
+                            HStack {
+                                Text("Share")
+                                    .font(.largeTitle)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(Color.white)
+                                    .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
+                                
+                                Image(systemName: "square.and.arrow.up")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 50, height: 50)
+                                    .foregroundColor(.white)
+                                    .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
+                            }
+                            .padding(.horizontal, 80)
+                            
+                            Image(.image2)
+                                .resizable()
+                                .frame(width: 25.0, height: 25.0)
+                                .padding(.bottom, 50)
+                        }
                     }
-                    
                 }
-
-            } .padding(.bottom, 130)
-           
-            
+                
+                // زر الحذف
+                Button(action: {
+                    // Action for the "Delete" button
+                }) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 18)
+                            .fill(Color.bBrave)
+                            .frame(width: 398, height: 90)
+                            .offset(x: 4, y: 4)
+                        
+                        RoundedRectangle(cornerRadius: 18)
+                            .fill(Color.brave)
+                            .frame(width: 398, height: 90)
+                        
+                        HStack {
+                            Image(.image1)
+                                .resizable()
+                                .frame(width: 25.0, height: 25.0)
+                                .padding(.bottom, 50)
+                            HStack {
+                                Text("Delete")
+                                    .font(.largeTitle)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(Color.white)
+                                    .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
+                                
+                                Image(systemName: "trash.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 50, height: 50)
+                                    .foregroundColor(.white)
+                                    .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
+                            }
+                            .padding(.horizontal, 80)
+                            
+                            Image(.image1)
+                                .resizable()
+                                .frame(width: 25.0, height: 25.0)
+                                .padding(.bottom, 50)
+                        }
+                    }
+                }
+            }
+            .padding(.bottom, 130)
         }
-        
-    }}
+    }
+}
 
+// Preview
 #Preview {
     CellarbrationScreen()
 }

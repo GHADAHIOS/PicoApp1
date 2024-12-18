@@ -1,248 +1,342 @@
-//
-//  CellarbrationScreen.swift
-//  PicoApp1
-//
-//  Created by Alanoud Alamrani on 14/06/1446 AH.
-//
-
 import SwiftUI
+import Speech
+import AVFoundation
 
 struct CellarbrationScreen: View {
+    @State private var isRecording = false
+    @State private var audioEngine = AVAudioEngine()
+    @State private var recognitionTask: SFSpeechRecognitionTask?
+    @State private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
+    @State private var isArabic: Bool = true // حالة اللغة (عربي/إنجليزي)
+    
+    // حالات التنقل بين الشاشات
+    @State private var navigateToCategories = false
+    @State private var navigateToColoring = false
+    
+    // الأوامر الصوتية التي سيتم التعرف عليها
+    let voiceCommands = ["فئات", "تلوين", "حفظ", "مشاركة", "حذف", "categories", "coloring", "save", "share", "delete"]
+
     var body: some View {
-        ZStack {
-            Color(.BG)
-                .ignoresSafeArea()
-            
-            VStack {
-                HStack {
-                    Button(action: {
-                        // Action for the first button
-                    }) {
-                        ZStack {
-                            Circle()
-                                .fill(Color.inspire) // لون رمادي شفاف
-                                .frame(width: 100, height: 100) // حجم الدائرة
-                                .offset(x: 3, y: 3) // تحريك الدائرة لأسفل ولليمين قليلًا
-                            
-                            Circle()
-                                .fill(Color.binspire)
-                                .frame(width: 100, height: 100) // نفس الحجم كالدائرة السفلية
-                                .padding(.all, 5)
-                            
-                            // الأيقونة داخل الدائرة
-                            Image(systemName: "circle.grid.2x2")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 50, height: 50)
-                                .foregroundColor(.white) // لون الأيقونة
-                        }
-                    }
-                    .padding(.leading, 25.0)
-                    .overlay(
-                        Text("Catogory")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundColor(.black)
-                            .offset(x: 10, y: 70) // تحريك النص تحت الدائرة
-                    )
-                    
-                    Spacer(minLength: 12)
-                    
-                    Button(action: {
-                        // Action for the second button
-                    }) {
-                        ZStack {
-                            Circle()
-                                .fill(Color.inspire) // لون رمادي شفاف
-                                .frame(width: 100, height: 100) // حجم الدائرة
-                                .offset(x: 3, y: 3)
-                            
-                            Circle()
-                                .fill(Color.binspire)
-                                .frame(width: 100, height: 100) // نفس الحجم كالدائرة السفلية
-                            
-                            // الأيقونة داخل الدائرة
-                            Image(systemName: "paintbrush.fill")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 50, height: 50)
-                                .foregroundColor(.white) // لون الأيقونة
-                        }
-                    }
-                    .padding(.trailing, 45.0)
-                    .overlay(
-                        Text("Colorings")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundColor(.black)
-                            .padding(.trailing, 45.0)
-                            .offset(y: 70) // تحريك النص تحت الدائرة
-                    )
-                } // نهاية HStack
-                .padding(.top, 30)
+        NavigationStack {
+            ZStack {
+                Color(.BG)
+                    .ignoresSafeArea()
                 
-                ZStack {
-                    // صورة السحابة مع الشخصية
+                VStack {
                     HStack {
-                        Image("Pico")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 115, height: 115)
-                            .offset(x: -10, y: 40)
+                        Button(action: {
+                            navigateToCategories = true
+                        }) {
+                            ZStack {
+                                Circle()
+                                    .fill(Color.inspire)
+                                    .frame(width: 100, height: 100)
+                                    .offset(x: 3, y: 3)
+                                
+                                Circle()
+                                    .fill(Color.binspire)
+                                    .frame(width: 100, height: 100)
+                                    .padding(.all, 5)
+                                
+                                Image(systemName: "circle.grid.2x2")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 50, height: 50)
+                                    .foregroundColor(.white)
+                            }
+                        }
+                        .padding(.leading, 25.0)
+                        .overlay(
+                            Text("Category")
+                                .font(.title2)
+                                .fontWeight(.bold)
+                                .foregroundColor(.black)
+                                .offset(x: 10, y: 70)
+                        )
+                        Spacer(minLength: 12)
                         
-                        ZStack {
-                            Image("cloud")
+                        Button(action: {
+                            navigateToColoring = true
+                        }) {
+                            ZStack {
+                                Circle()
+                                    .fill(Color.inspire)
+                                    .frame(width: 100, height: 100)
+                                    .offset(x: 3, y: 3)
+                                
+                                Circle()
+                                    .fill(Color.binspire)
+                                    .frame(width: 100, height: 100)
+                                
+                                Image(systemName: "paintbrush.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 50, height: 50)
+                                    .foregroundColor(.white)
+                            }
+                        }
+                        .padding(.trailing, 45.0)
+                        .overlay(
+                            Text("Colorings")
+                                .font(.title2)
+                                .fontWeight(.bold)
+                                .foregroundColor(.black)
+                                .padding(.trailing, 45.0)
+                                .offset(y: 70)
+                        )
+                    }
+                    .padding(.top, 30)
+                    
+                    ZStack {
+                        HStack {
+                            Image("Pico")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 780.0, height: 326)
-                                .offset(x: -90, y: -80)
+                                .frame(width: 115, height: 115)
+                                .offset(x: -10, y: 40)
                             
-                            Text("Well done, genius! Keep going!")
-                                .font(.title)
-                                .fontWeight(.semibold)
-                                .foregroundColor(.font1)
-                                .multilineTextAlignment(.center)
-                                .padding(.horizontal, 50)
-                                .offset(x: -90, y: -80)
-                        }
-                    }
-                    .padding(.top, -30)
-                }
-                .padding(.top, -100)
-                
-                // زر الحفظ
-                Button(action: {
-                    // Action for the "Save" button
-                }) {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 18)
-                            .fill(Color.bhope)
-                            .frame(width: 398, height: 90)
-                            .offset(x: 4, y: 4)
-                        
-                        RoundedRectangle(cornerRadius: 18)
-                            .fill(Color.hope)
-                            .frame(width: 398, height: 90)
-                        
-                        HStack {
-                            Image(.image3)
-                                .resizable()
-                                .frame(width: 25.0, height: 25.0)
-                                .padding(.bottom, 50)
-                            HStack {
-                                Text("Save")
-                                    .font(.largeTitle)
-                                    .fontWeight(.bold)
-                                    .foregroundColor(Color.white)
-                                    .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
-                                
-                                Image(systemName: "square.and.arrow.down")
+                            ZStack {
+                                Image("cloud")
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: 50, height: 50)
-                                    .foregroundColor(.white)
-                                    .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
-                            }
-                            .padding(.horizontal, 80)
-                            
-                            Image(.image3)
-                                .resizable()
-                                .frame(width: 25.0, height: 25.0)
-                                .padding(.bottom, 50)
-                        }
-                    }
-                }
-                
-                // زر المشاركة
-                Button(action: {
-                    // Action for the "Share" button
-                }) {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 18)
-                            .fill(Color.inspire)
-                            .frame(width: 398, height: 90)
-                            .offset(x: 4, y: 4)
-                        
-                        RoundedRectangle(cornerRadius: 18)
-                            .fill(Color.binspire)
-                            .frame(width: 398, height: 90)
-                        
-                        HStack {
-                            Image(.image2)
-                                .resizable()
-                                .frame(width: 25.0, height: 25.0)
-                                .padding(.bottom, 50)
-                            HStack {
-                                Text("Share")
-                                    .font(.largeTitle)
-                                    .fontWeight(.bold)
-                                    .foregroundColor(Color.white)
-                                    .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
+                                    .frame(width: 780.0, height: 326)
+                                    .offset(x: -90, y: -80)
                                 
-                                Image(systemName: "square.and.arrow.up")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 50, height: 50)
-                                    .foregroundColor(.white)
-                                    .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
+                                Text("Well done, genius! Keep going!")
+                                    .font(.title)
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.font1)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.horizontal, 50)
+                                    .offset(x: -90, y: -80)
                             }
-                            .padding(.horizontal, 80)
-                            
-                            Image(.image2)
-                                .resizable()
-                                .frame(width: 25.0, height: 25.0)
-                                .padding(.bottom, 50)
                         }
+                        .padding(.top, -30)
                     }
-                }
-                
-                // زر الحذف
-                Button(action: {
-                    // Action for the "Delete" button
-                }) {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 18)
-                            .fill(Color.bBrave)
-                            .frame(width: 398, height: 90)
-                            .offset(x: 4, y: 4)
-                        
-                        RoundedRectangle(cornerRadius: 18)
-                            .fill(Color.brave)
-                            .frame(width: 398, height: 90)
-                        
-                        HStack {
-                            Image(.image1)
-                                .resizable()
-                                .frame(width: 25.0, height: 25.0)
-                                .padding(.bottom, 50)
+                    .padding(.top, -100)
+                    
+                    // حفظ
+                    Button(action: {
+                        saveToGallery()
+                    }) {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 18)
+                                .fill(Color.bhope)
+                                .frame(width: 398, height: 90)
+                                .offset(x: 4, y: 4)
+                            
+                            RoundedRectangle(cornerRadius: 18)
+                                .fill(Color.hope)
+                                .frame(width: 398, height: 90)
+                            
                             HStack {
-                                Text("Delete")
-                                    .font(.largeTitle)
-                                    .fontWeight(.bold)
-                                    .foregroundColor(Color.white)
-                                    .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
-                                
-                                Image(systemName: "trash.fill")
+                                Image(.image3)
                                     .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 50, height: 50)
-                                    .foregroundColor(.white)
-                                    .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
+                                    .frame(width: 25.0, height: 25.0)
+                                    .padding(.bottom, 50)
+                                HStack {
+                                    Text("Save")
+                                        .font(.largeTitle)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(Color.white)
+                                        .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
+                                    
+                                    Image(systemName: "square.and.arrow.down")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 50, height: 50)
+                                        .foregroundColor(.white)
+                                        .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
+                                }
+                                .padding(.horizontal, 80)
+                                
+                                Image(.image3)
+                                    .resizable()
+                                    .frame(width: 25.0, height: 25.0)
+                                    .padding(.bottom, 50)
                             }
-                            .padding(.horizontal, 80)
+                        }
+                    }
+                    
+                    // زر المشاركة
+                    Button(action: {
+                        shareDrawing()
+                    }) {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 18)
+                                .fill(Color.inspire)
+                                .frame(width: 398, height: 90)
+                                .offset(x: 4, y: 4)
                             
-                            Image(.image1)
-                                .resizable()
-                                .frame(width: 25.0, height: 25.0)
-                                .padding(.bottom, 50)
+                            RoundedRectangle(cornerRadius: 18)
+                                .fill(Color.binspire)
+                                .frame(width: 398, height: 90)
+                            
+                            HStack {
+                                Image(.image2)
+                                    .resizable()
+                                    .frame(width: 25.0, height: 25.0)
+                                    .padding(.bottom, 50)
+                                HStack {
+                                    Text("Share")
+                                        .font(.largeTitle)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(Color.white)
+                                        .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
+                                    
+                                    Image(systemName: "square.and.arrow.up")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 50, height: 50)
+                                        .foregroundColor(.white)
+                                        .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
+                                }
+                                .padding(.horizontal, 80)
+                                
+                                Image(.image2)
+                                    .resizable()
+                                    .frame(width: 25.0, height: 25.0)
+                                    .padding(.bottom, 50)
+                            }
+                        }
+                    }
+                    
+                    // زر الحذف
+                    Button(action: {
+                        deleteDrawing()
+                    }) {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 18)
+                                .fill(Color.bBrave)
+                                .frame(width: 398, height: 90)
+                                .offset(x: 4, y: 4)
+                            
+                            RoundedRectangle(cornerRadius: 18)
+                                .fill(Color.brave)
+                                .frame(width: 398, height: 90)
+                            
+                            HStack {
+                                Image(.image1)
+                                    .resizable()
+                                    .frame(width: 25.0, height: 25.0)
+                                    .padding(.bottom, 50)
+                                HStack {
+                                    Text("Delete")
+                                        .font(.largeTitle)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(Color.white)
+                                        .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
+                                    
+                                    Image(systemName: "trash.fill")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 50, height: 50)
+                                        .foregroundColor(.white)
+                                        .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
+                                }
+                                .padding(.horizontal, 80)
+                                
+                                Image(.image1)
+                                    .resizable()
+                                    .frame(width: 25.0, height: 25.0)
+                                    .padding(.bottom, 50)
+                            }
                         }
                     }
                 }
+                .padding(.bottom, 130)
+                
+                // الانتقال إلى الصفحات باستخدام NavigationLink
+                NavigationLink(
+                    destination: CategoriesScreen(), // صفحة الفئات
+                    isActive: $navigateToCategories
+                ) { EmptyView() }
+
+                NavigationLink(
+                    destination: ColoringScreen(), // صفحة التلوين
+                    isActive: $navigateToColoring
+                ) { EmptyView() }
             }
-            .padding(.bottom, 130)
+            .onAppear {
+                startListening() // بدء الاستماع عند فتح الشاشة
+            }
+            .navigationBarBackButtonHidden(true)
+            .navigationBarTitle("")
         }
     }
+
+    // Start listening for voice commands
+    func startListening() {
+        SFSpeechRecognizer.requestAuthorization { authStatus in
+            DispatchQueue.main.async {
+                if authStatus == .authorized {
+                    do {
+                        try startAudioEngine()
+                    } catch {
+                        print("Audio engine error: \(error)")
+                    }
+                } else {
+                    print("Speech recognition authorization denied.")
+                }
+            }
+        }
+    }
+
+    func startAudioEngine() throws {
+        audioEngine = AVAudioEngine()
+        recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
+        let inputNode = audioEngine.inputNode
+        let recordingFormat = inputNode.outputFormat(forBus: 0)
+
+        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer, _) in
+            self.recognitionRequest?.append(buffer)
+        }
+
+        audioEngine.prepare()
+        try audioEngine.start()
+        isRecording = true
+    }
+
+    func stopRecording() {
+        audioEngine.stop()
+        recognitionRequest?.endAudio()
+    }
+
+    // معالجة الأوامر الصوتية
+    func handleVoiceCommand(_ command: String) {
+        let lowercasedCommand = command.lowercased()
+
+        if voiceCommands.contains(lowercasedCommand) {
+            switch lowercasedCommand {
+            case "فئات", "categories":
+                navigateToCategories = true
+            case "تلوين", "coloring":
+                navigateToColoring = true
+            case "حفظ", "save":
+                saveToGallery()
+            case "مشاركة", "share":
+                shareDrawing()
+            case "حذف", "delete":
+                deleteDrawing()
+            default:
+                print("Unrecognized command: \(command)")
+            }
+        }
+    }
+
+    func saveToGallery() {
+        print("Image saved to gallery.")
+    }
+
+    func shareDrawing() {
+        print("Image shared.")
+    }
+
+    func deleteDrawing() {
+        print("Drawing deleted.")
+    }
 }
+
 
 // Preview
 #Preview {

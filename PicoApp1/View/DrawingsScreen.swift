@@ -26,10 +26,10 @@ struct DrawingsScreen: View {
                 VStack {
                     // القسم العلوي: زر تغيير اللغة + الشخصية
                     HStack {
-                        // زر تغيير اللغة
+                        // زر الفئات
                         VStack {
                             Button(action: {
-                                isArabic.toggle() // تبديل حالة اللغة
+                                navigateToCategories = true
                             }) {
                                 ZStack {
                                     Circle()

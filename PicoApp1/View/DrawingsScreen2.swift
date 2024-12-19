@@ -129,7 +129,7 @@ struct DrawingsScreen2: View {
                 CategoriesScreen()
             }
             .navigationDestination(isPresented: $navigateToColoring1) {
-                ColoringScreen()
+                PixelArtView()
             }
             .navigationDestination(isPresented: $navigateToColoring2) {
                 ColoringScreen()

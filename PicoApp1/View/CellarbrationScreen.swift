@@ -13,6 +13,9 @@ struct CellarbrationScreen: View {
     @State private var navigateToCategories = false
     @State private var navigateToColoring = false
     
+    @Binding var image: UIImage?
+
+    
     // الأوامر الصوتية التي سيتم التعرف عليها
     let voiceCommands = ["فئات", "تلوين", "حفظ", "مشاركة", "حذف", "categories", "coloring", "save", "share", "delete"]
 
@@ -340,5 +343,5 @@ struct CellarbrationScreen: View {
 
 // Preview
 #Preview {
-    CellarbrationScreen()
+    CellarbrationScreen(image: .constant(UIImage(named: "sampleImage") ?? UIImage()))
 }

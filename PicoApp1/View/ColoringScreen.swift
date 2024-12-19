@@ -124,6 +124,9 @@ struct ColoringScreen: View {
                 }
                 .padding(.leading, 25)
 
+                
+                
+                
                 Spacer()
                 // صورة السحابة مع الشخصية
                           ZStack {

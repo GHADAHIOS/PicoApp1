@@ -6,3 +6,9 @@
 //
 
 import Foundation
+import UIKit
+// Define the GridCell model
+struct GridCell {
+    var number: Int
+    var color: UIColor
+}

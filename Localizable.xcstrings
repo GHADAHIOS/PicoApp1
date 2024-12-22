@@ -29,6 +29,23 @@
         }
       }
     },
+    "Say the category you want to color" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قل الفئة التي تريد تلوينها"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Say the category you want to color"
+          }
+        }
+      }
+    },
     "space" : {
       "extractionState" : "manual",
       "localizations" : {

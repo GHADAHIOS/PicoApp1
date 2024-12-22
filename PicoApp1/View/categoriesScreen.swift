@@ -175,7 +175,11 @@ struct CategoriesScreen: View {
 
     // Activate the audio engine and process speech
     func startAudioEngine() throws {
-        let recognizer = SFSpeechRecognizer(locale: Locale(identifier: "en_US"))! // English only
+        // Get the language code of the device
+        let languageCode = Locale.current.languageCode ?? "en" // Default to "en" if no language code found
+        let localeIdentifier = (languageCode == "ar") ? "ar_SA" : "en_US" // Set locale based on language code
+
+        let recognizer = SFSpeechRecognizer(locale: Locale(identifier: localeIdentifier))!
         recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
         guard let recognitionRequest = recognitionRequest else { return }
 
@@ -219,11 +223,11 @@ struct CategoriesScreen: View {
 
     // Handle voice commands
     func handleVoiceCommand(_ command: String) {
-        if command.contains("space") {
+        if command.contains("space") || command.contains("الفضاء") {
             navigateToSpace = true
-        } else if command.contains("food") {
+        } else if command.contains("food") || command.contains("الطعام") {
             navigateToNature = true
-        } else if command.contains("animals") {
+        } else if command.contains("animals") || command.contains("الحيوانات") {
             navigateToAnimals = true
         }
     }

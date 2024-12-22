@@ -90,7 +90,7 @@ struct CategoriesScreen: View {
 
                     // The three category cards
                     HStack(spacing: 20) {
-                        NavigationLink(destination: DrawingsScreen3(), isActive: $navigateToSpace) {
+                        NavigationLink(destination:  CellarbrationScreen(image: .constant(UIImage(named: "Pico") ?? UIImage())), isActive: $navigateToSpace) {
                             VStack {
                                 Text("Space")
                                     .font(.largeTitle)

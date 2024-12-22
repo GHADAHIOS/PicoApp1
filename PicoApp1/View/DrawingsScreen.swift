@@ -93,7 +93,7 @@ struct DrawingsScreen: View {
                         ForEach(1...4, id: \.self) { number in
                             Button(action: {
                                 playBubbleSound() // Play bubble sound
-                                withAnimation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.5)) {
+                                withAnimation(.spring(response: 0.5, dampingFraction: 0.6)) {
                                     clickedCard = number
                                 }
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -106,7 +106,7 @@ struct DrawingsScreen: View {
                                         .fill(Color.shine)
                                         .frame(width: 286, height: 350)
                                         .shadow(color: Color.shine.opacity(0.2), radius: 5, x: 0, y: 2)
-                                        .scaleEffect(clickedCard == number ? 1.1 : 1.0) // Animation effect
+                                        .scaleEffect(clickedCard == number ? 1.2 : 1.0) // Scale animation for selected card
 
                                     VStack {
                                         RoundedRectangle(cornerRadius: 20)
@@ -121,6 +121,9 @@ struct DrawingsScreen: View {
                                     }
                                 }
                             }
+                            .opacity(clickedCard == nil || clickedCard == number ? 1.0 : 0.3) // Fade out unselected cards
+                            .offset(x: clickedCard == number ? 0 : 0, y: clickedCard == number ? -50 : 0) // Move selected card up
+                            .zIndex(clickedCard == number ? 1 : 0) // Ensure the selected card appears on top
                         }
                     }
                     .padding(.bottom, 50)
@@ -174,15 +177,15 @@ struct DrawingsScreen: View {
     }
 
     func startListening() {
-        // Same implementation as above
+
     }
 
     func stopRecording() {
-        // Same implementation as above
+  
     }
 
     func handleVoiceCommand(_ command: String) {
-        // Same implementation as above
+    
     }
 }
 

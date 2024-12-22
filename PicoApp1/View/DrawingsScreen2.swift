@@ -104,7 +104,7 @@ struct DrawingsScreen2: View {
                                         .fill(Color.hope)
                                         .frame(width: 286, height: 350)
                                         .shadow(color: Color.hope.opacity(0.2), radius: 5, x: 0, y: 2)
-                                        .scaleEffect(clickedCard == number ? 1.1 : 1.0)
+                                        .scaleEffect(clickedCard == number ? 1.2 : 1.0) // Scale animation for selected card
 
                                     VStack {
                                         RoundedRectangle(cornerRadius: 20)
@@ -119,6 +119,9 @@ struct DrawingsScreen2: View {
                                     }
                                 }
                             }
+                            .opacity(clickedCard == nil || clickedCard == number ? 1.0 : 0.3) // Fade out unselected cards
+                            .offset(x: clickedCard == number ? 0 : 0, y: clickedCard == number ? -50 : 0) // Move selected card up
+                            .zIndex(clickedCard == number ? 1 : 0) // Ensure the selected card appears on top
                         }
                     }
                     .padding(.bottom, 50)
@@ -172,15 +175,15 @@ struct DrawingsScreen2: View {
     }
 
     func startListening() {
-        // Implementation same as above
+    
     }
 
     func stopRecording() {
-        // Implementation same as above
+     
     }
 
     func handleVoiceCommand(_ command: String) {
-        // Implementation same as above
+      
     }
 }
 

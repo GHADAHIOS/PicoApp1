@@ -24,6 +24,7 @@ struct DrawingsScreen3: View {
                 Color.BG.edgesIgnoringSafeArea(.all)
 
                 VStack {
+                    // Header Section
                     HStack {
                         VStack {
                             Button(action: {
@@ -87,8 +88,9 @@ struct DrawingsScreen3: View {
 
                     Spacer()
 
+                    // Cards Section
                     HStack(spacing: 10) {
-                        ForEach((1...4).reversed(), id: \ .self) { number in
+                        ForEach(1...4, id: \.self) { number in
                             Button(action: {
                                 playBubbleSound()
                                 withAnimation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.5)) {
@@ -119,6 +121,8 @@ struct DrawingsScreen3: View {
                                     }
                                 }
                             }
+                            .opacity(clickedCard == nil || clickedCard == number ? 1.0 : 0.3) // Fade unselected cards
+                            .zIndex(clickedCard == number ? 1 : 0) // Selected card on top
                         }
                     }
                     .padding(.bottom, 50)
@@ -172,15 +176,15 @@ struct DrawingsScreen3: View {
     }
 
     func startListening() {
-        // Implementation similar to the original
+     
     }
 
     func stopRecording() {
-        // Implementation similar to the original
+  
     }
 
     func handleVoiceCommand(_ command: String) {
-        // Implementation similar to the original
+     
     }
 }
 

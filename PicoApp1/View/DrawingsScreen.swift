@@ -3,7 +3,6 @@ import Speech
 import AVFoundation
 
 struct DrawingsScreen: View {
-    @State private var isArabic: Bool = true
     @State private var isRecording = false
     @State private var audioEngine = AVAudioEngine()
     @State private var recognitionTask: SFSpeechRecognitionTask?
@@ -18,7 +17,7 @@ struct DrawingsScreen: View {
     @State private var clickedCard: Int? = nil // Track the clicked card for animation
     @State private var audioPlayer: AVAudioPlayer?
 
-    let voiceCommands = ["واحد", "اثنان", "ثلاثة", "أربعة", "الفئات", "categories"]
+    let voiceCommands = ["one", "two", "three", "four", "categories"]
 
     var body: some View {
         NavigationStack {
@@ -26,7 +25,7 @@ struct DrawingsScreen: View {
                 Color.BG.edgesIgnoringSafeArea(.all)
 
                 VStack {
-                    // Upper Section: Language Toggle & Character
+                    // Upper Section: Navigation Button & Character
                     HStack {
                         VStack {
                             Button(action: {
@@ -51,7 +50,7 @@ struct DrawingsScreen: View {
                                 }
                             }
 
-                            Text(isArabic ? "الفئات" : "Categories")
+                            Text("Categories")
                                 .font(.title2)
                                 .fontWeight(.bold)
                                 .foregroundColor(.black)
@@ -74,8 +73,8 @@ struct DrawingsScreen: View {
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 880.0, height: 326)
-                                    .offset(x: -80, y: -20)
-                                Text(isArabic ? "قل رقم الرسم لتلوينه" : "Say a drawing number to color")
+                                    .scaleEffect(x: -1)                                 .offset(x: -80, y: -20)
+                                Text("Say a drawing number to color")
                                     .font(.title)
                                     .fontWeight(.semibold)
                                     .foregroundColor(.font1)
@@ -177,18 +176,17 @@ struct DrawingsScreen: View {
     }
 
     func startListening() {
-
+        // To be implemented
     }
 
     func stopRecording() {
-  
+        // To be implemented
     }
 
     func handleVoiceCommand(_ command: String) {
-    
+        // To be implemented
     }
 }
-
 
 // MARK: - Preview
 struct DrawingsScreen_Previews: PreviewProvider {

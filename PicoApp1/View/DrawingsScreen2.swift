@@ -3,7 +3,6 @@ import Speech
 import AVFoundation
 
 struct DrawingsScreen2: View {
-    @State private var isArabic: Bool = true
     @State private var navigateToCategories = false
     @State private var navigateToColoring1 = false
     @State private var navigateToColoring2 = false
@@ -16,7 +15,7 @@ struct DrawingsScreen2: View {
     @State private var clickedCard: Int? = nil
     @State private var audioPlayer: AVAudioPlayer?
 
-    let voiceCommands = ["واحد", "اثنان", "ثلاثة", "أربعة", "الفئات", "categories"]
+    let voiceCommands = ["one", "two", "three", "four", "categories"]
 
     var body: some View {
         NavigationStack {
@@ -49,7 +48,7 @@ struct DrawingsScreen2: View {
                                 }
                             }
 
-                            Text(isArabic ? "الفئات" : "Categories")
+                            Text("Categories")
                                 .font(.title2)
                                 .fontWeight(.bold)
                                 .foregroundColor(.black)
@@ -72,9 +71,10 @@ struct DrawingsScreen2: View {
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 880.0, height: 326)
+                                    .scaleEffect(x: -1)
                                     .offset(x: -80, y: -20)
 
-                                Text(isArabic ? "قل رقم الرسم لتلوينه" : "Say a drawing number to color")
+                                Text("Say a drawing number to color")
                                     .font(.title)
                                     .fontWeight(.semibold)
                                     .foregroundColor(.font1)
@@ -104,7 +104,7 @@ struct DrawingsScreen2: View {
                                         .fill(Color.hope)
                                         .frame(width: 286, height: 350)
                                         .shadow(color: Color.hope.opacity(0.2), radius: 5, x: 0, y: 2)
-                                        .scaleEffect(clickedCard == number ? 1.2 : 1.0) // Scale animation for selected card
+                                        .scaleEffect(clickedCard == number ? 1.2 : 1.0)
 
                                     VStack {
                                         RoundedRectangle(cornerRadius: 20)
@@ -119,9 +119,9 @@ struct DrawingsScreen2: View {
                                     }
                                 }
                             }
-                            .opacity(clickedCard == nil || clickedCard == number ? 1.0 : 0.3) // Fade out unselected cards
-                            .offset(x: clickedCard == number ? 0 : 0, y: clickedCard == number ? -50 : 0) // Move selected card up
-                            .zIndex(clickedCard == number ? 1 : 0) // Ensure the selected card appears on top
+                            .opacity(clickedCard == nil || clickedCard == number ? 1.0 : 0.3)
+                            .offset(x: clickedCard == number ? 0 : 0, y: clickedCard == number ? -50 : 0)
+                            .zIndex(clickedCard == number ? 1 : 0)
                         }
                     }
                     .padding(.bottom, 50)
@@ -175,15 +175,15 @@ struct DrawingsScreen2: View {
     }
 
     func startListening() {
-    
+        // To be implemented
     }
 
     func stopRecording() {
-     
+        // To be implemented
     }
 
     func handleVoiceCommand(_ command: String) {
-      
+        // To be implemented
     }
 }
 

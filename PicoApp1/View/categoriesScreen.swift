@@ -2,16 +2,16 @@ import SwiftUI
 import Speech
 
 struct CategoriesScreen: View {
-    @State private var isArabic: Bool = true // حالة اللغة (عربي/إنجليزي)
+    @State private var isArabic: Bool = false // Language toggle (English by default)
     @State private var isRecording = false
     @State private var audioEngine = AVAudioEngine()
     @State private var recognitionTask: SFSpeechRecognitionTask?
     @State private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
-    
-    // الأوامر الصوتية المتاحة
-    let voiceCommands = ["فضاء", "طعام", "حيوانات", "space", "Food", "animals", "English", "العربية"] // تم إضافة جميع الفئات باللغتين
 
-    // حالات التنقل بين الشاشات
+    // Available voice commands
+    let voiceCommands = ["space", "food", "animals"]
+
+    // Navigation states
     @State private var navigateToSpace = false
     @State private var navigateToNature = false
     @State private var navigateToAnimals = false
@@ -19,16 +19,16 @@ struct CategoriesScreen: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                // خلفية الصفحة
+                // Background color
                 Color.BG.edgesIgnoringSafeArea(.all)
 
                 VStack {
-                    // القسم العلوي: السحابة + زر اللغة + الشخصية
+                    // Top section: cloud, language button, and character
                     HStack {
                         VStack(spacing: 5) {
-                            // زر تغيير اللغة
+                            // Language toggle button
                             Button(action: {
-                                isArabic.toggle() // تغيير حالة اللغة عند الضغط
+                                isArabic.toggle() // Toggle language state
                             }) {
                                 ZStack {
                                     Circle()
@@ -49,8 +49,8 @@ struct CategoriesScreen: View {
                                 }
                             }
 
-                            // النص أسفل زر تغيير اللغة
-                            Text(isArabic ? "English" : "العربية")
+                            // Text below the language toggle button
+                            Text("العربية")
                                 .font(.headline)
                                 .foregroundColor(.font1)
                         }
@@ -71,9 +71,10 @@ struct CategoriesScreen: View {
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 880.0, height: 326)
+                                    .scaleEffect(x: -1) // Flip the cloud horizontally
                                     .offset(x: -80, y: -20)
 
-                                Text(isArabic ? "قل الفئة التي تريد تلوينها" : "Say the category you want to color")
+                                Text("Say the category you want to color")
                                     .font(.title)
                                     .fontWeight(.semibold)
                                     .foregroundColor(.font1)
@@ -87,11 +88,11 @@ struct CategoriesScreen: View {
 
                     Spacer()
 
-                    // الكروت الثلاثة في المنتصف
+                    // The three category cards
                     HStack(spacing: 20) {
                         NavigationLink(destination: DrawingsScreen3(), isActive: $navigateToSpace) {
                             VStack {
-                                Text(isArabic ? "فضاء" : "Space")
+                                Text("Space")
                                     .font(.largeTitle)
                                     .fontWeight(.bold)
                                     .foregroundColor(.white)
@@ -110,7 +111,7 @@ struct CategoriesScreen: View {
 
                         NavigationLink(destination: DrawingsScreen2(), isActive: $navigateToNature) {
                             VStack {
-                                Text(isArabic ? "طعام" : "Food")
+                                Text("Food")
                                     .font(.largeTitle)
                                     .fontWeight(.bold)
                                     .foregroundColor(.white)
@@ -129,7 +130,7 @@ struct CategoriesScreen: View {
 
                         NavigationLink(destination: DrawingsScreen(), isActive: $navigateToAnimals) {
                             VStack {
-                                Text(isArabic ? "حيوانات" : "Animals")
+                                Text("Animals")
                                     .font(.largeTitle)
                                     .fontWeight(.bold)
                                     .foregroundColor(.white)
@@ -152,14 +153,14 @@ struct CategoriesScreen: View {
                 }
             }
             .onAppear {
-                startListening() // بدء الاستماع عند فتح الشاشة
+                startListening() // Start listening when the screen appears
             }
             .navigationBarBackButtonHidden(true)
             .navigationBarTitle("")
         }
     }
 
-    // بدء الاستماع للأوامر الصوتية
+    // Start listening for voice commands
     func startListening() {
         SFSpeechRecognizer.requestAuthorization { authStatus in
             if authStatus == .authorized {
@@ -172,9 +173,9 @@ struct CategoriesScreen: View {
         }
     }
 
-    // تفعيل محرك الصوت وتحليل الصوت
+    // Activate the audio engine and process speech
     func startAudioEngine() throws {
-        let recognizer = SFSpeechRecognizer(locale: Locale(identifier: isArabic ? "ar_SA" : "en_US"))! // اللغة تتغير بناءً على الحالة
+        let recognizer = SFSpeechRecognizer(locale: Locale(identifier: "en_US"))! // English only
         recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
         guard let recognitionRequest = recognitionRequest else { return }
 
@@ -206,7 +207,7 @@ struct CategoriesScreen: View {
         isRecording = true
     }
 
-    // إيقاف التسجيل
+    // Stop recording
     func stopRecording() {
         audioEngine.stop()
         recognitionRequest?.endAudio()
@@ -216,16 +217,14 @@ struct CategoriesScreen: View {
         isRecording = false
     }
 
-    // التعامل مع الأوامر الصوتية
+    // Handle voice commands
     func handleVoiceCommand(_ command: String) {
-        if command.contains("فضاء") || command.contains("space") {
+        if command.contains("space") {
             navigateToSpace = true
-        } else if command.contains("طعام") || command.contains("Food") {
+        } else if command.contains("food") {
             navigateToNature = true
-        } else if command.contains("حيوانات") || command.contains("animals") {
+        } else if command.contains("animals") {
             navigateToAnimals = true
-        } else if command.contains("English") || command.contains("العربية") {
-            isArabic.toggle() // تغيير اللغة إذا تم التعرف على الأمر
         }
     }
 }

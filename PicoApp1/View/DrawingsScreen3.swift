@@ -3,7 +3,6 @@ import Speech
 import AVFoundation
 
 struct DrawingsScreen3: View {
-    @State private var isArabic: Bool = true
     @State private var navigateToCategories = false
     @State private var navigateToColoring1 = false
     @State private var navigateToColoring2 = false
@@ -16,7 +15,7 @@ struct DrawingsScreen3: View {
     @State private var clickedCard: Int? = nil
     @State private var audioPlayer: AVAudioPlayer?
 
-    let voiceCommands = ["واحد", "اثنان", "ثلاثة", "أربعة", "الفئات", "categories"]
+    let voiceCommands = ["one", "two", "three", "four", "categories"]
 
     var body: some View {
         NavigationStack {
@@ -50,7 +49,7 @@ struct DrawingsScreen3: View {
                                 }
                             }
 
-                            Text(isArabic ? "الفئات" : "Categories")
+                            Text("Categories")
                                 .font(.title2)
                                 .fontWeight(.bold)
                                 .foregroundColor(.black)
@@ -73,9 +72,10 @@ struct DrawingsScreen3: View {
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 880.0, height: 326)
+                                    .scaleEffect(x: -1)
                                     .offset(x: -80, y: -20)
 
-                                Text(isArabic ? "قل رقم الرسم لتلوينه" : "Say a drawing number to color")
+                                Text("Say a drawing number to color")
                                     .font(.title)
                                     .fontWeight(.semibold)
                                     .foregroundColor(.font1)

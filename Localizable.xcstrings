@@ -1,6 +1,15 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
+    "%lld" : {
+
+    },
+    "Add Item" : {
+
+    },
     "animals" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -8,6 +17,86 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "الحيوانات"
+          }
+        }
+      }
+    },
+    "Animals" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الحيوانات"
+          }
+        }
+      }
+    },
+    "Blue" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أزرق"
+          }
+        }
+      }
+    },
+    "Brown" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بني"
+          }
+        }
+      }
+    },
+    "Categories" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الفئات"
+          }
+        }
+      }
+    },
+    "Category" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الفئات"
+          }
+        }
+      }
+    },
+    "Colorings" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التلوين"
+          }
+        }
+      }
+    },
+    "Delete" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حذف"
+          }
+        }
+      }
+    },
+    "Done" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم"
           }
         }
       }
@@ -29,6 +118,115 @@
         }
       }
     },
+    "Food" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الطعام"
+          }
+        }
+      }
+    },
+    "Green" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أخضر"
+          }
+        }
+      }
+    },
+    "Item at %@" : {
+
+    },
+    "Light Blue" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أزرق فاتح"
+          }
+        }
+      }
+    },
+    "Orange" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "برتقالي"
+          }
+        }
+      }
+    },
+    "Pico" : {
+
+    },
+    "Pink" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "وردي"
+          }
+        }
+      }
+    },
+    "Purple" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بنفسجي"
+          }
+        }
+      }
+    },
+    "Red" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أحمر"
+          }
+        }
+      }
+    },
+    "Redo" : {
+
+    },
+    "Reset" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إعادة"
+          }
+        }
+      }
+    },
+    "Save" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حفظ"
+          }
+        }
+      }
+    },
+    "Say a drawing number to color" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قل رقم الرسمة التي تريد تلوينها"
+          }
+        }
+      }
+    },
     "Say the category you want to color" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -46,6 +244,29 @@
         }
       }
     },
+    "Say the number to color it" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قل الرقم الذي تريد تلوينه"
+          }
+        }
+      }
+    },
+    "Select an item" : {
+
+    },
+    "Share" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "شارك"
+          }
+        }
+      }
+    },
     "space" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -59,6 +280,39 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "space"
+          }
+        }
+      }
+    },
+    "Space" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الفضاء"
+          }
+        }
+      }
+    },
+    "Undo" : {
+
+    },
+    "Well done, genius! Keep going!" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رسمك رائع ، استمر "
+          }
+        }
+      }
+    },
+    "Yellow" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أصفر"
           }
         }
       }

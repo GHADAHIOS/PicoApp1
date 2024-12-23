@@ -30,37 +30,17 @@ struct SplashView: View {
 
                 ZStack {
                     if showRainbow {
-                        ForEach(0..<rainbowColors.count, id: \ .self) { index in
-                            Circle()
-                                .strokeBorder(lineWidth: 10)
-                                .foregroundColor(rainbowColors[index])
-                                .frame(width: CGFloat(100 + index * 20), height: CGFloat(100 + index * 20))
-                                .opacity(currentColorIndex >= index ? 1.0 : 0.0)
-                        }
+                        RainbowCircles(currentColorIndex: $currentColorIndex, rainbowColors: rainbowColors)
                     }
 
                     if showPico {
-                        VStack {
-                            Image("Pico")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 500, height: 500) // Larger logo size
-                                .scaleEffect(picoScale)
-                                .opacity(picoOpacity)
-                                .animation(.easeInOut(duration: 1.0), value: picoScale)
-                                .animation(.easeInOut(duration: 1.0), value: picoOpacity)
-
-                            HStack(spacing: 10) {
-                                ForEach(0..<displayedLetters.count, id: \ .self) { index in
-                                    let letter = Array(displayedLetters)[index]
-                                    let color = picoLetters.first(where: { $0.0 == String(letter) })?.1 ?? .black
-                                    Text(String(letter))
-                                        .font(.system(size: 40, weight: .bold)) // Larger font size
-                                        .foregroundColor(color)
+                        PicoView(picoScale: $picoScale, picoOpacity: $picoOpacity, displayedLetters: $displayedLetters)
+                            .onAppear {
+                                withAnimation(.easeInOut(duration: 1.0)) {
+                                    picoScale = 1.0
+                                    picoOpacity = 1.0
                                 }
                             }
-                            .animation(.easeInOut(duration: 0.2))
-                        }
                     }
                 }
             }
@@ -83,8 +63,10 @@ struct SplashView: View {
                         }
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
                             showPico = true
-                            picoScale = 1.0 // Animate Pico image from small to big
-                            picoOpacity = 1.0 // Animate Pico fade-in
+                            withAnimation(.easeInOut(duration: 1.0)) {
+                                picoScale = 1.0 // Animate Pico image from small to big
+                                picoOpacity = 1.0 // Animate Pico fade-in
+                            }
                             typePicoLetters() // Start typing letters
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                                 navigateToCategories = true
@@ -100,6 +82,55 @@ struct SplashView: View {
         for (index, letter) in picoLetters.enumerated() {
             DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * 0.3) {
                 displayedLetters.append(letter.0)
+            }
+        }
+    }
+}
+
+struct RainbowCircles: View {
+    @Binding var currentColorIndex: Int
+    let rainbowColors: [Color]
+    
+    var body: some View {
+        ForEach(0..<rainbowColors.count, id: \.self) { index in
+            Circle()
+                .strokeBorder(lineWidth: 10)
+                .foregroundColor(rainbowColors[index])
+                .frame(width: CGFloat(100 + index * 20), height: CGFloat(100 + index * 20))
+                .opacity(currentColorIndex >= index ? 1.0 : 0.0)
+        }
+    }
+}
+
+struct PicoView: View {
+    @Binding var picoScale: CGFloat
+    @Binding var picoOpacity: Double
+    @Binding var displayedLetters: String
+    
+    let picoLetters: [(String, Color)] = [
+        ("P", .hope),
+        ("I", .shine),
+        ("C", .inspire),
+        ("O", .brave)
+    ]
+    
+    var body: some View {
+        VStack {
+            Image("Pico")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 500, height: 500)
+                .scaleEffect(picoScale)
+                .opacity(picoOpacity)
+            
+            HStack(spacing: 10) {
+                ForEach(0..<displayedLetters.count, id: \.self) { index in
+                    let letter = Array(displayedLetters)[index]
+                    let color = picoLetters.first(where: { $0.0 == String(letter) })?.1 ?? .black
+                    Text(String(letter))
+                        .font(.system(size: 40, weight: .bold))
+                        .foregroundColor(color)
+                }
             }
         }
     }

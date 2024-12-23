@@ -12,38 +12,39 @@ struct SplashView: View {
     @State private var animationOpacity = 0.5
 
     var body: some View {
-        if isActive {
-            // Navigate to Main Content
-            CategoriesScreen()
-        } else {
-            ZStack {
-                Color.BG // Background color
-                    .ignoresSafeArea()
+        NavigationStack {
+            if isActive {
+                CategoriesScreen() // الانتقال إلى الشاشة الرئيسية
+            } else {
+                ZStack {
+                    Color.BG // لون الخلفية
+                        .ignoresSafeArea()
 
-                VStack {
-                    Image("Pico")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 288.04, height: 549.11)
-                        .scaleEffect(animationScale)
-                        .opacity(animationOpacity)
-                        .onAppear {
-                            withAnimation(.easeIn(duration: 1.2).repeatForever(autoreverses: true)) {
-                                animationScale = 1.0
-                                animationOpacity = 1.0
+                    VStack {
+                        Image("Pico")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 288.04, height: 549.11)
+                            .scaleEffect(animationScale)
+                            .opacity(animationOpacity)
+                            .onAppear {
+                                withAnimation(.easeIn(duration: 1.2).repeatForever(autoreverses: true)) {
+                                    animationScale = 1.0
+                                    animationOpacity = 1.0
+                                }
                             }
-                        }
 
-                    Text("Pico")
-                        .font(.headline)
-                        .foregroundColor(.black)
+                        Text("Pico")
+                            .font(.headline)
+                            .foregroundColor(.black)
+                    }
                 }
-            }
-            .onAppear {
-                // Set a delay for the splash screen
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                    withAnimation {
-                        isActive = true
+                .onAppear {
+                    // تعيين مهلة زمنية قبل الانتقال إلى الشاشة الرئيسية
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                        withAnimation {
+                            isActive = true
+                        }
                     }
                 }
             }
@@ -51,10 +52,18 @@ struct SplashView: View {
     }
 }
 
-
 struct SplashView_Previews: PreviewProvider {
     static var previews: some View {
         SplashView()
     }
 }
 
+//struct SplashView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SplashView()
+//    }
+//}
+
+#Preview {
+    SplashView()
+}

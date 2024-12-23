@@ -21,16 +21,6 @@
         }
       }
     },
-    "Animals" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الحيوانات"
-          }
-        }
-      }
-    },
     "Blue" : {
       "localizations" : {
         "ar" : {
@@ -114,16 +104,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "food"
-          }
-        }
-      }
-    },
-    "Food" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الطعام"
           }
         }
       }
@@ -280,16 +260,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "space"
-          }
-        }
-      }
-    },
-    "Space" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الفضاء"
           }
         }
       }

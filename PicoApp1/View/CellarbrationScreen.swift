@@ -260,15 +260,23 @@ struct CellarbrationScreen: View {
                 .padding(.bottom, 130)
                 
                 // الانتقال إلى الصفحات باستخدام NavigationLink
-                NavigationLink(
-                    destination: CategoriesScreen(), // صفحة الفئات
-                    isActive: $navigateToCategories
-                ) { EmptyView() }
+                NavigationLink(value: "Categories") {
+                     EmptyView() // Empty placeholder view for navigation
+                 }
+                 .navigationDestination(for: String.self) { value in
+                     if value == "Categories" {
+                         CategoriesScreen() // Navigate to the Categories screen
+                     }
+                 }
 
-                NavigationLink(
-                    destination: ColoringScreen(), // صفحة التلوين
-                    isActive: $navigateToColoring
-                ) { EmptyView() }
+                 NavigationLink(value: "Coloring") {
+                     EmptyView() // Empty placeholder view for navigation
+                 }
+                 .navigationDestination(for: String.self) { value in
+                     if value == "Coloring" {
+                         ColoringScreen() // Navigate to the Coloring screen
+                     }
+                 }
             }
             .onAppear {
                 startListening() // بدء الاستماع عند فتح الشاشة

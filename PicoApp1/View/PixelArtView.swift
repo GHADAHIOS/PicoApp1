@@ -30,7 +30,7 @@ struct PixelArtView: View {
         }
         _gridData = State(initialValue: initialGrid)
         _originalGridData = State(initialValue: initialGrid) //
-        _ = drawArt()
+        drawArt()
 
     }
    

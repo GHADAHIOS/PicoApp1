@@ -1,46 +1,30 @@
 import SwiftUI
-import Speech
 
 struct CategoriesScreen: View {
-    @State private var isArabic: Bool = false // Language toggle (English by default)
-    @State private var isRecording = false
-    @State private var audioEngine = AVAudioEngine()
-    @State private var recognitionTask: SFSpeechRecognitionTask?
-    @State private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
-
-    // Available voice commands
-    let voiceCommands = ["space", "food", "animals"]
-
-    // Navigation states
-    @State private var navigateToSpace = false
-    @State private var navigateToNature = false
-    @State private var navigateToAnimals = false
-
+    @StateObject private var viewModel = CategoriesScreenViewModel()
+    
     var body: some View {
         NavigationStack {
             ZStack {
-                // Background color
                 Color.BG.edgesIgnoringSafeArea(.all)
-
+                
                 VStack {
-                    // Top section: cloud, language button, and character
+                    // Top Section
                     HStack {
                         VStack(spacing: 5) {
-                            // Language toggle button
-                            Button(action: {
-                                isArabic.toggle() // Toggle language state
-                            }) {
+                            Button(action: viewModel.toggleLanguage) {
                                 ZStack {
                                     Circle()
                                         .fill(Color.inspire)
                                         .frame(width: 77, height: 73)
-                                        .offset(x: 2, y: 2)
-
+                                        .padding(.trailing, 2)
+                                        .padding(.bottom, 2)
+                                    
                                     Circle()
                                         .fill(Color.binspire)
                                         .frame(width: 77, height: 73)
                                         .padding(.all, 5)
-
+                                    
                                     Image(systemName: "globe")
                                         .resizable()
                                         .scaledToFit()
@@ -48,194 +32,105 @@ struct CategoriesScreen: View {
                                         .foregroundColor(.white)
                                 }
                             }
-
-                            // Text below the language toggle button
                             Text("العربية")
                                 .font(.headline)
                                 .foregroundColor(.font1)
                         }
                         .padding(.leading, 25)
-                        .padding(.top, -100)
-
+                        .padding(.top, 100)
+                        
                         Spacer()
-
+                        
                         HStack {
                             Image("Pico")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 115, height: 115)
-                                .offset(x: -80, y: 50)
-
+                                .padding(.trailing, 80)
+                                .padding(.top, 50)
+                            
                             ZStack {
                                 Image("cloud")
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 880.0, height: 326)
-                                    .scaleEffect(x: -1) // Flip the cloud horizontally
-                                    .offset(x: -80, y: -20)
-
+                                    .scaleEffect(x: -1)
+                                    .padding(.trailing, 80)
+                                    .padding(.bottom, 20)
+                                
                                 Text("Say the category you want to color")
                                     .font(.title)
                                     .fontWeight(.semibold)
                                     .foregroundColor(.font1)
                                     .multilineTextAlignment(.center)
                                     .padding(.horizontal, 50)
-                                    .offset(x: -80, y: -20)
+                                    .padding(.trailing, 80)
+                                    .padding(.bottom, 20)
                             }
                         }
                     }
                     .padding(.top, -30)
-
+                    
                     Spacer()
-
-                    // The three category cards
+                    
+                    // Categories Section
                     HStack(spacing: 20) {
-                        NavigationLink(destination:  CellarbrationScreen(image: .constant(UIImage(named: "Pico") ?? UIImage())), isActive: $navigateToSpace) {
-                            VStack {
-                                Text("Space")
-                                    .font(.largeTitle)
-                                    .fontWeight(.bold)
-                                    .foregroundColor(.white)
-
-                                Image("space")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 241.26, height: 213)
-                                    .padding()
-                            }
-                            .frame(width: 340, height: 400)
-                            .background(Color.brave)
-                            .cornerRadius(18)
-                            .shadow(color: Color.brave.opacity(0.5), radius: 10, x: 0, y: 3)
+                        NavigationLink(destination: DrawingsScreen(), isActive: $viewModel.navigateToSpace) {
+                            categoryCard(title: "Space", imageName: "space", color: Color.brave)
                         }
-
-                        NavigationLink(destination: DrawingsScreen2(), isActive: $navigateToNature) {
-                            VStack {
-                                Text("Food")
-                                    .font(.largeTitle)
-                                    .fontWeight(.bold)
-                                    .foregroundColor(.white)
-
-                                Image("food")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 241.26, height: 213)
-                                    .padding()
-                            }
-                            .frame(width: 340, height: 400)
-                            .background(Color.hope)
-                            .cornerRadius(18)
-                            .shadow(color: Color.hope.opacity(0.5), radius: 10, x: 0, y: 3)
+                        
+                        NavigationLink(destination: DrawingsScreen2(), isActive: $viewModel.navigateToNature) {
+                            categoryCard(title: "Food", imageName: "food", color: Color.hope)
                         }
-
-                        NavigationLink(destination: DrawingsScreen(), isActive: $navigateToAnimals) {
-                            VStack {
-                                Text("Animals")
-                                    .font(.largeTitle)
-                                    .fontWeight(.bold)
-                                    .foregroundColor(.white)
-
-                                Image("animal")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 241.26, height: 213)
-                                    .padding()
-                            }
-                            .frame(width: 340, height: 400)
-                            .background(Color.shine)
-                            .cornerRadius(18)
-                            .shadow(color: Color.shine.opacity(0.5), radius: 10, x: 0, y: 3)
+                        
+                        NavigationLink(destination: DrawingsScreen(), isActive: $viewModel.navigateToAnimals) {
+                            categoryCard(title: "Animals", imageName: "animal", color: Color.shine)
                         }
                     }
                     .padding(.bottom, 78)
-
+                    
                     Spacer()
                 }
             }
             .onAppear {
-                startListening() // Start listening when the screen appears
+                viewModel.startListening()
             }
             .navigationBarBackButtonHidden(true)
             .navigationBarTitle("")
         }
     }
-
-    // Start listening for voice commands
-    func startListening() {
-        SFSpeechRecognizer.requestAuthorization { authStatus in
-            if authStatus == .authorized {
-                do {
-                    try startAudioEngine()
-                } catch {
-                    print("Audio engine error: \(error)")
-                }
-            }
+    
+    // Helper function for category cards
+    private func categoryCard(title: String, imageName: String, color: Color) -> some View {
+        VStack {
+            Text(title)
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .foregroundColor(.white)
+            
+            Image(imageName)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 241.26, height: 213)
+                .padding()
         }
-    }
-
-    // Activate the audio engine and process speech
-    func startAudioEngine() throws {
-        // Get the language code of the device
-        let languageCode = Locale.current.languageCode ?? "en" // Default to "en" if no language code found
-        let localeIdentifier = (languageCode == "ar") ? "ar_SA" : "en_US" // Set locale based on language code
-
-        let recognizer = SFSpeechRecognizer(locale: Locale(identifier: localeIdentifier))!
-        recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
-        guard let recognitionRequest = recognitionRequest else { return }
-
-        recognitionRequest.shouldReportPartialResults = true
-
-        recognitionTask = recognizer.recognitionTask(with: recognitionRequest) { result, error in
-            if let result = result {
-                handleVoiceCommand(result.bestTranscription.formattedString)
-            }
-
-            if error != nil {
-                stopRecording()
-            }
-        }
-
-        let audioSession = AVAudioSession.sharedInstance()
-        try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
-        try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
-
-        let inputNode = audioEngine.inputNode
-        let recordingFormat = inputNode.outputFormat(forBus: 0)
-
-        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer, _) in
-            self.recognitionRequest?.append(buffer)
-        }
-
-        audioEngine.prepare()
-        try audioEngine.start()
-        isRecording = true
-    }
-
-    // Stop recording
-    func stopRecording() {
-        audioEngine.stop()
-        recognitionRequest?.endAudio()
-        recognitionTask?.cancel()
-        recognitionTask = nil
-        recognitionRequest = nil
-        isRecording = false
-    }
-
-    // Handle voice commands
-    func handleVoiceCommand(_ command: String) {
-        if command.contains("space") || command.contains("الفضاء") {
-            navigateToSpace = true
-        } else if command.contains("food") || command.contains("الطعام") {
-            navigateToNature = true
-        } else if command.contains("animals") || command.contains("الحيوانات") {
-            navigateToAnimals = true
-        }
+        .frame(width: 340, height: 400)
+        .background(color)
+        .cornerRadius(18)
+        .shadow(color: color.opacity(0.5), radius: 10, x: 0, y: 3)
     }
 }
 
-// MARK: - Preview
 struct CategoriesScreen_Previews: PreviewProvider {
     static var previews: some View {
         CategoriesScreen()
     }
 }
+//
+//
+//// MARK: - Preview
+//struct CategoriesScreen_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CategoriesScreen()
+//    }
+//}

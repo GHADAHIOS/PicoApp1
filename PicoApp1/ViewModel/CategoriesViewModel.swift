@@ -13,6 +13,9 @@ class CategoriesScreenViewModel: ObservableObject {
     private var recognitionTask: SFSpeechRecognitionTask?
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     
+   
+        let voiceCommands = ["Space", "Food", "Animals"]
+
     func toggleLanguage() {
         isArabic.toggle()
     }
@@ -88,11 +91,11 @@ class CategoriesScreenViewModel: ObservableObject {
     
     private func handleVoiceCommand(_ command: String) {
         DispatchQueue.main.async { // Ensure this update is on the main thread
-            if command.contains("space") || command.contains("الفضاء") {
+            if command.contains("Space") || command.contains("الفضاء") {
                 self.navigateToSpace = true
-            } else if command.contains("food") || command.contains("الطعام") {
+            } else if command.contains("Food") || command.contains("الطعام") {
                 self.navigateToNature = true
-            } else if command.contains("animals") || command.contains("الحيوانات") {
+            } else if command.contains("Animals") || command.contains("الحيوانات") {
                 self.navigateToAnimals = true
             }
         }

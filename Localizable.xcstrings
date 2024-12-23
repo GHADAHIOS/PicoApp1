@@ -10,7 +10,7 @@
     "Add Item" : {
 
     },
-    "animals" : {
+    "Animals" : {
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
@@ -91,19 +91,19 @@
         }
       }
     },
-    "food" : {
+    "Food" : {
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "الطعام"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "food"
+            "value" : "Food"
           }
         }
       }
@@ -247,19 +247,19 @@
         }
       }
     },
-    "space" : {
+    "Space" : {
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "الفضاء"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "space"
+            "value" : "Space"
           }
         }
       }

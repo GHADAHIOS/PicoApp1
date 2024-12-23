@@ -132,6 +132,9 @@ struct DrawingsScreen2: View {
             .onAppear {
                 startListening()
             }
+            .onDisappear {
+                stopRecording()
+            }
             .navigationDestination(isPresented: $navigateToCategories) {
                 CategoriesScreen()
             }
@@ -175,15 +178,67 @@ struct DrawingsScreen2: View {
     }
 
     func startListening() {
-        // To be implemented
+        SFSpeechRecognizer.requestAuthorization { authStatus in
+            if authStatus == .authorized {
+                do {
+                    try startAudioEngine()
+                } catch {
+                    print("Audio engine error: \(error)")
+                }
+            }
+        }
+    }
+
+    func startAudioEngine() throws {
+        let recognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))!
+        recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
+        guard let recognitionRequest = recognitionRequest else { return }
+
+        recognitionRequest.shouldReportPartialResults = true
+
+        recognitionTask = recognizer.recognitionTask(with: recognitionRequest) { result, error in
+            if let result = result {
+                handleVoiceCommand(result.bestTranscription.formattedString)
+            }
+
+            if error != nil {
+                stopRecording()
+            }
+        }
+
+        let inputNode = audioEngine.inputNode
+        let recordingFormat = inputNode.outputFormat(forBus: 0)
+
+        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { buffer, _ in
+            self.recognitionRequest?.append(buffer)
+        }
+
+        audioEngine.prepare()
+        try audioEngine.start()
+        isRecording = true
     }
 
     func stopRecording() {
-        // To be implemented
+        audioEngine.stop()
+        recognitionRequest?.endAudio()
+        recognitionTask?.cancel()
+        recognitionTask = nil
+        recognitionRequest = nil
+        isRecording = false
     }
 
     func handleVoiceCommand(_ command: String) {
-        // To be implemented
+        if command.contains("one") || command.contains("واحد") {
+            navigateToColoring1 = true
+        } else if command.contains("two") || command.contains("اثنين") {
+            navigateToColoring2 = true
+        } else if command.contains("three") || command.contains("ثلاثة") {
+            navigateToColoring3 = true
+        } else if command.contains("four") || command.contains("أربعة") {
+            navigateToColoring4 = true
+        } else if command.contains("categories") || command.contains("الفئات") {
+            navigateToCategories = true
+        }
     }
 }
 

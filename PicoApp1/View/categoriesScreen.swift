@@ -19,35 +19,6 @@ struct CategoriesScreen: View {
             ZStack {
                 VStack {
                     HStack {
-                        VStack(spacing: 5) {
-                            Button(action: {
-                                isArabic.toggle()
-                            }) {
-                                ZStack {
-                                    Circle()
-                                        .fill(Color.blue) // Outer circle color
-                                        .frame(width: 77, height: 73)
-                                        .offset(x: 2, y: 2)
-
-                                    Circle()
-                                        .fill(Color.blue) // Inner circle color
-                                        .frame(width: 77, height: 73)
-                                        .padding(.all, 5)
-
-                                    Image(systemName: "globe")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 44, height: 44)
-                                        .foregroundColor(.white)
-                                }
-                            }
-                            Text("العربية")
-                                .font(.headline)
-                                .foregroundColor(.black) // Text color
-                        }
-                        .padding(.leading, 25)
-                        .padding(.top, -100)
-
                         Spacer()
 
                         HStack {
@@ -90,17 +61,18 @@ struct CategoriesScreen: View {
                                     navigateToDrawingsScreen = true
                                 }
                             }) {
-                                VStack {
+                                VStack(spacing: 15) {
+                                    Image(category.lowercased())
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 180, height: 180)
+                                        .clipShape(Circle())
+                                        .shadow(radius: 5)
+
                                     Text(category)
                                         .font(.largeTitle)
                                         .fontWeight(.bold)
                                         .foregroundColor(.white)
-
-                                    Image(category.lowercased())
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 241.26, height: 213)
-                                        .padding()
                                 }
                                 .frame(width: 340, height: 400)
                                 .background(categoryColor(category)) // Dynamic background color

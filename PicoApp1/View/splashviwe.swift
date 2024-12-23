@@ -81,7 +81,7 @@ struct SplashView: View {
                         withAnimation(.easeInOut(duration: 1.0)) {
                             showRainbow = false
                         }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
                             showPico = true
                             picoScale = 1.0 // Animate Pico image from small to big
                             picoOpacity = 1.0 // Animate Pico fade-in

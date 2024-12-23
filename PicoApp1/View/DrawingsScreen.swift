@@ -9,12 +9,23 @@ struct DrawingsScreen: View {
     @State private var navigateToCategories = false
     @State private var navigateToColoring = false
 
+    // Dynamic color for each category
     func categoryColor() -> Color {
         switch selectedCategory {
         case "Space": return Color.shine
         case "Food": return Color.hope
         case "Animals": return Color.brave
         default: return Color.gray
+        }
+    }
+
+    // Dynamic images for each category
+    func categoryImages() -> [String] {
+        switch selectedCategory {
+        case "Space": return ["space1", "space2", "space3", "space4"]
+        case "Food": return ["food1", "food2", "food3", "food4"]
+        case "Animals": return ["butterfly1", "cat2", "Giraffe1", "penguin"]
+        default: return []
         }
     }
 
@@ -84,6 +95,8 @@ struct DrawingsScreen: View {
                     Spacer()
 
                     HStack(spacing: 10) {
+                        let images = categoryImages()
+
                         ForEach(1...4, id: \.self) { number in
                             Button(action: {
                                 playBubbleSound()
@@ -104,14 +117,30 @@ struct DrawingsScreen: View {
                                     VStack {
                                         RoundedRectangle(cornerRadius: 20)
                                             .fill(Color.white)
-                                            .frame(width: 238.33, height: 256.13)
-
-                                        Text("\(number)")
-                                            .font(.largeTitle)
-                                            .fontWeight(.bold)
-                                            .foregroundColor(.white)
-                                            .padding(.top, 10)
+                                            .frame(width: 238.33, height: 266.13)
+                                        
                                     }
+
+                                    VStack {
+                                        if number - 1 < images.count {
+                                            Image(images[number - 1]) // Dynamically load images for the category
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 208.33, height: 276.13)
+                                                .clipShape(RoundedRectangle(cornerRadius: 20))
+                                                .shadow(radius: 5)
+                                                .padding(.top, 5) // Adjust the top padding
+                                        }
+                                    }
+                                        
+                                        VStack {
+                                            Text("\(number)")
+                                                .font(.largeTitle)
+                                                .fontWeight(.bold)
+                                                .foregroundColor(.white)
+                                                .padding(.top, 310) // Adjust the top padding
+                                        }
+                                    
                                 }
                             }
                             .opacity(clickedCard == nil || clickedCard == number ? 1.0 : 0.3)

@@ -1,31 +1,27 @@
 import SwiftUI
-import Speech
 import AVFoundation
 
 struct DrawingsScreen: View {
-    @State private var isRecording = false
-    @State private var audioEngine = AVAudioEngine()
-    @State private var recognitionTask: SFSpeechRecognitionTask?
-    @State private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
-
-    @State private var navigateToCategories = false
-    @State private var navigateToColoring1 = false
-    @State private var navigateToColoring2 = false
-    @State private var navigateToColoring3 = false
-    @State private var navigateToColoring4 = false
-
-    @State private var clickedCard: Int? = nil // Track the clicked card for animation
+    var selectedCategory: String // Passed from CategoriesScreen
+    @State private var clickedCard: Int? = nil
     @State private var audioPlayer: AVAudioPlayer?
 
-    let voiceCommands = ["one", "two", "three", "four", "categories"] // Voice commands
+    @State private var navigateToCategories = false
+    @State private var navigateToColoring = false
+
+    func categoryColor() -> Color {
+        switch selectedCategory {
+        case "Space": return Color.shine
+        case "Food": return Color.hope
+        case "Animals": return Color.brave
+        default: return Color.gray
+        }
+    }
 
     var body: some View {
         NavigationStack {
             ZStack {
-                Color.BG.edgesIgnoringSafeArea(.all)
-
                 VStack {
-                    // Upper Section: Navigation Button & Character
                     HStack {
                         VStack {
                             Button(action: {
@@ -33,12 +29,12 @@ struct DrawingsScreen: View {
                             }) {
                                 ZStack {
                                     Circle()
-                                        .fill(Color.inspire)
+                                        .fill(Color.blue) // Outer circle color
                                         .frame(width: 77, height: 73)
                                         .offset(x: 2, y: 2)
 
                                     Circle()
-                                        .fill(Color.binspire)
+                                        .fill(Color.blue) // Inner circle color
                                         .frame(width: 77, height: 73)
                                         .padding(.all, 5)
 
@@ -49,7 +45,6 @@ struct DrawingsScreen: View {
                                         .foregroundColor(.white)
                                 }
                             }
-
                             Text("Categories")
                                 .font(.title2)
                                 .fontWeight(.bold)
@@ -75,11 +70,10 @@ struct DrawingsScreen: View {
                                     .frame(width: 880.0, height: 326)
                                     .scaleEffect(x: -1)
                                     .offset(x: -80, y: -20)
-
                                 Text("Say a drawing number to color")
                                     .font(.title)
                                     .fontWeight(.semibold)
-                                    .foregroundColor(.font1)
+                                    .foregroundColor(.font1) // Text color
                                     .multilineTextAlignment(.center)
                                     .offset(x: -80, y: -20)
                             }
@@ -89,26 +83,24 @@ struct DrawingsScreen: View {
 
                     Spacer()
 
-                    // Cards
                     HStack(spacing: 10) {
                         ForEach(1...4, id: \.self) { number in
                             Button(action: {
-                                playBubbleSound() // Play bubble sound
+                                playBubbleSound()
                                 withAnimation(.spring(response: 0.5, dampingFraction: 0.6)) {
                                     clickedCard = number
                                 }
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                     clickedCard = nil
-                                    navigateToColoring(number: number)
+                                    navigateToColoring = true
                                 }
                             }) {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 40)
-                                        .fill(Color.shine)
+                                        .fill(categoryColor()) // Dynamic background color
                                         .frame(width: 286, height: 350)
-                                        .shadow(color: Color.shine.opacity(0.2), radius: 5, x: 0, y: 2)
-                                        .scaleEffect(clickedCard == number ? 1.2 : 1.0) // Scale animation for selected card
-
+                                        .shadow(color: categoryColor().opacity(0.2), radius: 5, x: 0, y: 2)
+                                        .scaleEffect(clickedCard == number ? 1.2 : 1.0)
                                     VStack {
                                         RoundedRectangle(cornerRadius: 20)
                                             .fill(Color.white)
@@ -122,9 +114,9 @@ struct DrawingsScreen: View {
                                     }
                                 }
                             }
-                            .opacity(clickedCard == nil || clickedCard == number ? 1.0 : 0.3) // Fade out unselected cards
-                            .offset(x: clickedCard == number ? 0 : 0, y: clickedCard == number ? -50 : 0) // Move selected card up
-                            .zIndex(clickedCard == number ? 1 : 0) // Ensure the selected card appears on top
+                            .opacity(clickedCard == nil || clickedCard == number ? 1.0 : 0.3)
+                            .padding(.top, clickedCard == number ? 0 : 50)
+                            .zIndex(clickedCard == number ? 1 : 0)
                         }
                     }
                     .padding(.bottom, 50)
@@ -132,45 +124,17 @@ struct DrawingsScreen: View {
                     Spacer()
                 }
             }
-            .onAppear {
-                startListening()
-            }
             .navigationDestination(isPresented: $navigateToCategories) {
                 CategoriesScreen()
             }
-            .navigationDestination(isPresented: $navigateToColoring1) {
-                ColoringScreen()
-            }
-            .navigationDestination(isPresented: $navigateToColoring2) {
-                ColoringScreen()
-            }
-            .navigationDestination(isPresented: $navigateToColoring3) {
-                ColoringScreen()
-            }
-            .navigationDestination(isPresented: $navigateToColoring4) {
+            .navigationDestination(isPresented: $navigateToColoring) {
                 ColoringScreen()
             }
         }
     }
 
-    // Navigate to coloring screens
-    func navigateToColoring(number: Int) {
-        switch number {
-        case 1: navigateToColoring1 = true
-        case 2: navigateToColoring2 = true
-        case 3: navigateToColoring3 = true
-        case 4: navigateToColoring4 = true
-        default: break
-        }
-    }
-
-    // Play bubble sound
     func playBubbleSound() {
-        guard let soundURL = Bundle.main.url(forResource: "bubble", withExtension: "m4a") else {
-            print("Sound file not found!")
-            return
-        }
-
+        guard let soundURL = Bundle.main.url(forResource: "bubble", withExtension: "m4a") else { return }
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
             audioPlayer?.play()
@@ -178,84 +142,11 @@ struct DrawingsScreen: View {
             print("Error playing sound: \(error)")
         }
     }
+}
 
-    // Start listening for voice commands
-    func startListening() {
-        SFSpeechRecognizer.requestAuthorization { authStatus in
-            if authStatus == .authorized {
-                do {
-                    try startAudioEngine()
-                } catch {
-                    print("Audio engine error: \(error)")
-                }
-            }
-        }
-    }
-
-    // Activate the audio engine and process speech
-    func startAudioEngine() throws {
-        let languageCode = Locale.current.languageCode ?? "en"
-        let localeIdentifier = (languageCode == "ar") ? "ar_SA" : "en_US"
-
-        let recognizer = SFSpeechRecognizer(locale: Locale(identifier: localeIdentifier))!
-        recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
-        guard let recognitionRequest = recognitionRequest else { return }
-
-        recognitionRequest.shouldReportPartialResults = true
-
-        recognitionTask = recognizer.recognitionTask(with: recognitionRequest) { result, error in
-            if let result = result {
-                handleVoiceCommand(result.bestTranscription.formattedString)
-            }
-
-            if error != nil {
-                stopRecording()
-            }
-        }
-
-        let audioSession = AVAudioSession.sharedInstance()
-        try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
-        try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
-
-        let inputNode = audioEngine.inputNode
-        let recordingFormat = inputNode.outputFormat(forBus: 0)
-
-        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer, _) in
-            self.recognitionRequest?.append(buffer)
-        }
-
-        audioEngine.prepare()
-        try audioEngine.start()
-        isRecording = true
-    }
-
-    // Stop recording
-    func stopRecording() {
-        audioEngine.stop()
-        recognitionRequest?.endAudio()
-        recognitionTask?.cancel()
-        recognitionTask = nil
-        recognitionRequest = nil
-        isRecording = false
-    }
-
-    // Handle voice commands
-    func handleVoiceCommand(_ command: String) {
-        if command.contains("one") || command.contains("واحد") {
-            navigateToColoring(number: 1)
-        } else if command.contains("two") || command.contains("اثنين") {
-            navigateToColoring(number: 2)
-        } else if command.contains("three") || command.contains("ثلاثة") {
-            navigateToColoring(number: 3)
-        } else if command.contains("four") || command.contains("أربعة") {
-            navigateToColoring(number: 4)
-        } else if command.contains("categories") || command.contains("الفئات") {
-            navigateToCategories = true
-        }
-    }
-}// MARK: - Preview
+// MARK: - Preview
 struct DrawingsScreen_Previews: PreviewProvider {
     static var previews: some View {
-        DrawingsScreen()
+        DrawingsScreen(selectedCategory: "Space")
     }
 }

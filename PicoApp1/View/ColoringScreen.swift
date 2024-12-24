@@ -411,6 +411,7 @@ struct ColoringScreen: View {
             .padding(.top, 650)
             .padding(.leading, 100)
         }
+        .navigationBarBackButtonHidden(true) // Hide back arrow
     }
 }
 

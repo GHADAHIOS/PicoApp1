@@ -285,6 +285,7 @@ struct PixelArtView: View {
                 }.padding(.horizontal) // Add left and right padding to the main content
                 
             }
+            .navigationBarBackButtonHidden(true)
             .onAppear {
                 drawArt()
             }
@@ -545,6 +546,7 @@ class GridCellCollectionViewCell: UICollectionViewCell {
         colorView.backgroundColor = gridCell.color
         numberLabel.text = gridCell.number == 0 ? "" : "\(gridCell.number)"
     }
+    
 }
 
 #Preview{

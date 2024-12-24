@@ -22,9 +22,9 @@ struct DrawingsScreen: View {
     // Dynamic images for each category
     func categoryImages() -> [String] {
         switch selectedCategory {
-        case "Space": return ["space1", "space2", "space3", "space4"]
+        case "Space": return ["1", "2", "space3", "space4"]
         case "Food": return ["food1", "food2", "food3", "food4"]
-        case "Animals": return ["butterfly1", "cat2", "Giraffe1", "penguin"]
+        case "Animals": return ["1", "2", "Giraffe1", "penguin"]
         default: return []
         }
     }
@@ -153,6 +153,8 @@ struct DrawingsScreen: View {
                     Spacer()
                 }
             }
+            .navigationBarBackButtonHidden(true)
+            
             .navigationDestination(isPresented: $navigateToCategories) {
                 CategoriesScreen()
             }

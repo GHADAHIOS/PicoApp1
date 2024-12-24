@@ -1,26 +1,15 @@
 import SwiftUI
-import Speech
 
 struct CategoriesScreen: View {
-    @State private var isArabic: Bool = false // Language toggle (English by default)
-    @State private var isRecording = false
-    @State private var audioEngine = AVAudioEngine()
-    @State private var recognitionTask: SFSpeechRecognitionTask?
-    @State private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
-
-    @State private var selectedCategory: String? // Track the selected category
-    @State private var navigateToDrawingsScreen = false
-    @State private var clickedCard: String? = nil // Track the clicked card
-
-    let voiceCommands = ["space", "food", "animals"]
-
+    @StateObject private var viewModel = CategoriesViewModel()
+    
     var body: some View {
         NavigationStack {
             ZStack {
                 VStack {
+                    // Header
                     HStack {
                         Spacer()
-
                         HStack {
                             Image("Pico")
                                 .resizable()
@@ -46,42 +35,38 @@ struct CategoriesScreen: View {
                         }
                     }
                     .padding(.top, -30)
-
+                    
                     Spacer()
-
+                    
+                    // Categories
                     HStack(spacing: 20) {
-                        ForEach(["Space", "Food", "Animals"], id: \.self) { category in
+                        ForEach(viewModel.categories) { category in
                             Button(action: {
                                 withAnimation(.spring(response: 0.5, dampingFraction: 0.6)) {
-                                    clickedCard = category
-                                }
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    clickedCard = nil
-                                    selectedCategory = category
-                                    navigateToDrawingsScreen = true
+                                    viewModel.selectCategory(category.name)
                                 }
                             }) {
                                 VStack(spacing: 15) {
-                                    Image(category.lowercased())
+                                    Image(category.imageName)
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 180, height: 180)
                                         .clipShape(Circle())
                                         .shadow(radius: 5)
 
-                                    Text(category)
+                                    Text(category.name)
                                         .font(.largeTitle)
                                         .fontWeight(.bold)
                                         .foregroundColor(.white)
                                 }
                                 .frame(width: 340, height: 400)
-                                .background(categoryColor(category)) // Dynamic background color
+                                .background(category.color)
                                 .cornerRadius(18)
-                                .shadow(color: categoryColor(category).opacity(0.5), radius: 10, x: 0, y: 3)
-                                .scaleEffect(clickedCard == category ? 1.2 : 1.0)
-                                .opacity(clickedCard == nil || clickedCard == category ? 1.0 : 0.3)
+                                .shadow(color: category.color.opacity(0.5), radius: 10, x: 0, y: 3)
+                                .scaleEffect(viewModel.clickedCard == category.name ? 1.2 : 1.0)
+                                .opacity(viewModel.clickedCard == nil || viewModel.clickedCard == category.name ? 1.0 : 0.3)
                             }
-                            .zIndex(clickedCard == category ? 1 : 0)
+                            .zIndex(viewModel.clickedCard == category.name ? 1 : 0)
                         }
                     }
                     .padding(.bottom, 78)
@@ -90,29 +75,15 @@ struct CategoriesScreen: View {
                 }
             }
             .onAppear {
-                startListening()
+                viewModel.startListening()
             }
-            .navigationDestination(isPresented: $navigateToDrawingsScreen) {
-                DrawingsScreen(selectedCategory: selectedCategory ?? "")
+            .navigationDestination(isPresented: $viewModel.navigateToDrawingsScreen) {
+                DrawingsScreen(selectedCategory: viewModel.selectedCategory ?? "")
             }
             .navigationBarBackButtonHidden(true)
             .navigationBarTitle("")
         }
     }
-
-    // Dynamic color for categories
-    func categoryColor(_ category: String) -> Color {
-        switch category {
-        case "Space": return Color.shine
-        case "Food": return Color.hope
-        case "Animals": return Color.brave
-        default: return Color.gray
-        }
-    }
-
-    func startListening() { /* Add logic */ }
-    func stopRecording() { /* Add logic */ }
-    func handleVoiceCommand(_ command: String) { /* Add logic */ }
 }
 
 // MARK: - Preview

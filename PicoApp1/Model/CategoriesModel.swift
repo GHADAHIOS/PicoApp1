@@ -1,8 +1,10 @@
-//import Foundation
-//
-//// Voice Command Categories
-//struct Category {
-//    let name: String
-//    let image: String
-//    let destination: AnyView
-//}
+//Model
+import SwiftUI
+
+struct Category: Identifiable {
+    let id = UUID()
+    let name: String
+    let imageName: String
+    let color: Color
+}
+

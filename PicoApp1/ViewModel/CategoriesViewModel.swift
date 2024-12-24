@@ -2,79 +2,81 @@ import SwiftUI
 import Speech
 import AVFoundation
 
-class CategoriesScreenViewModel: ObservableObject {
-    @Published var isArabic: Bool = false
-    @Published var isRecording: Bool = false
-    @Published var navigateToSpace: Bool = false
-    @Published var navigateToNature: Bool = false
-    @Published var navigateToAnimals: Bool = false
+class CategoriesViewModel: ObservableObject {
+    @Published var isRecording = false
+    @Published var selectedCategory: String? = nil
+    @Published var navigateToDrawingsScreen = false
+    @Published var clickedCard: String? = nil
     
     private var audioEngine = AVAudioEngine()
     private var recognitionTask: SFSpeechRecognitionTask?
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
+    private let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en_US"))
     
-   
-        let voiceCommands = ["Space", "Food", "Animals"]
-
-    func toggleLanguage() {
-        isArabic.toggle()
+    // قائمة الأوامر الصوتية باللغة العربية والإنجليزية
+    var voiceCommands: [String] {
+        return ["الفضاء", "الطعام", "الحيوانات", "space", "food", "animals"]
+    }
+    
+    let categories: [Category] = [
+        Category(name: "Space", imageName: "space", color: Color.shine),
+        Category(name: "Food", imageName: "food", color: Color.hope),
+        Category(name: "Animals", imageName: "animals", color: Color.brave)
+    ]
+    
+    init() {
+        // التهيئة
     }
     
     func startListening() {
+        // طلب صلاحية الوصول إلى التعرف على الصوت
         SFSpeechRecognizer.requestAuthorization { authStatus in
-            if authStatus == .authorized {
-                DispatchQueue.main.async { // Ensure this update is on the main thread
-                    self.isRecording = true
-                }
-                do {
-                    try self.startAudioEngine()
-                } catch {
-                    print("Audio engine error: \(error)")
-                }
+            switch authStatus {
+            case .authorized:
+                self.startRecording() // بدء التسجيل الصوتي إذا كانت الصلاحية متاحة
+            case .denied, .restricted, .notDetermined:
+                print("Speech recognition authorization denied or not available")
+            default:
+                break
             }
         }
     }
     
-    private func startAudioEngine() throws {
-        let languageCode = Locale.current.language.languageCode?.identifier ?? "en"
-        let localeIdentifier = (languageCode == "ar") ? "ar_SA" : "en_US"
+    private func startRecording() {
+        // إعداد الجلسة الصوتية
+        let audioSession = AVAudioSession.sharedInstance()
+        try? audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
+        try? audioSession.setActive(true, options: .notifyOthersOnDeactivation)
         
-        guard let recognizer = SFSpeechRecognizer(locale: Locale(identifier: localeIdentifier)) else { return }
         recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
-        guard let recognitionRequest = recognitionRequest else { return }
+        
+        guard let recognitionRequest = recognitionRequest else {
+            return
+        }
         
         recognitionRequest.shouldReportPartialResults = true
         
-        recognitionTask = recognizer.recognitionTask(with: recognitionRequest) { [weak self] result, error in
-            guard let self = self else { return }
+        let inputNode = audioEngine.inputNode
+        audioEngine.inputNode.removeTap(onBus: 0)
+        
+        // إعداد مهمة التعرف الصوتي
+        recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest) { result, error in
             if let result = result {
-                DispatchQueue.main.async { // Ensure this update is on the main thread
-                    self.handleVoiceCommand(result.bestTranscription.formattedString)
-                }
+                let command = result.bestTranscription.formattedString
+                self.handleVoiceCommand(command) // معاملة الأمر الصوتي
             }
-            if error != nil {
-                DispatchQueue.main.async { // Ensure this update is on the main thread
-                    self.stopRecording()
-                }
+            if error != nil || result?.isFinal == true {
+                self.stopRecording() // إيقاف التسجيل عند الانتهاء
             }
         }
         
-        let audioSession = AVAudioSession.sharedInstance()
-        try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
-        try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
-        
-        let inputNode = audioEngine.inputNode
-        let recordingFormat = inputNode.outputFormat(forBus: 0)
-        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { [weak self] buffer, _ in
-            self?.recognitionRequest?.append(buffer)
+        // ربط المدخلات الصوتية بالطلب
+        inputNode.installTap(onBus: 0, bufferSize: 1024, format: inputNode.outputFormat(forBus: 0)) { (buffer, _) in
+            recognitionRequest.append(buffer)
         }
         
         audioEngine.prepare()
-        try audioEngine.start()
-        
-        DispatchQueue.main.async { // Ensure this update is on the main thread
-            self.isRecording = true
-        }
+        try? audioEngine.start() // بدء الاستماع
     }
     
     func stopRecording() {
@@ -82,22 +84,21 @@ class CategoriesScreenViewModel: ObservableObject {
         recognitionRequest?.endAudio()
         recognitionTask?.cancel()
         recognitionTask = nil
-        recognitionRequest = nil
-        
-        DispatchQueue.main.async { // Ensure this update is on the main thread
-            self.isRecording = false
+    }
+    
+    func handleVoiceCommand(_ command: String) {
+        // مقارنة الأوامر الصوتية مع التصنيفات
+        if let category = categories.first(where: { $0.name.lowercased() == command.lowercased() || $0.name == command }) {
+            selectCategory(category.name) // تحديد التصنيف
         }
     }
     
-    private func handleVoiceCommand(_ command: String) {
-        DispatchQueue.main.async { // Ensure this update is on the main thread
-            if command.contains("Space") || command.contains("الفضاء") {
-                self.navigateToSpace = true
-            } else if command.contains("Food") || command.contains("الطعام") {
-                self.navigateToNature = true
-            } else if command.contains("Animals") || command.contains("الحيوانات") {
-                self.navigateToAnimals = true
-            }
+    func selectCategory(_ category: String) {
+        clickedCard = category
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.clickedCard = nil
+            self.selectedCategory = category
+            self.navigateToDrawingsScreen = true
         }
     }
 }

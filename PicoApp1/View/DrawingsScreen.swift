@@ -1,5 +1,6 @@
 import SwiftUI
 import AVFoundation
+import Speech
 
 struct DrawingsScreen: View {
     var selectedCategory: String // Passed from CategoriesScreen
@@ -8,6 +9,16 @@ struct DrawingsScreen: View {
 
     @State private var navigateToCategories = false
     @State private var navigateToColoring = false
+    
+    @State private var isRecording = false
+    @State private var recognitionTask: SFSpeechRecognitionTask?
+    @State private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
+    @State private var speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en_US"))
+
+    // قائمة الأوامر الصوتية
+    var voiceCommands: [String] {
+        return ["one", "two", "three", "four", "categories"]
+    }
 
     // Dynamic color for each category
     func categoryColor() -> Color {
@@ -72,6 +83,7 @@ struct DrawingsScreen: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 115, height: 115)
+                                .scaleEffect(x: -1)
                                 .offset(x: -80, y: 50)
 
                             ZStack {
@@ -118,7 +130,6 @@ struct DrawingsScreen: View {
                                         RoundedRectangle(cornerRadius: 20)
                                             .fill(Color.white)
                                             .frame(width: 238.33, height: 266.13)
-                                        
                                     }
 
                                     VStack {
@@ -132,15 +143,14 @@ struct DrawingsScreen: View {
                                                 .padding(.top, 5) // Adjust the top padding
                                         }
                                     }
-                                        
-                                        VStack {
-                                            Text("\(number)")
-                                                .font(.largeTitle)
-                                                .fontWeight(.bold)
-                                                .foregroundColor(.white)
-                                                .padding(.top, 310) // Adjust the top padding
-                                        }
-                                    
+
+                                    VStack {
+                                        Text("\(number)")
+                                            .font(.largeTitle)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.white)
+                                            .padding(.top, 310) // Adjust the top padding
+                                    }
                                 }
                             }
                             .opacity(clickedCard == nil || clickedCard == number ? 1.0 : 0.3)
@@ -154,17 +164,92 @@ struct DrawingsScreen: View {
                 }
             }
             .navigationBarBackButtonHidden(true)
-            
+
             .navigationDestination(isPresented: $navigateToCategories) {
                 CategoriesScreen()
             }
             .navigationDestination(isPresented: $navigateToColoring) {
-                //ColoringScreen()
                 PixelArtView()
+            }
+        }
+        .onAppear {
+            startListening() // Start listening automatically when the view appears
+        }
+    }
+
+    // Start listening for voice commands
+    func startListening() {
+        SFSpeechRecognizer.requestAuthorization { authStatus in
+            switch authStatus {
+            case .authorized:
+                self.startRecording() // Start recording if permission is granted
+            case .denied, .restricted, .notDetermined:
+                print("Speech recognition authorization denied or not available")
+            default:
+                break
             }
         }
     }
 
+    private func startRecording() {
+        let audioSession = AVAudioSession.sharedInstance()
+        try? audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
+        try? audioSession.setActive(true, options: .notifyOthersOnDeactivation)
+
+        recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
+
+        guard let recognitionRequest = recognitionRequest else {
+            return
+        }
+
+        recognitionRequest.shouldReportPartialResults = true
+
+        let audioEngine = AVAudioEngine()
+        let inputNode = audioEngine.inputNode
+
+        inputNode.removeTap(onBus: 0)
+
+        recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest) { result, error in
+            if let result = result {
+                let command = result.bestTranscription.formattedString
+                self.handleVoiceCommand(command)
+            }
+
+            if error != nil || result?.isFinal == true {
+                audioEngine.stop()
+                recognitionRequest.endAudio()
+                recognitionTask?.cancel()
+                recognitionTask = nil
+                startRecording() // Re-start listening after each command
+            }
+        }
+
+        inputNode.installTap(onBus: 0, bufferSize: 1024, format: inputNode.outputFormat(forBus: 0)) { (buffer, _) in
+            recognitionRequest.append(buffer)
+        }
+
+        audioEngine.prepare()
+        try? audioEngine.start()
+    }
+
+    // Handle the recognized voice command
+    func handleVoiceCommand(_ command: String) {
+        // مقارنة الأوامر الصوتية مع الأوامر المحددة
+        let commandLowercased = command.lowercased()
+
+        // التحقق من الأوامر الصوتية
+        if commandLowercased == "one" {
+            clickedCard = 1
+        } else if commandLowercased == "two" {
+            clickedCard = 2
+        } else if commandLowercased == "three" {
+            clickedCard = 3
+        } else if commandLowercased == "four" {
+            clickedCard = 4
+        } else if commandLowercased == "categories" {
+            navigateToCategories = true
+        }
+    }
     func playBubbleSound() {
         guard let soundURL = Bundle.main.url(forResource: "bubble", withExtension: "m4a") else { return }
         do {
@@ -175,11 +260,9 @@ struct DrawingsScreen: View {
         }
     }
 }
-
 // MARK: - Preview
 struct DrawingsScreen_Previews: PreviewProvider {
     static var previews: some View {
         DrawingsScreen(selectedCategory: "Space")
     }
 }
-

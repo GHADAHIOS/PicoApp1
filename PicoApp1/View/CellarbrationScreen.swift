@@ -260,23 +260,15 @@ struct CellarbrationScreen: View {
                 .padding(.bottom, 130)
                 
                 // الانتقال إلى الصفحات باستخدام NavigationLink
-                NavigationLink(value: "Categories") {
-                     EmptyView() // Empty placeholder view for navigation
-                 }
-                 .navigationDestination(for: String.self) { value in
-                     if value == "Categories" {
-                         CategoriesScreen() // Navigate to the Categories screen
-                     }
-                 }
+                NavigationLink(
+                    destination: CategoriesScreen(), // صفحة الفئات
+                    isActive: $navigateToCategories
+                ) { EmptyView() }
 
-                 NavigationLink(value: "Coloring") {
-                     EmptyView() // Empty placeholder view for navigation
-                 }
-                 .navigationDestination(for: String.self) { value in
-                     if value == "Coloring" {
-                         ColoringScreen() // Navigate to the Coloring screen
-                     }
-                 }
+                NavigationLink(
+                    destination: ColoringScreen(), // صفحة التلوين
+                    isActive: $navigateToColoring
+                ) { EmptyView() }
             }
             .onAppear {
                 startListening() // بدء الاستماع عند فتح الشاشة
@@ -288,6 +280,14 @@ struct CellarbrationScreen: View {
 
     // Start listening for voice commands
     func startListening() {
+        do {
+            let audioSession = AVAudioSession.sharedInstance()
+            try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
+            try audioSession.setActive(true)
+        } catch {
+            print("Error setting up audio session: \(error)")
+        }
+        
         SFSpeechRecognizer.requestAuthorization { authStatus in
             DispatchQueue.main.async {
                 if authStatus == .authorized {
@@ -309,6 +309,12 @@ struct CellarbrationScreen: View {
         let inputNode = audioEngine.inputNode
         let recordingFormat = inputNode.outputFormat(forBus: 0)
 
+        // التحقق من تنسيق الإدخال
+        if !isFormatValid(recordingFormat) {
+            print("Invalid input format!")
+            return
+        }
+
         inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer, _) in
             self.recognitionRequest?.append(buffer)
         }
@@ -316,6 +322,13 @@ struct CellarbrationScreen: View {
         audioEngine.prepare()
         try audioEngine.start()
         isRecording = true
+    }
+
+    func isFormatValid(_ format: AVAudioFormat) -> Bool {
+        let sampleRate = format.sampleRate
+        let channelCount = format.channelCount
+        // تأكد من أن معدل العينة وعدد القنوات صالحان
+        return sampleRate == 44100 && channelCount == 1 // مثال للتحقق من التنسيق
     }
 
     func stopRecording() {
@@ -346,15 +359,16 @@ struct CellarbrationScreen: View {
     }
 
     func saveToGallery() {
-        guard let imageToSave = image else {
-            print("No image available to save.")
+    
+        guard let picoImage = UIImage(named: "Pico") else {
+            print("Unable to find Pico image.")
             return
         }
 
         // طلب إذن للوصول إلى مكتبة الصور إذا لم يتم منح الإذن
         PHPhotoLibrary.requestAuthorization { status in
             if status == .authorized {
-                UIImageWriteToSavedPhotosAlbum(imageToSave, nil, nil, nil)
+                UIImageWriteToSavedPhotosAlbum(picoImage, nil, nil, nil)
                 print("Image saved to gallery.")
             } else {
                 print("Permission denied to access photo library.")
@@ -373,5 +387,5 @@ struct CellarbrationScreen: View {
 
 // Preview
 #Preview {
-    CellarbrationScreen(image: .constant(UIImage(named: "Pico") ?? UIImage()))
+    CellarbrationScreen(image: .constant(UIImage(systemName: "photo")))
 }

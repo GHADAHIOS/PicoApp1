@@ -25,7 +25,7 @@ struct PicoApp1App: App {
 
     var body: some Scene {
         WindowGroup {
-            CategoriesScreen()
+            SplashView()
         }
         .modelContainer(sharedModelContainer)
     }

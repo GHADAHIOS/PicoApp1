@@ -14,6 +14,7 @@ struct CategoriesScreen: View {
                             Image("Pico")
                                 .resizable()
                                 .scaledToFit()
+                            
                                 .frame(width: 115, height: 115)
                                // .scaleEffect(x: -1)
                                 .offset(x: -80, y: 50)
@@ -23,8 +24,7 @@ struct CategoriesScreen: View {
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 880.0, height: 326)
-                                    .scaleEffect(x: -1)
-                                    .offset(x: -80, y: -20)
+                                    .scaleEffect(x: -1)                    .offset(x: -80, y: -20)
                                 Text("Say the category you want to color")
                                     .font(.title)
                                     .fontWeight(.semibold)

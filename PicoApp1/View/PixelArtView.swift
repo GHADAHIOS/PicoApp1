@@ -161,12 +161,12 @@ struct PixelArtView: View {
                                     ZStack {
                                         Circle()
                                             .fill(Color.green)
-                                            .frame(width: 70, height: 70)
+                                            .frame(width: 77, height: 73)
                                             .offset(x: 3, y: 3)
                                         
                                         Circle()
                                             .fill(Color.green)
-                                            .frame(width: 70, height: 70)
+                                            .frame(width: 77, height: 70)
                                             .padding(5)
                                         
                                         Image(systemName: "checkmark")

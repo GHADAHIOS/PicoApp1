@@ -115,10 +115,9 @@ struct DrawingsScreen: View {
                                 withAnimation(.spring(response: 0.5, dampingFraction: 0.6)) {
                                     clickedCard = number
                                 }
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    clickedCard = nil
-                                    navigateToColoring = true
-                                }
+                                // تم تعديل الانتقال هنا مباشرة بدون تأخير
+                                clickedCard = number
+                                navigateToColoring = true
                             }) {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 40)
@@ -240,16 +239,21 @@ struct DrawingsScreen: View {
         // التحقق من الأوامر الصوتية
         if commandLowercased == "one" {
             clickedCard = 1
+            navigateToColoring = true
         } else if commandLowercased == "two" {
             clickedCard = 2
+            navigateToColoring = true
         } else if commandLowercased == "three" {
             clickedCard = 3
+            navigateToColoring = true
         } else if commandLowercased == "four" {
             clickedCard = 4
+            navigateToColoring = true
         } else if commandLowercased == "categories" {
             navigateToCategories = true
         }
     }
+
     func playBubbleSound() {
         guard let soundURL = Bundle.main.url(forResource: "bubble", withExtension: "m4a") else { return }
         do {

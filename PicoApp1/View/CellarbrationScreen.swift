@@ -1,23 +1,8 @@
 import SwiftUI
-import Speech
-import AVFoundation
-import PhotosUI
 
 struct CellarbrationScreen: View {
-    @State private var isRecording = false
-    @State private var audioEngine = AVAudioEngine()
-    @State private var recognitionTask: SFSpeechRecognitionTask?
-    @State private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
-    @State private var isArabic: Bool = true // حالة اللغة (عربي/إنجليزي)
-    
-    // حالات التنقل بين الشاشات
-    @State private var navigateToCategories = false
-    @State private var navigateToColoring = false
-    
+    @StateObject private var viewModel = CellarbrationViewModel() // ربط بـ ViewModel
     @Binding var image: UIImage?
-
-    // الأوامر الصوتية التي سيتم التعرف عليها
-    let voiceCommands = ["فئات", "تلوين", "حفظ", "مشاركة", "حذف", "categories", "coloring", "save", "share", "delete"]
 
     var body: some View {
         NavigationStack {
@@ -28,7 +13,7 @@ struct CellarbrationScreen: View {
                 VStack {
                     HStack {
                         Button(action: {
-                            navigateToCategories = true
+                            viewModel.navigateToCategories = true
                         }) {
                             ZStack {
                                 Circle()
@@ -59,7 +44,7 @@ struct CellarbrationScreen: View {
                         Spacer(minLength: 12)
                         
                         Button(action: {
-                            navigateToColoring = true
+                            viewModel.navigateToColoring = true
                         }) {
                             ZStack {
                                 Circle()
@@ -128,7 +113,7 @@ struct CellarbrationScreen: View {
                         VStack {
                             // زر الحفظ
                             Button(action: {
-                                saveToGallery()
+                                viewModel.saveImage()
                             }) {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 18)
@@ -168,92 +153,6 @@ struct CellarbrationScreen: View {
                                     }
                                 }
                             }
-                            
-                            // زر المشاركة
-                            Button(action: {
-                                shareDrawing()
-                            }) {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 18)
-                                        .fill(Color.inspire)
-                                        .frame(width: 398, height: 90)
-                                        .offset(x: 4, y: 4)
-                                    
-                                    RoundedRectangle(cornerRadius: 18)
-                                        .fill(Color.binspire)
-                                        .frame(width: 398, height: 90)
-                                    
-                                    HStack {
-                                        Image(.image2)
-                                            .resizable()
-                                            .frame(width: 25.0, height: 25.0)
-                                            .padding(.bottom, 50)
-                                        HStack {
-                                            Text("Share")
-                                                .font(.largeTitle)
-                                                .fontWeight(.bold)
-                                                .foregroundColor(Color.white)
-                                                .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
-                                            
-                                            Image(systemName: "square.and.arrow.up")
-                                                .resizable()
-                                                .scaledToFit()
-                                                .frame(width: 50, height: 50)
-                                                .foregroundColor(.white)
-                                                .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
-                                        }
-                                        .padding(.horizontal, 80)
-                                        
-                                        Image(.image2)
-                                            .resizable()
-                                            .frame(width: 25.0, height: 25.0)
-                                            .padding(.bottom, 50)
-                                    }
-                                }
-                            }
-                            
-                            // زر الحذف
-                            Button(action: {
-                                deleteDrawing()
-                            }) {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 18)
-                                        .fill(Color.bBrave)
-                                        .frame(width: 398, height: 90)
-                                        .offset(x: 4, y: 4)
-                                    
-                                    RoundedRectangle(cornerRadius: 18)
-                                        .fill(Color.brave)
-                                        .frame(width: 398, height: 90)
-                                    
-                                    HStack {
-                                        Image(.image1)
-                                            .resizable()
-                                            .frame(width: 25.0, height: 25.0)
-                                            .padding(.bottom, 50)
-                                        HStack {
-                                            Text("Delete")
-                                                .font(.largeTitle)
-                                                .fontWeight(.bold)
-                                                .foregroundColor(Color.white)
-                                                .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
-                                            
-                                            Image(systemName: "trash.fill")
-                                                .resizable()
-                                                .scaledToFit()
-                                                .frame(width: 50, height: 50)
-                                                .foregroundColor(.white)
-                                                .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
-                                        }
-                                        .padding(.horizontal, 80)
-                                        
-                                        Image(.image1)
-                                            .resizable()
-                                            .frame(width: 25.0, height: 25.0)
-                                            .padding(.bottom, 50)
-                                    }
-                                }
-                            }
                         }
                     }
                 }
@@ -261,129 +160,19 @@ struct CellarbrationScreen: View {
                 
                 // الانتقال إلى الصفحات باستخدام NavigationLink
                 NavigationLink(
-                    destination: CategoriesScreen(), // صفحة الفئات
-                    isActive: $navigateToCategories
+                    destination: CategoriesScreen(),
+                    isActive: $viewModel.navigateToCategories
                 ) { EmptyView() }
 
                 NavigationLink(
-                    destination: ColoringScreen(), // صفحة التلوين
-                    isActive: $navigateToColoring
+                    destination: ColoringScreen(),
+                    isActive: $viewModel.navigateToColoring
                 ) { EmptyView() }
             }
-            .onAppear {
-                startListening() // بدء الاستماع عند فتح الشاشة
-            }
-            .navigationBarBackButtonHidden(true)
-            .navigationBarTitle("")
         }
-    }
-
-    // Start listening for voice commands
-    func startListening() {
-        do {
-            let audioSession = AVAudioSession.sharedInstance()
-            try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
-            try audioSession.setActive(true)
-        } catch {
-            print("Error setting up audio session: \(error)")
-        }
-        
-        SFSpeechRecognizer.requestAuthorization { authStatus in
-            DispatchQueue.main.async {
-                if authStatus == .authorized {
-                    do {
-                        try startAudioEngine()
-                    } catch {
-                        print("Audio engine error: \(error)")
-                    }
-                } else {
-                    print("Speech recognition authorization denied.")
-                }
-            }
-        }
-    }
-
-    func startAudioEngine() throws {
-        audioEngine = AVAudioEngine()
-        recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
-        let inputNode = audioEngine.inputNode
-        let recordingFormat = inputNode.outputFormat(forBus: 0)
-
-        // التحقق من تنسيق الإدخال
-        if !isFormatValid(recordingFormat) {
-            print("Invalid input format!")
-            return
-        }
-
-        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer, _) in
-            self.recognitionRequest?.append(buffer)
-        }
-
-        audioEngine.prepare()
-        try audioEngine.start()
-        isRecording = true
-    }
-
-    func isFormatValid(_ format: AVAudioFormat) -> Bool {
-        let sampleRate = format.sampleRate
-        let channelCount = format.channelCount
-        // تأكد من أن معدل العينة وعدد القنوات صالحان
-        return sampleRate == 44100 && channelCount == 1 // مثال للتحقق من التنسيق
-    }
-
-    func stopRecording() {
-        audioEngine.stop()
-        recognitionRequest?.endAudio()
-    }
-
-    // معالجة الأوامر الصوتية
-    func handleVoiceCommand(_ command: String) {
-        let lowercasedCommand = command.lowercased()
-
-        if voiceCommands.contains(lowercasedCommand) {
-            switch lowercasedCommand {
-            case "فئات", "categories":
-                navigateToCategories = true
-            case "تلوين", "coloring":
-                navigateToColoring = true
-            case "حفظ", "save":
-                saveToGallery()
-            case "مشاركة", "share":
-                shareDrawing()
-            case "حذف", "delete":
-                deleteDrawing()
-            default:
-                print("Unrecognized command: \(command)")
-            }
-        }
-    }
-
-    func saveToGallery() {
-    
-        guard let picoImage = UIImage(named: "Pico") else {
-            print("Unable to find Pico image.")
-            return
-        }
-
-        // طلب إذن للوصول إلى مكتبة الصور إذا لم يتم منح الإذن
-        PHPhotoLibrary.requestAuthorization { status in
-            if status == .authorized {
-                UIImageWriteToSavedPhotosAlbum(picoImage, nil, nil, nil)
-                print("Image saved to gallery.")
-            } else {
-                print("Permission denied to access photo library.")
-            }
-        }
-    }
-
-    func shareDrawing() {
-        print("Image shared.")
-    }
-
-    func deleteDrawing() {
-        print("Drawing deleted.")
     }
 }
+
 
 // Preview
 #Preview {

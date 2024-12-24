@@ -157,7 +157,8 @@ struct DrawingsScreen: View {
                 CategoriesScreen()
             }
             .navigationDestination(isPresented: $navigateToColoring) {
-                ColoringScreen()
+                //ColoringScreen()
+                PixelArtView()
             }
         }
     }

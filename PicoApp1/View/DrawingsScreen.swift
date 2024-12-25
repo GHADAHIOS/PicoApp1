@@ -133,7 +133,7 @@ struct DrawingsScreen: View {
                 CategoriesScreen()
             }
             .navigationDestination(isPresented: $viewModel.navigateToColoring) {
-                PixelArtView()
+                PixelArtDynmicView()
             }
         }
         .onAppear {

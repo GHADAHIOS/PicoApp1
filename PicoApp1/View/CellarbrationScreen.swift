@@ -76,28 +76,32 @@ struct CellarbrationScreen: View {
                     .padding(.top, 30)
                     
                     ZStack {
-                        HStack {
+                        ZStack {
+                            Image("cloud")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 700.0, height: 200)
+                                .scaleEffect(x: -1)                    .offset(x: -30, y: -20)
+                            Text("Say the category you want to color")
+                                .font(.title)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.font1) // Text color
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal, 50)
+                                .offset(x: -30, y: -20)
+                            
+                            
+                            
                             Image("Pico")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 115, height: 115)
-                                .offset(x: -10, y: 40)
                             
-                            ZStack {
-                                Image("cloud")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 780.0, height: 326)
-                                    .offset(x: -90, y: -80)
-                                
-                                Text("Well done, genius! Keep going!")
-                                    .font(.title)
-                                    .fontWeight(.semibold)
-                                    .foregroundColor(.font1)
-                                    .multilineTextAlignment(.center)
-                                    .padding(.horizontal, 50)
-                                    .offset(x: -90, y: -80)
-                            }
+                                .frame(width: 115, height: 115)
+                               // .scaleEffect(x: -1)
+                               // .offset(x: -80, y: 50)
+                                .padding(.leading, 710.0)
+                                .padding(.top,90.0)
+                            
                         }
                         .padding(.top, -30)
                     }

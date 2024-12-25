@@ -58,6 +58,7 @@ struct PixelArtDynmicView: View {
     @Environment(\.modelContext) private var modelContext // Access the model context
     @State private var showDetailView = false // Control navigation
     @State private var showDrawingsScreen = false // Navigate to DrawingsScreen
+    @State private var showCategoriesScreen = false // Navigate to CategoriesScreen
 
     private let colorOptions: [Color] = [.blue, .red, .green, .yellow, .orange, .purple, .brown, .pink]
     private let availablePixelArtFiles = ["pixelart", "pixelart2", "pixelart3"]
@@ -69,7 +70,7 @@ struct PixelArtDynmicView: View {
                 HStack {
                     // Button on the left
                     Button {
-                        // Action for left "Category" button
+                        showCategoriesScreen = true // Navigate to CategoriesScreen
                     } label: {
                         VStack {
                             ZStack {
@@ -96,6 +97,11 @@ struct PixelArtDynmicView: View {
                         }
                     }
                     .padding(.leading, 20) // Add spacing to the left
+                    .background(
+                        NavigationLink(destination: CategoriesScreen(), isActive: $showCategoriesScreen) {
+                            EmptyView()
+                        }
+                    )
 
                     Spacer() // Push the buttons apart
 
@@ -244,7 +250,6 @@ struct PixelArtDynmicView: View {
         }
     }
 }
-
 
 #Preview {
     PixelArtDynmicView()

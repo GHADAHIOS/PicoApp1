@@ -15,13 +15,13 @@ class CategoriesViewModel: ObservableObject {
     
     // قائمة الأوامر الصوتية
     var voiceCommands: [String] {
-        return ["الفضاء", "الطعام", "الحيوانات", "space", "food", "animals"]
+        return [ "space", "food", "animals"]
     }
     
     let categories: [Category] = [
-        Category(name: "Space", imageName: "space", color: Color.shine),
-        Category(name: "Food", imageName: "food", color: Color.hope),
-        Category(name: "Animals", imageName: "animals", color: Color.brave)
+        Category(name: "Space", imageName: "earth", color: Color.shine),
+        Category(name: "Food", imageName: "dounat", color: Color.hope),
+        Category(name: "Animals", imageName: "butterflycoloring", color: Color.brave)
     ]
     
     func startListening() {

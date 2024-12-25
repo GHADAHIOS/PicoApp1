@@ -56,7 +56,7 @@ struct CategoriesScreen: View {
                                     Image(category.imageName)
                                         .resizable()
                                         .scaledToFit()
-                                        .frame(width: 180, height: 180)
+                                        .frame(width: 270, height: 270)
                                         .clipShape(Circle())
                                         .shadow(radius: 5)
 
@@ -64,6 +64,7 @@ struct CategoriesScreen: View {
                                         .font(.largeTitle)
                                         .fontWeight(.bold)
                                         .foregroundColor(.white)
+                                        .frame(width: 165, height: 58.03)
                                 }
                                 .frame(width: 340, height: 400)
                                 .background(category.color)

@@ -125,9 +125,7 @@ struct onboardingView: View {
                     
                     NavigationLink(destination: CategoriesScreen(), isActive: $viewModel.navigateToCategories) {
                         HStack {
-                            Image(systemName: "arrow.right.circle")
-                                .resizable()
-                                .frame(width: 25.0, height: 25.0)
+                            
                             
                             Text("Start")
                                 .font(.largeTitle)
@@ -135,9 +133,7 @@ struct onboardingView: View {
                                 .foregroundColor(Color.white)
                                 .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
                             
-                            Image(systemName: "arrow.left.circle")
-                                .resizable()
-                                .frame(width: 25.0, height: 25.0)
+                          
                         }
                         .padding(.horizontal, 80)
                     }

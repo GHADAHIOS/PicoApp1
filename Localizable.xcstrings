@@ -284,13 +284,27 @@
       }
     },
     "Start" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ابدأ"
+          }
+        }
+      }
     },
     "Undo" : {
 
     },
     "welcome to pico!" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اهلاً بك في بيكو "
+          }
+        }
+      }
     },
     "Well done, genius! Keep going!" : {
       "extractionState" : "stale",

@@ -23,7 +23,7 @@ struct SplashView: View {
 
     var body: some View {
         if navigateToCategories {
-            CategoriesScreen()
+            onboardingView()
         } else {
             ZStack {
                 Color.white.edgesIgnoringSafeArea(.all)

@@ -74,3 +74,13 @@ struct UpdatePixelArtView: View {
         .navigationTitle("Pixel Art List")
     }
 }
+
+struct UpdatePixelArtView_Previews: PreviewProvider {
+    static var previews: some View {
+        // Providing sample data for Preview
+        UpdatePixelArtView(pixelArt: .constant(nil))
+            .previewDevice("iPhone 14")
+            .previewLayout(.sizeThatFits)
+            .padding()
+    }
+}

@@ -109,9 +109,6 @@
         }
       }
     },
-    "Go to Pixel Art List" : {
-
-    },
     "Green" : {
       "localizations" : {
         "ar" : {
@@ -279,6 +276,7 @@
 
     },
     "Well done, genius! Keep going!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {

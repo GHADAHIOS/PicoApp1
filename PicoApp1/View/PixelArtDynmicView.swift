@@ -114,13 +114,13 @@ struct PixelArtDynmicView: View {
                                     .frame(width: 100, height: 100)
                                     .padding(5)
 
-                                Image(systemName: "circle.grid.2x2")
+                                Image(systemName: "paintbrush.fill")
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 50, height: 50)
                                     .foregroundColor(.white)
                             }
-                            Text("Category")
+                            Text("Drawings")
                                 .font(.title2)
                                 .fontWeight(.bold)
                                 .foregroundColor(.black)
@@ -139,7 +139,7 @@ struct PixelArtDynmicView: View {
                         selectedColor: UIColor(self.selectedColor),
                         modelContext: modelContext
                     )
-                    .frame(width: 300, height: 300) // زيادة حجم الإطار
+                    .frame(width: 500, height: 500) // زيادة حجم الإطار
 
                     .border(Color.black, width: 1)
                     .padding()
@@ -165,33 +165,37 @@ struct PixelArtDynmicView: View {
                     }
 
                     // Save and navigate button
-                    Button(action: {
-                        if let pixelArt = pixelArt {
-                            savePixelArtToDatabase(pixelArt: pixelArt)
-                            showDetailView = true // إعداد الانتقال بعد الحفظ
+                    VStack {
+                        Spacer() // رفع الزر
+                        
+                        Button(action: {
+                            if let pixelArt = pixelArt {
+                                savePixelArtToDatabase(pixelArt: pixelArt)
+                                showDetailView = true // إعداد الانتقال بعد الحفظ
+                            }
+                        }) {
+                            Image(systemName: "checkmark")
+                                .font(.largeTitle)
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                                .frame(width: 100, height: 100)
+                                .background(
+                                    ZStack {
+                                        Circle()
+                                            .fill(Color.green1)
+                                            .frame(width: 100, height: 100)
+                                            .offset(x: 3, y: 3)
+                                        
+                                        Circle()
+                                            .fill(Color.green)
+                                            .frame(width: 100, height: 100)
+                                            .padding(5)
+                                    }
+                                )
                         }
-                    }) {
-                        Text("Save")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                            .frame(width: 100, height: 100)
-                            .background(
-                                ZStack {
-                                    Circle()
-                                        .fill(Color.inspire)
-                                        .frame(width: 100, height: 100)
-                                        .offset(x: 3, y: 3)
-                                    
-                                    Circle()
-                                        .fill(Color.binspire)
-                                        .frame(width: 100, height: 100)
-                                        .padding(5)
-                                }
-                            )
+                        .padding(.bottom, 20) // حشو أسفل الزر
                     }
-                    .padding()
-
+                    
                     NavigationLink(destination: UpdatePixelArtView(pixelArt: $pixelArt), isActive: $showDetailView) {
                         EmptyView() // رابط التنقل المخفي
                     }

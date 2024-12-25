@@ -92,6 +92,17 @@
         }
       }
     },
+    "Drawings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الرسومات"
+          }
+        }
+      }
+    },
     "Food" : {
       "extractionState" : "manual",
       "localizations" : {

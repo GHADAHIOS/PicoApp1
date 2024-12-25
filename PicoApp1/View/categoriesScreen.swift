@@ -11,27 +11,32 @@ struct CategoriesScreen: View {
                     HStack {
                         Spacer()
                         HStack {
-                            Image("Pico")
-                                .resizable()
-                                .scaledToFit()
-                            
-                                .frame(width: 115, height: 115)
-                               // .scaleEffect(x: -1)
-                                .offset(x: -80, y: 50)
-
                             ZStack {
                                 Image("cloud")
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 880.0, height: 326)
-                                    .scaleEffect(x: -1)                    .offset(x: -80, y: -20)
+                                    .scaleEffect(x: -1)                    .offset(x: -120, y: -20)
                                 Text("Say the category you want to color")
                                     .font(.title)
                                     .fontWeight(.semibold)
                                     .foregroundColor(.font1) // Text color
                                     .multilineTextAlignment(.center)
                                     .padding(.horizontal, 50)
-                                    .offset(x: -80, y: -20)
+                                    .offset(x: -120, y: -20)
+                                
+                                
+                                
+                                Image("Pico")
+                                    .resizable()
+                                    .scaledToFit()
+                                
+                                    .frame(width: 115, height: 115)
+                                   // .scaleEffect(x: -1)
+                                   // .offset(x: -80, y: 50)
+                                    .padding(.leading, 720.0)
+                                    .padding(.top,120.0)
+                                
                             }
                         }
                     }

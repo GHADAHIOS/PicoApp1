@@ -132,6 +132,9 @@
         }
       }
     },
+    "No Pixel Art selected." : {
+
+    },
     "Orange" : {
       "localizations" : {
         "ar" : {
@@ -151,6 +154,9 @@
           }
         }
       }
+    },
+    "Pixel Art List" : {
+
     },
     "Purple" : {
       "localizations" : {
@@ -235,6 +241,9 @@
     "Select an item" : {
 
     },
+    "Selected Pixel Art: %@" : {
+
+    },
     "Share" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -267,11 +276,22 @@
 
     },
     "Well done, genius! Keep going!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "رسمك رائع ، استمر "
+          }
+        }
+      }
+    },
+    "Width: %lld, Height: %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Width: %1$lld, Height: %2$lld"
           }
         }
       }

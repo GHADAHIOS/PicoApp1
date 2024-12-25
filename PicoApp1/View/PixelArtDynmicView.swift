@@ -57,6 +57,7 @@ struct PixelArtDynmicView: View {
     @State private var selectedColor: Color = .blue
     @Environment(\.modelContext) private var modelContext // Access the model context
     @State private var showDetailView = false // Control navigation
+    @State private var showDrawingsScreen = false // Navigate to DrawingsScreen
 
     private let colorOptions: [Color] = [.blue, .red, .green, .yellow, .orange, .purple, .brown, .pink]
     private let availablePixelArtFiles = ["pixelart", "pixelart2", "pixelart3"]
@@ -100,7 +101,7 @@ struct PixelArtDynmicView: View {
 
                     // Button on the right
                     Button {
-                        // Action for right "Category" button
+                        showDrawingsScreen = true // Navigate to DrawingsScreen
                     } label: {
                         VStack {
                             ZStack {
@@ -127,9 +128,14 @@ struct PixelArtDynmicView: View {
                         }
                     }
                     .padding(.trailing, 20) // Add spacing to the right
+                    .background(
+                        NavigationLink(destination: DrawingsScreen(selectedCategory: "Space"), isActive: $showDrawingsScreen) {
+                            EmptyView()
+                        }
+                    )
                 }
                 .padding(.top, 20) // Add spacing to the top
-                
+
                 Spacer()
 
                 // Pixel art display and editing
@@ -167,7 +173,7 @@ struct PixelArtDynmicView: View {
                     // Save and navigate button
                     VStack {
                         Spacer() // رفع الزر
-                        
+
                         Button(action: {
                             if let pixelArt = pixelArt {
                                 savePixelArtToDatabase(pixelArt: pixelArt)
@@ -185,7 +191,7 @@ struct PixelArtDynmicView: View {
                                             .fill(Color.green1)
                                             .frame(width: 100, height: 100)
                                             .offset(x: 3, y: 3)
-                                        
+
                                         Circle()
                                             .fill(Color.green)
                                             .frame(width: 100, height: 100)
@@ -195,7 +201,7 @@ struct PixelArtDynmicView: View {
                         }
                         .padding(.bottom, 20) // حشو أسفل الزر
                     }
-                    
+
                     NavigationLink(destination: UpdatePixelArtView(pixelArt: $pixelArt), isActive: $showDetailView) {
                         EmptyView() // رابط التنقل المخفي
                     }
@@ -238,6 +244,7 @@ struct PixelArtDynmicView: View {
         }
     }
 }
+
 
 #Preview {
     PixelArtDynmicView()

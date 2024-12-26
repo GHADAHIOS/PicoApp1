@@ -22,8 +22,19 @@ class DrawingsViewModel: ObservableObject {
 
     init(selectedCategory: String) {
         self.selectedCategory = selectedCategory
+        //print("selectedCategory",selectedCategory)
     }
-
+    
+    //new to save select art number //
+    @Published var selectedArt: String? {
+        didSet {
+            // Save the selected category to UserDefaults
+            if let selectedArt = selectedArt {
+                UserDefaults.standard.set(selectedArt, forKey: "selectedArt")
+            }
+        }
+    }
+    
     func categoryColor() -> Color {
         switch selectedCategory {
         case "Space": return Color.shine

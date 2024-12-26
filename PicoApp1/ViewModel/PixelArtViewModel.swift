@@ -7,8 +7,11 @@
 
 import SwiftUI
 import SwiftData
+import Speech
+import AVFoundation
 
-class PixelArtViewModel: UIView {
+
+class PixelArtViewModel: UIView , SFSpeechRecognizerDelegate ,ObservableObject{
     var pixelArt: PixelArt
     var selectedColor: UIColor
     var selectedNumber: Int?
@@ -16,7 +19,23 @@ class PixelArtViewModel: UIView {
     var onColorChanged: (() -> Void)? // Closure to notify color changes
    // @Environment(\.modelContext) private var modelContext
     var modelContext: ModelContext // Store the model context
+    
+    @State private var selectedCategory: Category?
+    @State private var selectedCard: Category?
 
+ //   @Published var isRecording = false
+
+    
+//        private var speechRecognizer: SFSpeechRecognizer?
+//        private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
+//        private var recognitionTask: SFSpeechRecognitionTask?
+//        private var audioEngine: AVAudioEngine?
+//        
+//    // قائمة الأوامر الصوتية
+////    var voiceCommands: [String] {
+////        return [ "space", "food", "animals"]
+////    }
+    
     
     init(frame: CGRect, pixelArt: PixelArt, selectedColor: UIColor, modelContext: ModelContext) {
          self.pixelArt = pixelArt
@@ -24,11 +43,160 @@ class PixelArtViewModel: UIView {
          self.cellColors = Array(repeating: Array(repeating: nil, count: pixelArt.width), count: pixelArt.height)
          self.modelContext = modelContext // Assign the model context
          super.init(frame: frame)
+        
+//        // Initialize the speech recognizer with the appropriate locale
+//             self.speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en_US"))
+//             self.speechRecognizer?.delegate = self
+
      }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+//    func startListening() {
+//        SFSpeechRecognizer.requestAuthorization { authStatus in
+//            DispatchQueue.main.async {
+//                switch authStatus {
+//                case .authorized:
+//                    self.startRecording()
+//                case .denied:
+//                    print("Speech recognition authorization denied.")
+//                case .restricted:
+//                    print("Speech recognition is restricted on this device.")
+//                case .notDetermined:
+//                    print("Speech recognition authorization not determined.")
+//                @unknown default:
+//                    print("Unknown speech recognition authorization status.")
+//                }
+//            }
+//        }
+//    }
+    
+    
+//    private func startRecording() {
+//        print("startRecording")
+//        guard !audioEngine!.isRunning else { return }
+//        
+//        // إعداد الجلسة الصوتية
+//        let audioSession = AVAudioSession.sharedInstance()
+//        do {
+//            try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
+//            try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
+//        } catch {
+//            print("Failed to configure audio session: \(error.localizedDescription)")
+//            return
+//        }
+//        
+//        recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
+//        guard let recognitionRequest = recognitionRequest else {
+//            print("Unable to create recognition request.")
+//            return
+//        }
+//        recognitionRequest.shouldReportPartialResults = true
+//        
+//        recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest) { result, error in
+//            if let result = result {
+//                let command = result.bestTranscription.formattedString
+//                print("Heard command: \(command)")
+//                self.handleRecognizedCommand(command)
+//            }
+//            
+//            if let error = error {
+//                print("Recognition task error: \(error.localizedDescription)")
+//                self.stopRecording()
+//            }
+//            
+//            if result?.isFinal == true {
+//                self.stopRecording()
+//            }
+//        }
+//        
+//        let inputNode = audioEngine?.inputNode
+//        inputNode?.removeTap(onBus: 0) // تنظيف أي تبويبات قديمة
+//        let recordingFormat = inputNode?.outputFormat(forBus: 0)
+//        inputNode?.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { buffer, _ in
+//            self.recognitionRequest?.append(buffer)
+//        }
+//        
+//        do {
+//            try audioEngine?.start()
+//            isRecording = true
+//            print("Audio engine started, now listening.")
+//        } catch {
+//            print("Failed to start audio engine: \(error.localizedDescription)")
+//            stopRecording()
+//        }
+//    }
+    
+    
+//    func stopRecording() {
+//        audioEngine?.stop()
+//        audioEngine?.inputNode.removeTap(onBus: 0)
+//        recognitionRequest?.endAudio()
+//        recognitionTask?.cancel()
+//        recognitionTask = nil
+//        isRecording = false
+//        print("Stopped recording.")
+//    }
+
+//        func handleRecognizedCommand(_ command: String) {
+//            print("Recognized command: \(command)")
+//
+//            let words = command.lowercased().split(separator: " ")
+//            
+//            if words.contains("color") {
+//                if let colorName = getColorFromCommand(words) {
+//                    self.selectedColor = colorName
+//                    print("Selected color: \(colorName)")
+//                }
+//            }
+//            
+//            if words.contains("number") {
+//                if let number = getNumberFromCommand(words) {
+//                    self.selectedNumber = number
+//                    print("Selected number: \(number)")
+//                }
+//            }
+//            
+//            if words.contains("apply") {
+//                applyColorToSelectedPixels()
+//            }
+//        }
+//        
+//        func getColorFromCommand(_ words: [Substring]) -> UIColor? {
+//            // This function can be extended to handle more colors
+//            let colorMapping: [String: UIColor] = [
+//                "red": .red,
+//                "blue": .blue,
+//                "green": .green,
+//                "yellow": .yellow,
+//                "purple": .purple,
+//                "orange": .orange
+//            ]
+//            
+//            for word in words {
+//                if let color = colorMapping[String(word)] {
+//                    return color
+//                }
+//            }
+//            return nil
+//        }
+//        
+//        func getNumberFromCommand(_ words: [Substring]) -> Int? {
+//            for word in words {
+//                if let number = Int(word) {
+//                    return number
+//                }
+//            }
+//            return nil
+//        }
+//
+//    
+//    func applyColorToSelectedPixels() {
+//     print("applyColorToSelectedPixels")
+//    }
+
     
     func savePixelArtToDatabase(pixelArt: PixelArt) {
             do {

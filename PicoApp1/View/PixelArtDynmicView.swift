@@ -53,14 +53,24 @@ struct PixelArtViewRepresentable: UIViewRepresentable {
 }
 
 struct PixelArtDynmicView: View {
+    
     @State private var pixelArt: PixelArt? // PixelArt state (optional)
     @State private var selectedColor: Color = .blue
     @Environment(\.modelContext) private var modelContext // Access the model context
     @State private var showDetailView = false // Control navigation
+    @EnvironmentObject var drawingsViewModel: DrawingsViewModel
+    @EnvironmentObject var categoriesViewModel: CategoriesViewModel
+    @EnvironmentObject var pixelArtViewModel: PixelArtViewModel  // Use @EnvironmentObject
+   // @StateObject private var pixelArtDynamicViewModel: PixelArtDynamicViewModel
 
     private let colorOptions: [Color] = [.blue, .red, .green, .yellow, .orange, .purple, .brown, .pink]
     private let availablePixelArtFiles = ["pixelart", "pixelart2", "pixelart3"]
-
+    
+    init(selectedCategory: String, modelContext: ModelContext) {
+       //    _pixelArtDynamicViewModel = StateObject(wrappedValue: PixelArtDynamicViewModel(modelContext: modelContext))
+       }
+   
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -139,7 +149,7 @@ struct PixelArtDynmicView: View {
                         selectedColor: UIColor(self.selectedColor),
                         modelContext: modelContext
                     )
-                    .frame(width: 300, height: 300) // زيادة حجم الإطار
+                    .frame(width: 500, height: 500) // زيادة حجم الإطار
 
                     .border(Color.black, width: 1)
                     .padding()
@@ -150,6 +160,8 @@ struct PixelArtDynmicView: View {
                     ForEach(colorOptions, id: \.self) { color in
                         Button(action: {
                             self.selectedColor = color
+                      //      pixelArtDynamicViewModel.selectedColor = UIColor(self.selectedColor) // Update color in view model
+
                         }) {
                             ZStack {
                                 Circle()
@@ -167,7 +179,8 @@ struct PixelArtDynmicView: View {
                     // Save and navigate button
                     Button(action: {
                         if let pixelArt = pixelArt {
-                            savePixelArtToDatabase(pixelArt: pixelArt)
+//                            savePixelArtToDatabase(pixelArt: pixelArt)
+                      //      pixelArtDynamicViewModel.savePixelArt()
                             showDetailView = true // إعداد الانتقال بعد الحفظ
                         }
                     }) {
@@ -200,14 +213,32 @@ struct PixelArtDynmicView: View {
             }
             .padding()
             .onAppear {
-                if let firstFile = availablePixelArtFiles.first {
-                    self.loadPixelArt(from: firstFile)
-                }
+
+//                if let firstFile = availablePixelArtFiles.first {
+//                    self.loadPixelArt(from: firstFile )
+//                    
+//                }
+                
+                // Load the saved category and clicked card from UserDefaults
+                                if let savedCategory = UserDefaults.standard.string(forKey: "selectedCategory"),
+                                   let savedCard = UserDefaults.standard.string(forKey: "selectedArt") {
+                                    //categoriesViewModel.selectedCate = savedCategory
+                                    //drawingsViewModel.selectedArt = savedCard
+                                    print("Loaded saved category: \(savedCategory), and card: \(savedCard)")
+                                    let fileName = "\(savedCategory)_\(savedCard)"
+                                    print("fileName:", fileName)
+                                    self.loadPixelArt(from: fileName )
+                             //       pixelArtDynamicViewModel.loadPixelArt(from: fileName)
+                                }
+             //   pixelArtDynamicViewModel.startListening()
+
+                
             }
         }
+
     }
 
-    func loadPixelArt(from fileName: String) {
+    func loadPixelArt(from fileName: String ) {        
         guard let url = Bundle.main.url(forResource: fileName, withExtension: "json") else {
             print("Failed to find \(fileName).json in the app bundle.")
             return
@@ -235,6 +266,6 @@ struct PixelArtDynmicView: View {
     }
 }
 
-#Preview {
-    PixelArtDynmicView()
-}
+//#Preview {
+//    PixelArtDynmicView()
+//}

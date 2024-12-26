@@ -1,10 +1,13 @@
 import SwiftUI
 
 struct DrawingsScreen: View {
+    @Environment(\.modelContext) private var modelContext
     @StateObject private var viewModel: DrawingsViewModel
+    //@StateObject private var pixelArtViewModel: PixelArtViewModel
 
     init(selectedCategory: String) {
         _viewModel = StateObject(wrappedValue: DrawingsViewModel(selectedCategory: selectedCategory))
+        //_pixelArtViewModel = StateObject(wrappedValue: PixelArtViewModel()!)
     }
 
     var body: some View {
@@ -83,6 +86,9 @@ struct DrawingsScreen: View {
                                     viewModel.clickedCard = number
                                 }
                                 viewModel.clickedCard = number
+                                // Set the selected art number
+                                viewModel.selectedArt = "\(number)"
+
                                 viewModel.navigateToColoring = true
                             }) {
                                 ZStack {
@@ -133,12 +139,17 @@ struct DrawingsScreen: View {
                 CategoriesScreen()
             }
             .navigationDestination(isPresented: $viewModel.navigateToColoring) {
-                PixelArtView()
+               //PixelArtView()
+                PixelArtDynmicView(selectedCategory: viewModel.selectedCategory, modelContext: modelContext)
+
             }
         }
+        /*.environmentObject(pixelArtViewModel)*/ // Inject PixelArtViewModel into the environment
+
         .onAppear {
             viewModel.startListening()
         }
+        
     }
 }
 

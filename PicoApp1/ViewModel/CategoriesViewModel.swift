@@ -7,7 +7,7 @@ class CategoriesViewModel: ObservableObject {
     @Published var selectedCategory: String? = nil
     @Published var navigateToDrawingsScreen = false
     @Published var clickedCard: String? = nil
-    
+  
     private var audioEngine = AVAudioEngine()
     private var recognitionTask: SFSpeechRecognitionTask?
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
@@ -23,6 +23,17 @@ class CategoriesViewModel: ObservableObject {
         Category(name: "Food", imageName: "dounat", color: Color.hope),
         Category(name: "Animals", imageName: "butterflycoloring", color: Color.brave)
     ]
+    
+    // Saving the selected category to UserDefaults
+        @Published var selectedCate: String? {
+            didSet {
+                // Save the selected category to UserDefaults
+                if let category = selectedCate {
+                    UserDefaults.standard.set(category, forKey: "selectedCategory")
+                }
+            }
+        }
+        
     
     func startListening() {
         SFSpeechRecognizer.requestAuthorization { authStatus in
@@ -120,7 +131,11 @@ class CategoriesViewModel: ObservableObject {
     }
     
     func selectCategory(_ category: String) {
+        print("category", category)
         clickedCard = category
+        //new //
+        selectedCate = category
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.clickedCard = nil
             self.selectedCategory = category

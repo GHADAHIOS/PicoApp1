@@ -220,6 +220,7 @@ struct PixelArtDynmicView: View {
                     self.loadPixelArt(from: firstFile)
                 }
             }
+            .navigationBarBackButtonHidden(true)
         }
     }
 

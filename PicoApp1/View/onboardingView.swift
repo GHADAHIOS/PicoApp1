@@ -91,7 +91,7 @@ struct onboardingView: View {
                         .scaleEffect(x: -1)
                         .offset(x: -20, y: -20)
                     
-                    Text("Say the category you want to color")
+                    Text("Say Start")
                         .font(.title)
                         .fontWeight(.semibold)
                         .foregroundColor(.font1)

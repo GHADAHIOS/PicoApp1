@@ -163,15 +163,31 @@ struct CellarbrationScreen: View {
                 .padding(.bottom, 130)
                 
                 // الانتقال إلى الصفحات باستخدام NavigationLink
-                NavigationLink(
-                    destination: CategoriesScreen(),
-                    isActive: $viewModel.navigateToCategories
-                ) { EmptyView() }
+                NavigationStack {
+                    NavigationLink(value: viewModel.navigateToCategories) {
+                        EmptyView() // Or any UI component triggering navigation
+                    }
+                    .navigationDestination(for: Bool.self) { value in
+                        if value {
+                            CategoriesScreen()
+                        } else {
+                            EmptyView()
+                        }
+                    }
+                }
 
-                NavigationLink(
-                    destination: ColoringScreen(),
-                    isActive: $viewModel.navigateToColoring
-                ) { EmptyView() }
+                NavigationStack {
+                    NavigationLink(value: viewModel.navigateToColoring) {
+                        EmptyView() // Or any UI element that triggers navigation
+                    }
+                    .navigationDestination(for: Bool.self) { value in
+                        if value {
+                            ColoringScreen()
+                        } else {
+                            EmptyView()
+                        }
+                    }
+                }
             }
         }
     }

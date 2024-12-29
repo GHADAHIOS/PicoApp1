@@ -35,7 +35,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		69F860632D115233000C4241 /* Exceptions for "PicoApp1" folder in "PicoApp1" target */ = {
+		17C24D3A2D21AD46000E59D8 /* Exceptions for "PicoApp1" folder in "PicoApp1" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -48,7 +48,7 @@
 		6978164E2D0EB519000B7AC1 /* PicoApp1 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				69F860632D115233000C4241 /* Exceptions for "PicoApp1" folder in "PicoApp1" target */,
+				17C24D3A2D21AD46000E59D8 /* Exceptions for "PicoApp1" folder in "PicoApp1" target */,
 			);
 			path = PicoApp1;
 			sourceTree = "<group>";
@@ -418,19 +418,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = PicoApp1/PicoApp1.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"PicoApp1/Preview Content\"";
-				DEVELOPMENT_TEAM = SG894QZK76;
+				DEVELOPMENT_TEAM = H5B8Y4T9NK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PicoApp1/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "\"We need microphone access to capture your voice.\"";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to save images.";
-				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "\"We need access to speech recognition to process voice commands.”";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to save images";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "We need access to speech recognition to process voice commands.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -457,19 +457,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = PicoApp1/PicoApp1.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"PicoApp1/Preview Content\"";
-				DEVELOPMENT_TEAM = SG894QZK76;
+				DEVELOPMENT_TEAM = H5B8Y4T9NK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PicoApp1/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "\"We need microphone access to capture your voice.\"";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to save images.";
-				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "\"We need access to speech recognition to process voice commands.”";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to save images";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "We need access to speech recognition to process voice commands.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

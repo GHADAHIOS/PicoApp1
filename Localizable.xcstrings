@@ -7,9 +7,6 @@
     "%lld" : {
 
     },
-    "Add Item" : {
-
-    },
     "Animals" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -72,7 +69,7 @@
       }
     },
     "Delete" : {
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -129,9 +126,6 @@
           }
         }
       }
-    },
-    "Item at %@" : {
-
     },
     "Light Blue" : {
       "localizations" : {
@@ -222,6 +216,9 @@
         }
       }
     },
+    "Say Start" : {
+
+    },
     "Say the category you want to color" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -249,14 +246,11 @@
         }
       }
     },
-    "Select an item" : {
-
-    },
     "Selected Pixel Art: %@" : {
 
     },
     "Share" : {
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -307,7 +301,7 @@
       }
     },
     "Well done, genius! Keep going!" : {
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {

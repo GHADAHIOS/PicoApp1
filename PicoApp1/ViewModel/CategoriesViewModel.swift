@@ -1,7 +1,6 @@
 import SwiftUI
 import Speech
 import AVFoundation
-
 class CategoriesViewModel: ObservableObject {
     @Published var isRecording = false
     @Published var selectedCategory: String? = nil

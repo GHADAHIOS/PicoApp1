@@ -16,7 +16,6 @@ class PixelArtViewModel: UIView {
     var onColorChanged: (() -> Void)? // Closure to notify color changes
    // @Environment(\.modelContext) private var modelContext
     var modelContext: ModelContext // Store the model context
-
     
     init(frame: CGRect, pixelArt: PixelArt, selectedColor: UIColor, modelContext: ModelContext) {
          self.pixelArt = pixelArt

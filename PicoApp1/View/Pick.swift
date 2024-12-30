@@ -28,7 +28,6 @@ struct Pick: View {
                 VStack {
                     // Upper Section: Navigation Button & Character
                     HStack {
-
                         Spacer()
 
                         HStack {
@@ -103,6 +102,7 @@ struct Pick: View {
             }
             .onAppear {
                 startListening()
+                playOnAppearSound() // Play sound when the view appears
             }
             .navigationDestination(isPresented: $navigateToCategories) {
                 CategoriesScreen()
@@ -143,6 +143,20 @@ struct Pick: View {
             audioPlayer?.play()
         } catch {
             print("Error playing sound: \(error)")
+        }
+    }
+
+    func playOnAppearSound() {
+        guard let soundURL = Bundle.main.url(forResource: "Hi", withExtension: "mp3") else {
+            print("Sound file not found!")
+            return
+        }
+
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
+            audioPlayer?.play()
+        } catch {
+            print("Error playing onAppear sound: \(error)")
         }
     }
 

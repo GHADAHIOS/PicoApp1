@@ -57,93 +57,44 @@ struct PixelArtDynmicView: View {
     @State private var selectedColor: Color = .blue
     @Environment(\.modelContext) private var modelContext // Access the model context
     @State private var showDetailView = false // Control navigation
-    @State private var showDrawingsScreen = false // Navigate to DrawingsScreen
-    @State private var showCategoriesScreen = false // Navigate to CategoriesScreen
 
-    private let colorOptions: [Color] = [.blue, .red, .green, .yellow, .orange, .purple, .brown, .pink]
+    private let colorOptions: [Color] = [ .red, .green, .blue]
     private let availablePixelArtFiles = ["pixelart", "pixelart2", "pixelart3"]
 
     var body: some View {
         NavigationStack {
-            VStack {
+            HStack {
+                
                 // Top section with buttons on both sides
+                
+
                 HStack {
-                    // Button on the left
-                    Button {
-                        showCategoriesScreen = true // Navigate to CategoriesScreen
-                    } label: {
-                        VStack {
-                            ZStack {
-                                Circle()
-                                    .fill(Color.inspire)
-                                    .frame(width: 100, height: 100)
-                                    .offset(x: -3, y: 3)
 
-                                Circle()
-                                    .fill(Color.binspire)
-                                    .frame(width: 100, height: 100)
-                                    .padding(5)
+                    Spacer()
 
-                                Image(systemName: "circle.grid.2x2")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 50, height: 50)
-                                    .foregroundColor(.white)
-                            }
-                            Text("Category")
-                                .font(.title2)
-                                .fontWeight(.bold)
-                                .foregroundColor(.black)
+                    HStack {
+                        Image("Pico")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 115, height: 115)
+                            .offset(x: 820, y: 50)
+
+                        ZStack {
+                            Image("cloud")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 880.0, height: 326)
+                                .scaleEffect(x: -1)
+                                .offset(x: -170, y: -20)
+                            Text("Say a drawing number to color")
+                                .font(.title)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.font1)
+                                .multilineTextAlignment(.center)
+                                .offset(x: -170, y: -20)
                         }
                     }
-                    .padding(.leading, 20) // Add spacing to the left
-                    .background(
-                        NavigationLink(destination: CategoriesScreen(), isActive: $showCategoriesScreen) {
-                            EmptyView()
-                        }
-                    )
-
-                    Spacer() // Push the buttons apart
-
-                    // Button on the right
-                    Button {
-                        showDrawingsScreen = true // Navigate to DrawingsScreen
-                    } label: {
-                        VStack {
-                            ZStack {
-                                Circle()
-                                    .fill(Color.inspire)
-                                    .frame(width: 100, height: 100)
-                                    .offset(x: 3, y: 3)
-
-                                Circle()
-                                    .fill(Color.binspire)
-                                    .frame(width: 100, height: 100)
-                                    .padding(5)
-
-                                Image(systemName: "paintbrush.fill")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 50, height: 50)
-                                    .foregroundColor(.white)
-                            }
-                            Text("Drawings")
-                                .font(.title2)
-                                .fontWeight(.bold)
-                                .foregroundColor(.black)
-                        }
-                    }
-                    .padding(.trailing, 20) // Add spacing to the right
-                    .background(
-                        NavigationLink(destination: DrawingsScreen(selectedCategory: "Space"), isActive: $showDrawingsScreen) {
-                            EmptyView()
-                        }
-                    )
                 }
-                .padding(.top, 20) // Add spacing to the top
-
-                Spacer()
-
                 // Pixel art display and editing
                 if let pixelArt = pixelArt {
                     PixelArtViewRepresentable(
@@ -151,14 +102,14 @@ struct PixelArtDynmicView: View {
                         selectedColor: UIColor(self.selectedColor),
                         modelContext: modelContext
                     )
-                    .frame(width: 500, height: 500) // زيادة حجم الإطار
+                    .frame(width: 650, height: 650) // زيادة حجم الإطار
 
                     .border(Color.black, width: 1)
-                    .padding()
+                    .padding(.leading, 100)
                 }
 
                 // Color selection buttons and Save button
-                HStack(spacing: 40) {
+                VStack(spacing: 40) {
                     ForEach(colorOptions, id: \.self) { color in
                         Button(action: {
                             self.selectedColor = color
@@ -174,11 +125,12 @@ struct PixelArtDynmicView: View {
                                     .shadow(color: Color.black, radius: 1)
                             }
                         }
+                        
                     }
-
+                    .padding(.leading,36)
                     // Save and navigate button
                     VStack {
-                        Spacer() // رفع الزر
+                         // رفع الزر
 
                         Button(action: {
                             if let pixelArt = pixelArt {
@@ -186,26 +138,28 @@ struct PixelArtDynmicView: View {
                                 showDetailView = true // إعداد الانتقال بعد الحفظ
                             }
                         }) {
-                            Image(systemName: "checkmark")
-                                .font(.largeTitle)
-                                .fontWeight(.bold)
-                                .foregroundColor(.white)
-                                .frame(width: 100, height: 100)
-                                .background(
-                                    ZStack {
-                                        Circle()
-                                            .fill(Color.green1)
-                                            .frame(width: 100, height: 100)
-                                            .offset(x: 3, y: 3)
+            Image(systemName: "checkmark")
+                    .font(.largeTitle)
+                .fontWeight(.bold)
+                .foregroundColor(.white)
+                .frame(width: 200, height: 200)
+                .background(
+                    ZStack {
+                    Circle()
+                        .fill(Color.green1)
+                        .frame(width: 100, height: 100)
+.offset(x: 3, y: 3)
 
-                                        Circle()
-                                            .fill(Color.green)
-                                            .frame(width: 100, height: 100)
-                                            .padding(5)
+            Circle()
+                    .fill(Color.green)
+            .frame(width: 100, height: 100)
+                .padding(5)
                                     }
                                 )
                         }
-                        .padding(.bottom, 20) // حشو أسفل الزر
+                       
+                        .padding(.leading,36)
+
                     }
 
                     NavigationLink(destination: UpdatePixelArtView(pixelArt: $pixelArt), isActive: $showDetailView) {

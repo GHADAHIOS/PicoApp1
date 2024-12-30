@@ -20,6 +20,7 @@ class CategoriesViewModel: ObservableObject {
     let categories: [Category] = [
         Category(name: "Space", imageName: "earth", color: Color.shine),
         Category(name: "Food", imageName: "dounat", color: Color.hope),
+        Category(name: "Animals", imageName: "butterflycoloring", color: Color.brave),
         Category(name: "Animals", imageName: "butterflycoloring", color: Color.brave)
     ]
     

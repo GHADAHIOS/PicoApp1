@@ -66,7 +66,7 @@ struct CategoriesScreen: View {
                                         .foregroundColor(.white)
                                         .frame(width: 165, height: 58.03)
                                 }
-                                .frame(width: 340, height: 400)
+                                .frame(width: 288, height: 360)
                                 .background(category.color)
                                 .cornerRadius(18)
                                 .shadow(color: category.color.opacity(0.5), radius: 10, x: 0, y: 3)

@@ -51,7 +51,9 @@ struct DrawingsScreen: View {
                                 .scaledToFit()
                                 .frame(width: 115, height: 115)
                                 .scaleEffect(x: -1)
-                                .offset(x: -80, y: 50)
+                                .offset(x: 903, y: 70)
+                            
+                            
 
                             ZStack {
                                 Image("cloud")

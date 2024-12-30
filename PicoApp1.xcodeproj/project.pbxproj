@@ -45,6 +45,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		17C24ECB2D229CCF000E59D8 /* new */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = new;
+			sourceTree = "<group>";
+		};
 		6978164E2D0EB519000B7AC1 /* PicoApp1 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -93,6 +98,7 @@
 		697816432D0EB519000B7AC1 = {
 			isa = PBXGroup;
 			children = (
+				17C24ECB2D229CCF000E59D8 /* new */,
 				69858D3F2D17F90600167F19 /* Localizable.xcstrings */,
 				6978164E2D0EB519000B7AC1 /* PicoApp1 */,
 				697816612D0EB51A000B7AC1 /* PicoApp1Tests */,
@@ -127,6 +133,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				17C24ECB2D229CCF000E59D8 /* new */,
 				6978164E2D0EB519000B7AC1 /* PicoApp1 */,
 			);
 			name = PicoApp1;

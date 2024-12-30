@@ -92,6 +92,7 @@ struct PixelArtDynmicView: View {
                                 .foregroundColor(.font1)
                                 .multilineTextAlignment(.center)
                                 .offset(x: -170, y: 15)
+                            
                         }
                     }
                 }
@@ -104,10 +105,10 @@ struct PixelArtDynmicView: View {
                             selectedColor: UIColor(self.selectedColor),
                             modelContext: modelContext
                         )
-                        .frame(width: 650, height: 650) // زيادة حجم الإطار
+                        .frame(width: 600, height: 600) // زيادة حجم الإطار
                         
                         .border(Color.black, width: 1)
-                       .padding(.leading, 350)
+                       .padding(.leading, 300)
                        .padding(.bottom, 200)
                     }
                     

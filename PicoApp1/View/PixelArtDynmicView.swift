@@ -63,7 +63,7 @@ struct PixelArtDynmicView: View {
 
     var body: some View {
         NavigationStack {
-            HStack {
+            VStack {
                 
                 // Top section with buttons on both sides
                 
@@ -85,86 +85,90 @@ struct PixelArtDynmicView: View {
                                 .scaledToFit()
                                 .frame(width: 880.0, height: 326)
                                 .scaleEffect(x: -1)
-                                .offset(x: -170, y: -20)
+                                .offset(x: -170, y: 10)
                             Text("Say a drawing number to color")
                                 .font(.title)
                                 .fontWeight(.semibold)
                                 .foregroundColor(.font1)
                                 .multilineTextAlignment(.center)
-                                .offset(x: -170, y: -20)
+                                .offset(x: -170, y: 15)
                         }
                     }
                 }
-                // Pixel art display and editing
-                if let pixelArt = pixelArt {
-                    PixelArtViewRepresentable(
-                        pixelArt: pixelArt,
-                        selectedColor: UIColor(self.selectedColor),
-                        modelContext: modelContext
-                    )
-                    .frame(width: 650, height: 650) // زيادة حجم الإطار
-
-                    .border(Color.black, width: 1)
-                    .padding(.leading, 100)
-                }
-
-                // Color selection buttons and Save button
-                VStack(spacing: 40) {
-                    ForEach(colorOptions, id: \.self) { color in
-                        Button(action: {
-                            self.selectedColor = color
-                        }) {
-                            ZStack {
-                                Circle()
-                                    .fill(color)
-                                    .frame(width: 70, height: 70)
-
-                                Circle()
-                                    .stroke(Color.white, lineWidth: 6)
-                                    .frame(width: 70, height: 70)
-                                    .shadow(color: Color.black, radius: 1)
+                
+                HStack{
+                    // Pixel art display and editing
+                    if let pixelArt = pixelArt {
+                        PixelArtViewRepresentable(
+                            pixelArt: pixelArt,
+                            selectedColor: UIColor(self.selectedColor),
+                            modelContext: modelContext
+                        )
+                        .frame(width: 650, height: 650) // زيادة حجم الإطار
+                        
+                        .border(Color.black, width: 1)
+                       .padding(.leading, 350)
+                       .padding(.bottom, 200)
+                    }
+                    
+                    // Color selection buttons and Save button
+                    VStack(spacing: 30) {
+                        ForEach(colorOptions, id: \.self) { color in
+                            Button(action: {
+                                self.selectedColor = color
+                            }) {
+                                ZStack {
+                                    Circle()
+                                        .fill(color)
+                                        .frame(width: 70, height: 70)
+                                    
+                                    Circle()
+                                        .stroke(Color.white, lineWidth: 6)
+                                        .frame(width: 70, height: 70)
+                                        .shadow(color: Color.black, radius: 1)
+                                }
                             }
+                            
+                        }
+                    //    .padding(.leading,36)
+                        // Save and navigate button
+                        VStack {
+                            // رفع الزر
+                            
+                            Button(action: {
+                                if let pixelArt = pixelArt {
+                                    savePixelArtToDatabase(pixelArt: pixelArt)
+                                    showDetailView = true // إعداد الانتقال بعد الحفظ
+                                }
+                            }) {
+                                Image(systemName: "checkmark")
+                                    .font(.largeTitle)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.white)
+                                    .frame(width: 200, height: 200)
+                                    .background(
+                                        ZStack {
+                                            Circle()
+                                                .fill(Color.green1)
+                                                .frame(width: 100, height: 100)
+                                                .offset(x: 3, y: 3)
+                                            
+                                            Circle()
+                                                .fill(Color.green)
+                                                .frame(width: 100, height: 100)
+                                                .padding(5)
+                                        }
+                                    )
+                            }
+                            
+                          
+                            
                         }
                         
-                    }
-                    .padding(.leading,36)
-                    // Save and navigate button
-                    VStack {
-                         // رفع الزر
-
-                        Button(action: {
-                            if let pixelArt = pixelArt {
-                                savePixelArtToDatabase(pixelArt: pixelArt)
-                                showDetailView = true // إعداد الانتقال بعد الحفظ
-                            }
-                        }) {
-            Image(systemName: "checkmark")
-                    .font(.largeTitle)
-                .fontWeight(.bold)
-                .foregroundColor(.white)
-                .frame(width: 200, height: 200)
-                .background(
-                    ZStack {
-                    Circle()
-                        .fill(Color.green1)
-                        .frame(width: 100, height: 100)
-.offset(x: 3, y: 3)
-
-            Circle()
-                    .fill(Color.green)
-            .frame(width: 100, height: 100)
-                .padding(5)
-                                    }
-                                )
+                        NavigationLink(destination: UpdatePixelArtView(pixelArt: $pixelArt), isActive: $showDetailView) {
+                            EmptyView() // رابط التنقل المخفي
                         }
-                       
-                        .padding(.leading,36)
-
-                    }
-
-                    NavigationLink(destination: UpdatePixelArtView(pixelArt: $pixelArt), isActive: $showDetailView) {
-                        EmptyView() // رابط التنقل المخفي
-                    }
+                    }.padding(.leading, 50)
                 }
                 .padding(.horizontal, 20)
             }

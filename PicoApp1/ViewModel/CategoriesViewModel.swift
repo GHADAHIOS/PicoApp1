@@ -46,14 +46,26 @@ class CategoriesViewModel: ObservableObject {
         guard !audioEngine.isRunning else { return }
         
         // إعداد الجلسة الصوتية
+//        let audioSession = AVAudioSession.sharedInstance()
+//        do {
+//            try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
+//            try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
+//        } catch {
+//            print("Failed to configure audio session: \(error.localizedDescription)")
+//            return
+//        }
+//
+        
         let audioSession = AVAudioSession.sharedInstance()
         do {
-            try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
+            try audioSession.setCategory(.playAndRecord, mode: .measurement, options: [.defaultToSpeaker, .allowBluetooth])
             try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
         } catch {
-            print("Failed to configure audio session: \(error.localizedDescription)")
+            print("Failed to configure AVAudioSession: \(error.localizedDescription)")
             return
         }
+        
+        
         
         recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
         guard let recognitionRequest = recognitionRequest else {
@@ -81,6 +93,8 @@ class CategoriesViewModel: ObservableObject {
         
         let inputNode = audioEngine.inputNode
         inputNode.removeTap(onBus: 0) // تنظيف أي تبويبات قديمة
+        
+        
         let recordingFormat = inputNode.outputFormat(forBus: 0)
         inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { buffer, _ in
             self.recognitionRequest?.append(buffer)

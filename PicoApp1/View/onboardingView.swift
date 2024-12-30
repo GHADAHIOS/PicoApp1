@@ -1,7 +1,8 @@
 import SwiftUI
 import Speech
+import AVFoundation
 
-class OnboardingViewModel: ObservableObject {
+class onboardingViewModel: ObservableObject {
     @Published var navigateToCategories = false
     private let speechRecognizer = SFSpeechRecognizer()
     private var recognitionTask: SFSpeechRecognitionTask?
@@ -10,29 +11,59 @@ class OnboardingViewModel: ObservableObject {
     // قائمة الأوامر الصوتية المدعومة
     var voiceCommands: [String] = ["start", "begin", "go", "ابدأ"] // يمكنك إضافة المزيد من الأوامر هنا
 
+    // طلب إذن لاستخدام التعرف على الصوت
     func startListening() {
-        // طلب إذن لاستخدام التعرف على الصوت
         SFSpeechRecognizer.requestAuthorization { status in
-            if status == .authorized {
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                if status == .authorized {
                     self.record()
+                } else {
+                    print("لم يتم منح إذن التعرف على الصوت.")
                 }
-            } else {
-                print("لم يتم منح إذن التعرف على الصوت.")
             }
         }
     }
 
+    // إعداد وبدء التسجيل
     private func record() {
+        // التأكد من أن SFSpeechRecognizer متاح
         guard let recognizer = speechRecognizer, recognizer.isAvailable else {
             print("التعرف على الصوت غير متاح.")
             return
         }
 
+        // إعداد AVAudioSession
+        do {
+            let audioSession = AVAudioSession.sharedInstance()
+            try audioSession.setCategory(.playAndRecord, mode: .measurement, options: [.defaultToSpeaker, .allowBluetooth])
+            try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
+        } catch {
+            print("فشل في إعداد AVAudioSession: \(error.localizedDescription)")
+            return
+        }
+
+        // إعداد طلب التعرف على الصوت
         let request = SFSpeechAudioBufferRecognitionRequest()
         let inputNode = audioEngine.inputNode
         request.shouldReportPartialResults = true
 
+        // تحقق من تنسيق الصوت
+        let format = inputNode.outputFormat(forBus: 0)
+        guard format.sampleRate > 0 && format.channelCount > 0 else {
+            print("تنسيق الصوت غير صالح: SampleRate=\(format.sampleRate), ChannelCount=\(format.channelCount)")
+            stopListening()
+            return
+        }
+
+        // إزالة التبويبات القديمة
+        inputNode.removeTap(onBus: 0)
+
+        // تثبيت التبويب الجديد
+        inputNode.installTap(onBus: 0, bufferSize: 1024, format: format) { buffer, _ in
+            request.append(buffer)
+        }
+
+        // بدء مهمة التعرف على الصوت
         recognitionTask = recognizer.recognitionTask(with: request) { result, error in
             if let error = error {
                 print("حدث خطأ أثناء التعرف على الصوت: \(error.localizedDescription)")
@@ -52,11 +83,7 @@ class OnboardingViewModel: ObservableObject {
             }
         }
 
-        let format = inputNode.outputFormat(forBus: 0)
-        inputNode.installTap(onBus: 0, bufferSize: 1024, format: format) { buffer, _ in
-            request.append(buffer)
-        }
-
+        // بدء محرك الصوت
         do {
             try audioEngine.start()
             print("بدأ الاستماع...")
@@ -65,15 +92,18 @@ class OnboardingViewModel: ObservableObject {
         }
     }
 
+    // إيقاف الاستماع
     func stopListening() {
         audioEngine.stop()
+        audioEngine.inputNode.removeTap(onBus: 0)  // إزالة التبويب
         recognitionTask?.cancel()
+        recognitionTask = nil
         print("توقف الاستماع.")
     }
 }
 
 struct onboardingView: View {
-    @StateObject private var viewModel = OnboardingViewModel()
+    @StateObject private var viewModel = onboardingViewModel()
 
     var body: some View {
         NavigationStack {
@@ -125,15 +155,11 @@ struct onboardingView: View {
                     
                     NavigationLink(destination: CategoriesScreen(), isActive: $viewModel.navigateToCategories) {
                         HStack {
-                            
-                            
                             Text("Start")
                                 .font(.largeTitle)
                                 .fontWeight(.bold)
                                 .foregroundColor(Color.white)
                                 .shadow(color: Color.black.opacity(0.5), radius: 5, x: 2, y: 2)
-                            
-                          
                         }
                         .padding(.horizontal, 80)
                     }
@@ -146,7 +172,6 @@ struct onboardingView: View {
         }
     }
 }
-
 
 #Preview {
     onboardingView()

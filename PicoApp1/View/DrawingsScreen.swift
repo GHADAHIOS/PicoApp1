@@ -135,7 +135,7 @@ struct DrawingsScreen: View {
                 CategoriesScreen()
             }
             .navigationDestination(isPresented: $viewModel.navigateToColoring) {
-                PixelArtDynmicView()
+                PixelArtDynmicView(fileName: "pixelart")
             }
         }
         .onAppear {

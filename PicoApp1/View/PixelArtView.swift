@@ -156,42 +156,42 @@ struct PixelArtView: View {
                         VStack(spacing: 10)
                         {
                             
-                            NavigationLink(destination: CellarbrationScreen(image: $gridImage),isActive: $isNavigatingToCollaborationScreen) {
-                                VStack {
-                                    ZStack {
-                                        Circle()
-                                            .fill(Color.green)
-                                            .frame(width: 77, height: 73)
-                                            .offset(x: 3, y: 3)
-                                        
-                                        Circle()
-                                            .fill(Color.green)
-                                            .frame(width: 77, height: 70)
-                                            .padding(5)
-                                        
-                                        Image(systemName: "checkmark")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 40, height: 40)
-                                            .foregroundColor(.white)
-                                    }
-                                    Text("Done")
-                                        .font(.title2)
-                                        .fontWeight(.bold)
-                                        .foregroundColor(.black)
-                                } .onTapGesture {
-                                    // Capture the snapshot before navigation
-                                    if let capturedImage = captureSnapshot() {
-                                        gridImage = capturedImage
-                                        isNavigatingToCollaborationScreen = true
-                                    }
-                                    
-                                }
-                                
-                            }
-                            .padding()
-                            .frame(width: 120)
-                            .cornerRadius(10)
+//                            NavigationLink(destination:  CellarbrationScreen(pixelArt: $pixelArt),isActive: $isNavigatingToCollaborationScreen) {
+//                                VStack {
+//                                    ZStack {
+//                                        Circle()
+//                                            .fill(Color.green)
+//                                            .frame(width: 77, height: 73)
+//                                            .offset(x: 3, y: 3)
+//                                        
+//                                        Circle()
+//                                            .fill(Color.green)
+//                                            .frame(width: 77, height: 70)
+//                                            .padding(5)
+//                                        
+//                                        Image(systemName: "checkmark")
+//                                            .resizable()
+//                                            .scaledToFit()
+//                                            .frame(width: 40, height: 40)
+//                                            .foregroundColor(.white)
+//                                    }
+//                                    Text("Done")
+//                                        .font(.title2)
+//                                        .fontWeight(.bold)
+//                                        .foregroundColor(.black)
+//                                } .onTapGesture {
+//                                    // Capture the snapshot before navigation
+//                                    if let capturedImage = captureSnapshot() {
+//                                        gridImage = capturedImage
+//                                        isNavigatingToCollaborationScreen = true
+//                                    }
+//                                    
+//                                }
+//                                
+//                            }
+                           // .padding()
+                           // .frame(width: 120)
+                            //.cornerRadius(10)
                             
                             
 //                            Button {

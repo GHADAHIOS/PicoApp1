@@ -38,6 +38,7 @@ struct PixelArtViewRepresentable: UIViewRepresentable {
     var selectedColor: UIColor
     var onColorChanged: (() -> Void)?
     var modelContext: ModelContext
+    @State var fileName: String
 
     func makeUIView(context: Context) -> PixelArtViewModel {
         let view = PixelArtViewModel(frame: .zero, pixelArt: pixelArt, selectedColor: selectedColor, modelContext: modelContext)
@@ -57,6 +58,7 @@ struct PixelArtDynmicView: View {
     @State private var selectedColor: Color = .blue
     @Environment(\.modelContext) private var modelContext // Access the model context
     @State private var showDetailView = false // Control navigation
+    var fileName: String //
 
     private let colorOptions: [Color] = [ .red, .green, .blue]
     private let availablePixelArtFiles = ["pixelart", "pixelart2", "pixelart3"]
@@ -103,7 +105,7 @@ struct PixelArtDynmicView: View {
                         PixelArtViewRepresentable(
                             pixelArt: pixelArt,
                             selectedColor: UIColor(self.selectedColor),
-                            modelContext: modelContext
+                            modelContext: modelContext, fileName: "pixelart"
                         )
                         .frame(width: 600, height: 600) // زيادة حجم الإطار
                         
@@ -166,7 +168,7 @@ struct PixelArtDynmicView: View {
                             
                         }
                         
-                        NavigationLink(destination: UpdatePixelArtView(pixelArt: $pixelArt), isActive: $showDetailView) {
+                        NavigationLink(destination: CellarbrationScreen(pixelArt: $pixelArt), isActive: $showDetailView) {
                             EmptyView() // رابط التنقل المخفي
                         }
                     }.padding(.leading, 50)
@@ -175,9 +177,9 @@ struct PixelArtDynmicView: View {
             }
             .padding()
             .onAppear {
-                if let firstFile = availablePixelArtFiles.first {
-                    self.loadPixelArt(from: firstFile)
-                }
+               // if let firstFile = availablePixelArtFiles.first {
+                    self.loadPixelArt(from: fileName)
+               /// }
             }
             .navigationBarBackButtonHidden(true)
         }
@@ -212,5 +214,5 @@ struct PixelArtDynmicView: View {
 }
 
 #Preview {
-    PixelArtDynmicView()
+    PixelArtDynmicView(fileName: "pixelart")
 }

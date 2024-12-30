@@ -80,6 +80,7 @@
       }
     },
     "Done" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -136,6 +137,9 @@
           }
         }
       }
+    },
+    "No Pixel Art found." : {
+
     },
     "No Pixel Art selected." : {
 
@@ -197,6 +201,7 @@
       }
     },
     "Save" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -299,6 +304,9 @@
           }
         }
       }
+    },
+    "Well Done , Amazing art" : {
+
     },
     "Well done, genius! Keep going!" : {
       "extractionState" : "manual",

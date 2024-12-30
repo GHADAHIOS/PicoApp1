@@ -16,10 +16,16 @@ struct Pick: View {
 
     @State private var clickedCard: Int? = nil // Track the clicked card for animation
     @State private var audioPlayer: AVAudioPlayer?
-
+ 
     let voiceCommands = ["one", "two", "three", "four", "categories"]
     let cardColors: [Color] = [.shine, .hope, .brave, .binspire] // Colors for the cards
-
+    
+  
+    
+    
+  
+    
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -105,19 +111,19 @@ struct Pick: View {
                 playOnAppearSound() // Play sound when the view appears
             }
             .navigationDestination(isPresented: $navigateToCategories) {
-                CategoriesScreen()
+                PixelArtDynmicView(fileName: "Animals_1")
             }
             .navigationDestination(isPresented: $navigateToColoring1) {
-                ColoringScreen()
+                PixelArtDynmicView(fileName: "Animals_3")
             }
             .navigationDestination(isPresented: $navigateToColoring2) {
-                ColoringScreen()
+                PixelArtDynmicView(fileName: "Food_1")
             }
             .navigationDestination(isPresented: $navigateToColoring3) {
-                ColoringScreen()
+                PixelArtDynmicView(fileName: "pixelart")
             }
             .navigationDestination(isPresented: $navigateToColoring4) {
-                ColoringScreen()
+                PixelArtDynmicView(fileName: "")
             }
         }
     }

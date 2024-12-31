@@ -24,32 +24,35 @@ struct Pick: View {
                 VStack {
                     // واجهة المستخدم العلوية (الشعار والنص)
                     HStack {
-                        Spacer()
                         HStack {
-                            Image("Pico")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 115, height: 115)
-                                .offset(x: 820, y: 50)
-
+                         
                             ZStack {
                                 Image("cloud")
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: 880.0, height: 326)
+                                    .frame(width: 713, height: 126)
                                     .scaleEffect(x: -1)
-                                    .offset(x: -170, y: -20)
-                                Text("قل رقم الرسم للتلوين")
+//                                    .padding(.bottom, 38.0)
+                    Text("قل رقم الرسم للتلوين")
                                     .font(.title)
                                     .fontWeight(.semibold)
                                     .foregroundColor(.font1)
                                     .multilineTextAlignment(.center)
-                                    .offset(x: -170, y: -20)
                             }
+                            Image("Pico")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 115, height: 115)
+                                .padding(.top, 80)
+                                .padding(.leading, -40.0)
+
+                            
                         }
+                        .padding(.horizontal, 1000)
+                        .padding(.top, 80)
                     }
 
-                    Spacer()
+                    Spacer(minLength: 20)
 
                     // بطاقات الأرقام
                     HStack(spacing: 10) {
@@ -77,8 +80,10 @@ struct Pick: View {
                                         .font(.largeTitle)
                                         .fontWeight(.bold)
                                         .foregroundColor(.white)
-                                        .offset(y: 150) // وضع النص تحت المستطيل الأبيض
+                                        .padding(.top, 290.0)
+
                                 }
+                                .padding(.bottom, 242.0)
                             }
                             .opacity(clickedCard == nil || clickedCard == number ? 1.0 : 0.3)
                             .padding(.top, clickedCard == number ? 0 : 50)

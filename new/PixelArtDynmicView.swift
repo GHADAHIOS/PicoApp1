@@ -71,32 +71,32 @@ struct PixelArtDynmicView: View {
                 
 
                 HStack {
-
-                    Spacer()
-
                     HStack {
-                        Image("Pico")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 115, height: 115)
-                            .offset(x: 820, y: 50)
-
+                     
                         ZStack {
                             Image("cloud")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 880.0, height: 326)
+                                .frame(width: 713, height: 126)
                                 .scaleEffect(x: -1)
-                                .offset(x: -170, y: 10)
-                            Text("Say a drawing number to color")
+//                                    .padding(.bottom, 38.0)
+                Text("قل رقم الرسم للتلوين")
                                 .font(.title)
                                 .fontWeight(.semibold)
                                 .foregroundColor(.font1)
                                 .multilineTextAlignment(.center)
-                                .offset(x: -170, y: 15)
-                            
                         }
+                        Image("Pico")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 115, height: 115)
+                            .padding(.top, 80)
+                            .padding(.leading, -40.0)
+
+                        
                     }
+                    .padding(.horizontal, 1000)
+                    .padding(.top, 80)
                 }
                 
                 HStack{

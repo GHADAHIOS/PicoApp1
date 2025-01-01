@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		69858D402D17F90600167F19 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 69858D3F2D17F90600167F19 /* Localizable.xcstrings */; };
+		EFC217732D258161002B74D8 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = EFC217722D258161002B74D8 /* ConfettiSwiftUI */; };
+		EFC217752D258190002B74D8 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = EFC217742D258190002B74D8 /* ConfettiSwiftUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EFC217732D258161002B74D8 /* ConfettiSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,6 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EFC217752D258190002B74D8 /* ConfettiSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,6 +142,7 @@
 			);
 			name = PicoApp1;
 			packageProductDependencies = (
+				EFC217722D258161002B74D8 /* ConfettiSwiftUI */,
 			);
 			productName = PicoApp1;
 			productReference = 6978164C2D0EB519000B7AC1 /* PicoApp1.app */;
@@ -161,6 +166,7 @@
 			);
 			name = PicoApp1Tests;
 			packageProductDependencies = (
+				EFC217742D258190002B74D8 /* ConfettiSwiftUI */,
 			);
 			productName = PicoApp1Tests;
 			productReference = 6978165E2D0EB51A000B7AC1 /* PicoApp1Tests.xctest */;
@@ -222,6 +228,9 @@
 			);
 			mainGroup = 697816432D0EB519000B7AC1;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				EFC217712D258127002B74D8 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 6978164D2D0EB519000B7AC1 /* Products */;
 			projectDirPath = "";
@@ -610,6 +619,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EFC217712D258127002B74D8 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/simibac/ConfettiSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EFC217722D258161002B74D8 /* ConfettiSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EFC217712D258127002B74D8 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
+			productName = ConfettiSwiftUI;
+		};
+		EFC217742D258190002B74D8 /* ConfettiSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EFC217712D258127002B74D8 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
+			productName = ConfettiSwiftUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 697816442D0EB519000B7AC1 /* Project object */;
 }

@@ -49,6 +49,7 @@
       }
     },
     "Category" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -59,6 +60,7 @@
       }
     },
     "Colorings" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -307,7 +309,7 @@
         }
       }
     },
-    "Well Done , Amazing art" : {
+    "Well Done, Amazing Art!" : {
 
     },
     "Well done, genius! Keep going!" : {

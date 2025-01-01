@@ -114,7 +114,7 @@ struct PixelArtDynmicView: View {
                         .padding(.leading, -40.0)
                 }
                 .padding(.horizontal, 1000)
-                .padding(.top, 190)
+                .padding(.top, 200)
                 
                 HStack {
                     if let pixelArt = pixelArt {
@@ -149,7 +149,7 @@ struct PixelArtDynmicView: View {
                                 }
                             }
                         }
-                        NavigationLink(destination: CellarbrationScreen(pixelArt: $pixelArt), isActive: $showDetailView) {
+                        NavigationLink(destination: CelebrationScreen(pixelArt: $pixelArt), isActive: $showDetailView) {
                             
                             Button(action: {
                                 if let pixelArt = pixelArt {
@@ -166,12 +166,12 @@ struct PixelArtDynmicView: View {
                                         ZStack {
                                             Circle()
                                                 .fill(Color.green1)
-                                                .frame(width: 90, height: 90)
+                                                .frame(width: 100, height: 100)
                                                 .offset(x: 3, y: 3)
                                             
                                             Circle()
                                                 .fill(Color.green)
-                                                .frame(width: 90, height: 90)
+                                                .frame(width: 100, height: 100)
                                                 .padding(5)
                                         }
                                     )

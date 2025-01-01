@@ -1,9 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "" : {
-
-    },
     "%lld" : {
 
     },
@@ -19,6 +16,7 @@
       }
     },
     "Blue" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -29,6 +27,7 @@
       }
     },
     "Brown" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -39,6 +38,7 @@
       }
     },
     "Categories" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -119,6 +119,7 @@
       }
     },
     "Green" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -129,6 +130,7 @@
       }
     },
     "Light Blue" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -145,6 +147,7 @@
 
     },
     "Orange" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -155,6 +158,7 @@
       }
     },
     "Pink" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -168,6 +172,7 @@
 
     },
     "Purple" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -178,6 +183,7 @@
       }
     },
     "Red" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -187,10 +193,8 @@
         }
       }
     },
-    "Redo" : {
-
-    },
     "Reset" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -212,6 +216,7 @@
       }
     },
     "Say a drawing number to color" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -220,9 +225,6 @@
           }
         }
       }
-    },
-    "Say Start" : {
-
     },
     "Say the category you want to color" : {
       "extractionState" : "manual",
@@ -242,6 +244,7 @@
       }
     },
     "Say the number to color it" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -283,6 +286,7 @@
       }
     },
     "Start" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -292,10 +296,8 @@
         }
       }
     },
-    "Undo" : {
-
-    },
     "welcome to pico!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -330,6 +332,7 @@
       }
     },
     "Yellow" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {

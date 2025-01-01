@@ -149,32 +149,39 @@ struct PixelArtDynmicView: View {
                                 }
                             }
                         }
-                        
-                        Button(action: {
-                            if let pixelArt = pixelArt {
-                                savePixelArtToDatabase(pixelArt: pixelArt)
-                                showDetailView = true
+                        NavigationLink(destination: CellarbrationScreen(pixelArt: $pixelArt), isActive: $showDetailView) {
+                            
+                            Button(action: {
+                                if let pixelArt = pixelArt {
+                                    savePixelArtToDatabase(pixelArt: pixelArt)
+                                    showDetailView = true
+                                }
+                            }) {
+                                Image(systemName: "checkmark")
+                                    .font(.largeTitle)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.white)
+                                    .frame(width: 200, height: 200)
+                                    .background(
+                                        ZStack {
+                                            Circle()
+                                                .fill(Color.green1)
+                                                .frame(width: 100, height: 100)
+                                                .offset(x: 3, y: 3)
+                                            
+                                            Circle()
+                                                .fill(Color.green)
+                                                .frame(width: 100, height: 100)
+                                                .padding(5)
+                                        }
+                                    )
                             }
-                        }) {
-                            Image(systemName: "checkmark")
-                                .font(.largeTitle)
-                                .fontWeight(.bold)
-                                .foregroundColor(.white)
-                                .frame(width: 200, height: 200)
-                                .background(
-                                    ZStack {
-                                        Circle()
-                                            .fill(Color.green1)
-                                            .frame(width: 100, height: 100)
-                                            .offset(x: 3, y: 3)
-                                        
-                                        Circle()
-                                            .fill(Color.green)
-                                            .frame(width: 100, height: 100)
-                                            .padding(5)
-                                    }
-                                )
                         }
+                        
+//                       }
+//                        NavigationLink(destination: CellarbrationScreen(pixelArt: $pixelArt), isActive: $showDetailView) {
+//                            EmptyView() // رابط التنقل المخفي
+                        
                     }.padding(.leading, 50)
                 }
                 .padding(.horizontal, 20)

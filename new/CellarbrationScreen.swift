@@ -28,7 +28,7 @@ struct CelebrationScreen: View {
                             .scaleEffect(x: -1)
                             .offset(x: -30, y: -20)
                         
-                        Text("Well Done, Amazing Art!")
+                        Text("أحسنت عمل جميل ، إستمر يامبدع")
                             .font(.title)
                             .fontWeight(.semibold)
                             .foregroundColor(.font1)

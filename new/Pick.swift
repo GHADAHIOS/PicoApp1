@@ -15,6 +15,16 @@ struct Pick: View {
     @State private var audioPlayer: AVAudioPlayer?
     
     let cardColors: [Color] = [.shine, .hope, .brave, .binspire]
+    func getImageName(for number: Int) -> String {
+        switch number {
+        case 1: return "butterflyBW"
+        case 2: return "CATBW"
+        case 3: return "strawberryBW"
+        case 4: return "AppleBW"
+        default: return ""
+        }
+    }
+
     
     var body: some View {
         NavigationStack {
@@ -72,12 +82,24 @@ struct Pick: View {
                                         .fill(Color.white)
                                         .frame(width: 240, height: 250)
                                     
-                                    Text("\(number)")
-                                        .font(.largeTitle)
-                                        .fontWeight(.bold)
-                                        .foregroundColor(.white)
-                                        .padding(.top, 290.0)
+
+                                    VStack {
+                                        // Map the number to the corresponding image
+                                        Image(getImageName(for: number))
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 200, height: 150)
+                                            .padding(.top, 100)
+                                        
+                                        Text("\(number)")
+                                            .font(.largeTitle)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.white)
+                                            .padding(.top,50)
+                                    }
                                 }
+                                
+                                
                                 .padding(.bottom, 242.0)
                             }
                             .opacity(clickedCard == nil || clickedCard == number ? 1.0 : 0.3)
@@ -293,9 +315,6 @@ struct Pick: View {
 
     
 }
-
-
-
 
 
 // MARK: - Preview

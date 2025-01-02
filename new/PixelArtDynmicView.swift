@@ -1,9 +1,10 @@
-
 import SwiftUI
 import SwiftData
 import UIKit
 import Speech
 import AVFoundation
+
+var audioPlayer: AVAudioPlayer?
 
 extension UIColor {
     convenience init?(hex: String) {
@@ -23,6 +24,7 @@ extension UIColor {
             return nil
         }
     }
+    
 
     func toHex() -> String {
         guard let components = self.cgColor.components else {
@@ -406,7 +408,18 @@ struct PixelArtDynmicView: View {
     @State private var lastProcessedCommandTime: Date? = nil
     let debounceInterval: TimeInterval = 0.2  // Adjust this interval to suit your needs
 
-   
+    func playSound(for resource: String, ofType type: String) {
+        if let path = Bundle.main.path(forResource: resource, ofType: type) {
+            let url = URL(fileURLWithPath: path)
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: url)
+                audioPlayer?.play()
+            } catch {
+                print("Error: Could not play the sound file.")
+            }
+        }
+    }
+    
     func handleVoiceCommandV(_ command: String) {
         // Trim leading/trailing whitespace and remove duplicate words
         var trimmedCommand = removeDuplicateWords(from: command)
@@ -447,13 +460,24 @@ struct PixelArtDynmicView: View {
                 if let pixelArt = self.pixelArt {
                     self.colorAllPixels(withColor: .blue) // Trigger the coloring with blue
                 }
+                else if lastWord.contains("أربعة") || lastWord.contains("4") {
+                  
+                        self.selectedColor = .orange
+                        print("تم اختيار اللون الأزرق") // Arabic: Blue color selected
+                        if let pixelArt = self.pixelArt {
+                            self.colorAllPixels(withColor: .orange) // Trigger the coloring with blue
+                        }
+                }
+                
             } else if trimmedCommand.contains("ابدأ التلوين") || trimmedCommand.contains("start coloring") {
                 // Trigger coloring logic when the user says "ابدأ التلوين" or "start coloring"
                 if let pixelArt = self.pixelArt {
                     self.colorAllPixels(withColor: self.selectedColor) // Use the current selected color
                 }
                 print("تم بدء التلوين") // Arabic: Coloring started
-            } else if trimmedCommand.contains("حفظ") || trimmedCommand.contains("save") {
+            }
+            else if trimmedCommand.contains("حفظ") || trimmedCommand.contains("save") {
+                playSound(for: "Kids", ofType: "mp3") // Replace with the actual filename
                 if let pixelArt = self.pixelArt {
                     self.savePixelArtToDatabase(pixelArt: pixelArt)
                     self.showDetailView = true

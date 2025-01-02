@@ -309,9 +309,6 @@
         }
       }
     },
-    "Well Done, Amazing Art!" : {
-
-    },
     "Well done, genius! Keep going!" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -343,6 +340,9 @@
           }
         }
       }
+    },
+    "أحسنت عمل جميل ، إستمر يامبدع" : {
+
     },
     "العربية" : {
       "extractionState" : "manual",

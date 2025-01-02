@@ -213,14 +213,14 @@ struct CellarbrationScreen: View {
                 
                 // الانتقال إلى الصفحات باستخدام NavigationLink
                 NavigationLink(
-                    destination: CategoriesScreen(),
+                    destination: Pick(),
                     isActive: $viewModel.navigateToCategories
                 ) { EmptyView() }
 
-                NavigationLink(
-                    destination: ColoringScreen(),
-                    isActive: $viewModel.navigateToColoring
-                ) { EmptyView() }
+//                NavigationLink(
+//                    destination: ColoringScreen(),
+//                    isActive: $viewModel.navigateToColoring
+//                ) { EmptyView() }
             }
         }
     }
@@ -229,5 +229,5 @@ struct CellarbrationScreen: View {
 
 // Preview
 #Preview {
-    //CellarbrationScreen(pixelArt: "pixelArt")
+//    CellarbrationScreen(pixelArt: "pixelArt")
 }

@@ -32,8 +32,136 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "6"
             endingLineNumber = "6"
-            landmarkName = "CategoriesViewModel"
-            landmarkType = "3">
+            landmarkName = "unknown"
+            landmarkType = "0">
+            <Locations>
+               <Location
+                  uuid = "2868EBCF-7BA6-4F40-A6B8-0AA601F044F0 - 6e72b2ccb40f237c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "property wrapper backing initializer of PicoApp1.CategoriesViewModel.selectedCategory : Swift.Optional&lt;Swift.String&gt;"
+                  moduleName = "PicoApp1.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/reemaalhudaian/Documents/PicoApp1/PicoApp1/ViewModel/CategoriesViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+               <Location
+                  uuid = "2868EBCF-7BA6-4F40-A6B8-0AA601F044F0 - fbfd4f418e09a928"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PicoApp1.CategoriesViewModel.selectedCategory.getter : Swift.Optional&lt;Swift.String&gt;"
+                  moduleName = "PicoApp1.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/reemaalhudaian/Documents/PicoApp1/PicoApp1/ViewModel/CategoriesViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+               <Location
+                  uuid = "2868EBCF-7BA6-4F40-A6B8-0AA601F044F0 - f49e06f9f0207872"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PicoApp1.CategoriesViewModel.selectedCategory.setter : Swift.Optional&lt;Swift.String&gt;"
+                  moduleName = "PicoApp1.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/reemaalhudaian/Documents/PicoApp1/PicoApp1/ViewModel/CategoriesViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "6"
+                  endingLineNumber = "6">
+               </Location>
+               <Location
+                  uuid = "2868EBCF-7BA6-4F40-A6B8-0AA601F044F0 - a3acf35598390c61"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PicoApp1.CategoriesViewModel.selectedCategory.modify : Swift.Optional&lt;Swift.String&gt;"
+                  moduleName = "PicoApp1.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/reemaalhudaian/Documents/PicoApp1/PicoApp1/ViewModel/CategoriesViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "6"
+                  endingLineNumber = "6">
+               </Location>
+               <Location
+                  uuid = "2868EBCF-7BA6-4F40-A6B8-0AA601F044F0 - 7885df13ad7aed3e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PicoApp1.CategoriesViewModel.selectedCategory.modify : Swift.Optional&lt;Swift.String&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "PicoApp1.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///%3Ccompiler-generated%3E"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+               <Location
+                  uuid = "2868EBCF-7BA6-4F40-A6B8-0AA601F044F0 - a5972d64dae22bc4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PicoApp1.CategoriesViewModel.$selectedCategory.getter : Combine.Published&lt;Swift.Optional&lt;Swift.String&gt;&gt;.Publisher"
+                  moduleName = "PicoApp1.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/reemaalhudaian/Documents/PicoApp1/PicoApp1/ViewModel/CategoriesViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+               <Location
+                  uuid = "2868EBCF-7BA6-4F40-A6B8-0AA601F044F0 - 230147fda21f8a96"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PicoApp1.CategoriesViewModel.$selectedCategory.setter : Combine.Published&lt;Swift.Optional&lt;Swift.String&gt;&gt;.Publisher"
+                  moduleName = "PicoApp1.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/reemaalhudaian/Documents/PicoApp1/PicoApp1/ViewModel/CategoriesViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "6"
+                  endingLineNumber = "6">
+               </Location>
+               <Location
+                  uuid = "2868EBCF-7BA6-4F40-A6B8-0AA601F044F0 - 85c8e7beee69b285"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PicoApp1.CategoriesViewModel.$selectedCategory.modify : Combine.Published&lt;Swift.Optional&lt;Swift.String&gt;&gt;.Publisher"
+                  moduleName = "PicoApp1.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/reemaalhudaian/Documents/PicoApp1/PicoApp1/ViewModel/CategoriesViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "6"
+                  endingLineNumber = "6">
+               </Location>
+               <Location
+                  uuid = "2868EBCF-7BA6-4F40-A6B8-0AA601F044F0 - a69d2813f38a6c75"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PicoApp1.CategoriesViewModel.$selectedCategory.modify : Combine.Published&lt;Swift.Optional&lt;Swift.String&gt;&gt;.Publisher with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "PicoApp1.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///%3Ccompiler-generated%3E"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -48,8 +176,66 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "4"
             endingLineNumber = "4"
-            landmarkName = "CategoriesViewModel"
-            landmarkType = "3">
+            landmarkName = "unknown"
+            landmarkType = "0">
+            <Locations>
+               <Location
+                  uuid = "F0A6996B-D47B-4697-91B1-9A67875E141D - 84fcbab104ebbe6e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PicoApp1.CategoriesViewModel.deinit"
+                  moduleName = "PicoApp1.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/reemaalhudaian/Documents/PicoApp1/PicoApp1/ViewModel/CategoriesViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+               <Location
+                  uuid = "F0A6996B-D47B-4697-91B1-9A67875E141D - 552fb47573288bd3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PicoApp1.CategoriesViewModel.__deallocating_deinit"
+                  moduleName = "PicoApp1.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/reemaalhudaian/Documents/PicoApp1/PicoApp1/ViewModel/CategoriesViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+               <Location
+                  uuid = "F0A6996B-D47B-4697-91B1-9A67875E141D - c7459dbea387850e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PicoApp1.CategoriesViewModel.__allocating_init() -&gt; PicoApp1.CategoriesViewModel"
+                  moduleName = "PicoApp1.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/reemaalhudaian/Documents/PicoApp1/PicoApp1/ViewModel/CategoriesViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+               <Location
+                  uuid = "F0A6996B-D47B-4697-91B1-9A67875E141D - 8ee3533d50a8de54"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PicoApp1.CategoriesViewModel.init() -&gt; PicoApp1.CategoriesViewModel"
+                  moduleName = "PicoApp1.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/reemaalhudaian/Documents/PicoApp1/PicoApp1/ViewModel/CategoriesViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "10"
+                  endingLineNumber = "10">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -64,8 +250,168 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "5"
             endingLineNumber = "5"
-            landmarkName = "CategoriesViewModel"
-            landmarkType = "3">
+            landmarkName = "unknown"
+            landmarkType = "0">
+            <Locations>
+               <Location
+                  uuid = "5DB70842-BC41-4BDC-A206-44C6315B1A9D - 89c86c990682e6fd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "property wrapper backing initializer of PicoApp1.CategoriesViewModel.isRecording : Swift.Bool"
+                  moduleName = "PicoApp1.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/reemaalhudaian/Documents/PicoApp1/PicoApp1/ViewModel/CategoriesViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+               <Location
+                  uuid = "5DB70842-BC41-4BDC-A206-44C6315B1A9D - 1a57d3306fb7e1d7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PicoApp1.CategoriesViewModel.isRecording.getter : Swift.Bool"
+                  moduleName = "PicoApp1.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/reemaalhudaian/Documents/PicoApp1/PicoApp1/ViewModel/CategoriesViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+               <Location
+                  uuid = "5DB70842-BC41-4BDC-A206-44C6315B1A9D - df75742896829884"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PicoApp1.CategoriesViewModel.isRecording.setter : Swift.Bool"
+                  moduleName = "PicoApp1.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/reemaalhudaian/Documents/PicoApp1/PicoApp1/ViewModel/CategoriesViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "5"
+                  endingLineNumber = "5">
+               </Location>
+               <Location
+                  uuid = "5DB70842-BC41-4BDC-A206-44C6315B1A9D - 3899ba9bfd79a75"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PicoApp1.CategoriesViewModel.isRecording.modify : Swift.Bool"
+                  moduleName = "PicoApp1.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/reemaalhudaian/Documents/PicoApp1/PicoApp1/ViewModel/CategoriesViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "5"
+                  endingLineNumber = "5">
+               </Location>
+               <Location
+                  uuid = "5DB70842-BC41-4BDC-A206-44C6315B1A9D - 25a9ca23a2973902"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PicoApp1.CategoriesViewModel.isRecording.modify : Swift.Bool with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "PicoApp1.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///%3Ccompiler-generated%3E"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+               <Location
+                  uuid = "5DB70842-BC41-4BDC-A206-44C6315B1A9D - a42b978c15243a30"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PicoApp1.CategoriesViewModel.$isRecording.getter : Combine.Published&lt;Swift.Bool&gt;.Publisher"
+                  moduleName = "PicoApp1.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/reemaalhudaian/Documents/PicoApp1/PicoApp1/ViewModel/CategoriesViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+               <Location
+                  uuid = "5DB70842-BC41-4BDC-A206-44C6315B1A9D - 10770b6c6cf60fab"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PicoApp1.CategoriesViewModel.$isRecording.setter : Combine.Published&lt;Swift.Bool&gt;.Publisher"
+                  moduleName = "PicoApp1.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/reemaalhudaian/Documents/PicoApp1/PicoApp1/ViewModel/CategoriesViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "5"
+                  endingLineNumber = "5">
+               </Location>
+               <Location
+                  uuid = "5DB70842-BC41-4BDC-A206-44C6315B1A9D - df37a5a00e54be98"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PicoApp1.CategoriesViewModel.$isRecording.modify : Combine.Published&lt;Swift.Bool&gt;.Publisher"
+                  moduleName = "PicoApp1.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/reemaalhudaian/Documents/PicoApp1/PicoApp1/ViewModel/CategoriesViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "5"
+                  endingLineNumber = "5">
+               </Location>
+               <Location
+                  uuid = "5DB70842-BC41-4BDC-A206-44C6315B1A9D - c1cc5b3b0a5ab09c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PicoApp1.CategoriesViewModel.$isRecording.modify : Combine.Published&lt;Swift.Bool&gt;.Publisher with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "PicoApp1.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///%3Ccompiler-generated%3E"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "26760405-7B6D-4A1D-821B-48D4068F907E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "new/PixelArtDynmicView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "makeUIView(context:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CAC48E1F-C1A7-4368-A0C5-6CD0BB7252AC"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "new/PixelArtDynmicView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "makeUIView(context:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

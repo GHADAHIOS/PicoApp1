@@ -114,7 +114,7 @@ struct PixelArtDynmicView: View {
                         .padding(.leading, -40.0)
                 }
                 .padding(.horizontal, 1000)
-                .padding(.top, 80)
+                .padding(.top, 190)
                 
                 HStack {
                     if let pixelArt = pixelArt {
@@ -140,11 +140,11 @@ struct PixelArtDynmicView: View {
                                 ZStack {
                                     Circle()
                                         .fill(color)
-                                        .frame(width: 70, height: 70)
+                                        .frame(width: 60, height: 60)
                                     
                                     Circle()
                                         .stroke(Color.white, lineWidth: 6)
-                                        .frame(width: 70, height: 70)
+                                        .frame(width: 60, height: 60)
                                         .shadow(color: Color.black, radius: 1)
                                 }
                             }
@@ -166,12 +166,12 @@ struct PixelArtDynmicView: View {
                                         ZStack {
                                             Circle()
                                                 .fill(Color.green1)
-                                                .frame(width: 100, height: 100)
+                                                .frame(width: 90, height: 90)
                                                 .offset(x: 3, y: 3)
                                             
                                             Circle()
                                                 .fill(Color.green)
-                                                .frame(width: 100, height: 100)
+                                                .frame(width: 90, height: 90)
                                                 .padding(5)
                                         }
                                     )
@@ -184,7 +184,8 @@ struct PixelArtDynmicView: View {
                         
                     }.padding(.leading, 50)
                 }
-                .padding(.horizontal, 20)
+                .padding(.bottom, 50)
+               // .padding(.horizontal, 20)
             }
             .padding()
             .onAppear {

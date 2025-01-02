@@ -302,53 +302,149 @@ struct PixelArtDynmicView: View {
            print("Audio engine already stopped.")
        }
     }
-
+    
     func removeDuplicateWords(from command: String) -> String {
+        // Split the command into words (using non-letter characters as delimiters)
         let words = command.split { !$0.isLetter }
-        let uniqueWords = Set(words.map { String($0) })
+
+        // Use an array to keep track of unique words while preserving order
+        var seenWords = Set<String>()
+        var uniqueWords = [String]()
+
+        // Loop through the words and add unique ones to the result
+        for word in words {
+            let sanitizedWord = String(word).lowercased() // Optionally, make it case-insensitive
+            if !seenWords.contains(sanitizedWord) {
+                uniqueWords.append(sanitizedWord)
+                seenWords.insert(sanitizedWord)
+            }
+        }
+
+        // Return the unique words joined back into a string
         return uniqueWords.joined(separator: " ")
     }
-    
-    @State private var lastProcessedCommandTime: Date? = nil
-    let debounceInterval: TimeInterval = 0.5  // Adjust this interval to suit your needs
 
+//    func removeDuplicateWords(from command: String) -> String {
+//        
+////        let words = command.split(separator: " ")
+////          let uniqueWords = Set(words)
+////          return uniqueWords.joined(separator: " ")
+////        
+//        let words = command.split { !$0.isLetter }
+//        let uniqueWords = Set(words.map { String($0) })
+//        return uniqueWords.joined(separator: " ")
+//    }
+//    
+    
+//    @State private var lastProcessedCommandTime: Date? = nil
+//    let debounceInterval: TimeInterval = 0.2  // Adjust this interval to suit your needs
+//
+//    func handleVoiceCommandV(_ command: String) {
+//        // Trim leading/trailing whitespace and make case-insensitive check
+//        var trimmedCommand = removeDuplicateWords(from: command)
+//
+//        DispatchQueue.main.async {
+//            // Debugging: print the command received for analysis
+//            guard !command.isEmpty else { return }
+//
+//            print("Received command: \(trimmedCommand)")
+//
+//            let currentTime = Date()
+//                
+//            // Check if enough time has passed since the last command
+//            if let lastProcessedCommandTime = lastProcessedCommandTime,
+//               currentTime.timeIntervalSince(lastProcessedCommandTime) < debounceInterval {
+//                return // Ignore this command if it's too soon after the last one
+//            }
+//                
+//            // Match the Arabic commands and some English commands to select the color
+//            
+//            if trimmedCommand.contains("واحد") || trimmedCommand.contains("1") {
+//                self.selectedColor = .red
+//                print("تم اختيار اللون الأحمر") // Arabic: Red color selected
+//                if let pixelArt = self.pixelArt {
+//                    self.colorAllPixels(withColor: .red) // Trigger the coloring with red
+//                }
+//            } else if trimmedCommand.contains("اثنان") || trimmedCommand.contains("2") {
+//                self.selectedColor = .green
+//                print("تم اختيار اللون الأخضر") // Arabic: Green color selected
+//                if let pixelArt = self.pixelArt {
+//                    self.colorAllPixels(withColor: .green) // Trigger the coloring with green
+//                }
+//            } else if trimmedCommand.contains("ثلاثة") || trimmedCommand.contains("3") {
+//                self.selectedColor = .blue
+//                print("تم اختيار اللون الأزرق") // Arabic: Blue color selected
+//                if let pixelArt = self.pixelArt {
+//                    self.colorAllPixels(withColor: .blue) // Trigger the coloring with blue
+//                   
+//                }
+//            } else if trimmedCommand.contains("ابدأ التلوين") || trimmedCommand.contains("start coloring") {
+//                // Trigger coloring logic when the user says "ابدأ التلوين" or "start coloring"
+//                if let pixelArt = self.pixelArt {
+//                    self.colorAllPixels(withColor: self.selectedColor) // Use the current selected color
+//                }
+//                print("تم بدء التلوين") // Arabic: Coloring started
+//            } else if trimmedCommand.contains("حفظ") || trimmedCommand.contains("save") {
+//                if let pixelArt = self.pixelArt {
+//                    self.savePixelArtToDatabase(pixelArt: pixelArt)
+//                    self.showDetailView = true
+//                    print("تم حفظ العمل") // Arabic: Work saved
+//                }
+//            } else {
+//                // If none of the conditions are met, just print the command.
+//                print("Unrecognized command: \(trimmedCommand)")
+//                trimmedCommand = ""
+//            }
+//            self.speechRecognizedText = "" // Clear the recognized command to reset
+//            trimmedCommand = ""
+//                   // Update the time of the last processed command for debounce logic
+//            lastProcessedCommandTime = currentTime
+//        }
+//    }
+//
+    @State private var lastProcessedCommandTime: Date? = nil
+    let debounceInterval: TimeInterval = 0.2  // Adjust this interval to suit your needs
+
+   
     func handleVoiceCommandV(_ command: String) {
-        // Trim leading/trailing whitespace and make case-insensitive check
+        // Trim leading/trailing whitespace and remove duplicate words
         var trimmedCommand = removeDuplicateWords(from: command)
 
         DispatchQueue.main.async {
             // Debugging: print the command received for analysis
-            guard !command.isEmpty else { return }
+            guard !trimmedCommand.isEmpty else { return }
 
             print("Received command: \(trimmedCommand)")
 
             let currentTime = Date()
-                
-            // Check if enough time has passed since the last command
+
+            // Check if enough time has passed since the last command (debounce)
             if let lastProcessedCommandTime = lastProcessedCommandTime,
                currentTime.timeIntervalSince(lastProcessedCommandTime) < debounceInterval {
                 return // Ignore this command if it's too soon after the last one
             }
-                
-            // Match the Arabic commands and some English commands to select the color
-            if trimmedCommand.contains("واحد") || trimmedCommand.contains("1") {
+
+            // Now we will match against the last word in the command after removing duplicates.
+            let words = trimmedCommand.split(separator: " ")
+            guard let lastWord = words.last else { return }
+
+            if lastWord.contains("واحد") || lastWord.contains("1") {
                 self.selectedColor = .red
                 print("تم اختيار اللون الأحمر") // Arabic: Red color selected
                 if let pixelArt = self.pixelArt {
                     self.colorAllPixels(withColor: .red) // Trigger the coloring with red
                 }
-            } else if trimmedCommand.contains("اثنان") || trimmedCommand.contains("2") {
+            } else if lastWord.contains("اثنان") || lastWord.contains("2") {
                 self.selectedColor = .green
                 print("تم اختيار اللون الأخضر") // Arabic: Green color selected
                 if let pixelArt = self.pixelArt {
                     self.colorAllPixels(withColor: .green) // Trigger the coloring with green
                 }
-            } else if trimmedCommand.contains("ثلاثة") || trimmedCommand.contains("3") {
+            } else if lastWord.contains("ثلاثة") || lastWord.contains("3") {
                 self.selectedColor = .blue
                 print("تم اختيار اللون الأزرق") // Arabic: Blue color selected
                 if let pixelArt = self.pixelArt {
                     self.colorAllPixels(withColor: .blue) // Trigger the coloring with blue
-                   
                 }
             } else if trimmedCommand.contains("ابدأ التلوين") || trimmedCommand.contains("start coloring") {
                 // Trigger coloring logic when the user says "ابدأ التلوين" or "start coloring"
@@ -365,15 +461,16 @@ struct PixelArtDynmicView: View {
             } else {
                 // If none of the conditions are met, just print the command.
                 print("Unrecognized command: \(trimmedCommand)")
-                trimmedCommand = ""
             }
-            self.speechRecognizedText = "" // Clear the recognized command to reset
-            trimmedCommand = ""
-                   // Update the time of the last processed command for debounce logic
+
+            // Reset the speech-recognized text
+            self.speechRecognizedText = ""
+
+            // Update the time of the last processed command for debounce logic
             lastProcessedCommandTime = currentTime
         }
     }
-    
+
     func colorAllPixels(withColor color: Color) {
         guard let pixelArt = pixelArt else { return }
 
@@ -386,8 +483,8 @@ struct PixelArtDynmicView: View {
         // Map each color to a specific pixel number
         var pixelNumberToColorMapping: [Color: Int] = [
             .red: 1,     // Red corresponds to pixel number 1
-            .blue: 2,    // Blue corresponds to pixel number 2
-            .green: 3,   // Green corresponds to pixel number 3
+            .green: 2,    // Blue corresponds to pixel number 2
+            .blue: 3,   // Green corresponds to pixel number 3
             .orange: 4,  // orange corresponds to pixel number 4 (if you want to add more colors)
             // Add more colors if needed
         ]

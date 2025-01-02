@@ -100,13 +100,13 @@ struct Pick: View {
                 PixelArtDynmicView(fileName: "Animals_1")
             }
             .navigationDestination(isPresented: $navigateToColoring2) {
-                PixelArtDynmicView(fileName: "Food_1")
+                PixelArtDynmicView(fileName: "Animals_2")
             }
             .navigationDestination(isPresented: $navigateToColoring3) {
-                PixelArtDynmicView(fileName: "Animals_4")
+                PixelArtDynmicView(fileName: "Food_1")
             }
             .navigationDestination(isPresented: $navigateToColoring4) {
-                PixelArtDynmicView(fileName: "")
+                PixelArtDynmicView(fileName: "pixelart")
             }
         }
     }

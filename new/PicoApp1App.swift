@@ -10,23 +10,15 @@ import SwiftData
 
 @main
 struct PicoApp1App: App {
-//    var sharedModelContainer: ModelContainer = {
-//        let schema = Schema([
-//            Item.self,
-//        ])
-//        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-//
-//        do {
-//            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-//        } catch {
-//            fatalError("Could not create ModelContainer: \(error)")
-//        }
-//    }()
-
+    
+    // تأكد من إضافة النموذج الخاص بك إلى Container
+    @Environment(\.modelContext) private var modelContext: ModelContext
+    
     var body: some Scene {
         WindowGroup {
+            // التأكد من تفعيل الربط مع SwiftData
             SplashView()
+                .modelContainer(for: PixelArt.self) // التأكد من أنه يستخدم
         }
-//        .modelContainer(sharedModelContainer)
     }
 }

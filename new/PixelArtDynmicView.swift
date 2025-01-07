@@ -77,7 +77,7 @@ struct PixelArtDynmicView: View {
     @State private var showDetailView = false // Control navigation
     var fileName: String // Pixel art file name
     
-    private let colorOptions: [Color] = [.red, .green, .blue , .orange]
+    private let colorOptions: [Color] = [.red, .green, .blue  , .yellow ]
     @State private var speechRecognizedText: String = ""
     @State private var speechRecognizer: SFSpeechRecognizer? // Speech recognizer initialized later
     @State private var audioEngine = AVAudioEngine()
@@ -180,10 +180,7 @@ struct PixelArtDynmicView: View {
                             }
                         }
                         
-//                       }
-//                        NavigationLink(destination: CellarbrationScreen(pixelArt: $pixelArt), isActive: $showDetailView) {
-//                            EmptyView() // رابط التنقل المخفي
-                        
+
                     }.padding(.leading, 50)
                 }
                 .padding(.bottom, 50)
@@ -510,7 +507,7 @@ struct PixelArtDynmicView: View {
             .red: 1,     // Red corresponds to pixel number 1
             .green: 2,    // Blue corresponds to pixel number 2
             .blue: 3,   // Green corresponds to pixel number 3
-            .orange: 4,  // orange corresponds to pixel number 4 (if you want to add more colors)
+            .yellow: 4,  // orange corresponds to pixel number 4 (if you want to add more colors)
             // Add more colors if needed
         ]
         

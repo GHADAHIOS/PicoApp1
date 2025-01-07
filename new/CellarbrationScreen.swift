@@ -9,6 +9,7 @@ struct CelebrationScreen: View {
     
     @State private var showConfetti = false // حالة لتفعيل تساقط القصاصات
     @State private var confettiPositions: [Confetti] = [] // لتخزين مواضع القصاصات
+    @State private var navigateToPick = false // حالة التنقل إلى صفحة Pick
     
     var gridWidth: CGFloat = 400
     var gridHeight: CGFloat = 400
@@ -88,9 +89,20 @@ struct CelebrationScreen: View {
             }
             .onAppear {
                 startConfettiEffect() // بدء تأثير القصاصات تلقائيًا عند ظهور الشاشة
+                navigateAfterCelebration() // بدء مؤقت التنقل
             }
             .onDisappear {
                 stopConfettiEffect() // إيقاف تأثير القصاصات عند مغادرة الشاشة
+            }
+            
+            // NavigationLink للتنقل التلقائي إلى صفحة Pick
+            NavigationLink(destination: Pick(), isActive: $navigateToPick) {
+                EmptyView()
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            EmptyView() // إخفاء زر الرجوع
+                        }
+                    }
             }
         }
     }
@@ -118,6 +130,15 @@ struct CelebrationScreen: View {
         confettiPositions.removeAll() // حذف القصاصات الورقية
         showConfetti = false
     }
+    
+    // التنقل إلى صفحة Pick بعد الاحتفالية
+    private func navigateAfterCelebration() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) { // تعديل الوقت المناسب
+            withAnimation {
+                navigateToPick = true
+            }
+        }
+    }
 }
 
 // Struct لتمثيل القصاصات الورقية
@@ -137,6 +158,17 @@ extension Color {
         )
     }
 }
+
+// شاشة Pick
+//struct PickScreen: View {
+//    var body: some View {
+//        Text("Welcome to the Pick Screen!")
+//            .font(.largeTitle)
+//            .fontWeight(.bold)
+//            
+//            }
+//    }
+//}
 
 // Preview
 #Preview {

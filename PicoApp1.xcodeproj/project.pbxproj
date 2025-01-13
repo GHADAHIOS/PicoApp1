@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		69858D402D17F90600167F19 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 69858D3F2D17F90600167F19 /* Localizable.xcstrings */; };
+		6935BBCC2D357FBD0072E510 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 6935BBCB2D357FBD0072E510 /* Localizable.xcstrings */; };
 		EFC217732D258161002B74D8 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = EFC217722D258161002B74D8 /* ConfettiSwiftUI */; };
 		EFC217752D258190002B74D8 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = EFC217742D258190002B74D8 /* ConfettiSwiftUI */; };
 /* End PBXBuildFile section */
@@ -30,10 +30,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6935BBCB2D357FBD0072E510 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		6978164C2D0EB519000B7AC1 /* PicoApp1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PicoApp1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6978165E2D0EB51A000B7AC1 /* PicoApp1Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PicoApp1Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		697816682D0EB51A000B7AC1 /* PicoApp1UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PicoApp1UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		69858D3F2D17F90600167F19 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -102,8 +102,8 @@
 		697816432D0EB519000B7AC1 = {
 			isa = PBXGroup;
 			children = (
+				6935BBCB2D357FBD0072E510 /* Localizable.xcstrings */,
 				17C24ECB2D229CCF000E59D8 /* new */,
-				69858D3F2D17F90600167F19 /* Localizable.xcstrings */,
 				6978164E2D0EB519000B7AC1 /* PicoApp1 */,
 				697816612D0EB51A000B7AC1 /* PicoApp1Tests */,
 				6978166B2D0EB51A000B7AC1 /* PicoApp1UITests */,
@@ -248,7 +248,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				69858D402D17F90600167F19 /* Localizable.xcstrings in Resources */,
+				6935BBCC2D357FBD0072E510 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,7 +439,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"PicoApp1/Preview Content\"";
-				DEVELOPMENT_TEAM = 4X7AX8RVKB;
+				DEVELOPMENT_TEAM = SG894QZK76;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PicoApp1/Info.plist;

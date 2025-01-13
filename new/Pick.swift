@@ -36,11 +36,11 @@ struct Pick: View {
                     HStack {
                         HStack {
                             ZStack {
-                                Image("cloud")
+                                Image("Image 4")
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 713, height: 126)
-                                    .scaleEffect(x: -1)
+//                                    .scaleEffect(x: -1)
                                 Text("قل رقم الرسم للتلوين")
                                     .font(.title)
                                     .fontWeight(.semibold)
@@ -121,15 +121,23 @@ struct Pick: View {
             .navigationDestination(isPresented: $navigateToColoring1) {
                 PixelArtDynmicView(fileName: "Animals_1")
             }
+            .navigationBarBackButtonHidden(true) // 1
+
             .navigationDestination(isPresented: $navigateToColoring2) {
                 PixelArtDynmicView(fileName: "Animals_2")
             }
+            .navigationBarBackButtonHidden(true) // 1
+
             .navigationDestination(isPresented: $navigateToColoring3) {
                 PixelArtDynmicView(fileName: "Food_1")
             }
+            .navigationBarBackButtonHidden(true) // 1
+
             .navigationDestination(isPresented: $navigateToColoring4) {
                 PixelArtDynmicView(fileName: "pixelart")
             }
+            .navigationBarBackButtonHidden(true) // 1
+
         }
     }
     

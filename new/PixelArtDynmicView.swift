@@ -97,11 +97,11 @@ struct PixelArtDynmicView: View {
             VStack {
                 HStack {
                     ZStack {
-                        Image("cloud")
+                        Image("Image 4")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 713, height: 126)
-                            .scaleEffect(x: -1)
+//                            .scaleEffect(x: -1)
                         Text("قل رقم الرسم للتلوين")
                             .font(.title)
                             .fontWeight(.semibold)
@@ -179,7 +179,8 @@ struct PixelArtDynmicView: View {
                                     )
                             }
                         }
-                        
+                        .navigationBarBackButtonHidden(true) // 1
+
 
                     }.padding(.leading, 50)
                 }

@@ -22,11 +22,11 @@ struct CelebrationScreen: View {
                 
                 VStack {
                     ZStack {
-                        Image("cloud")
+                        Image("Image 4")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 700.0, height: 200)
-                            .scaleEffect(x: -1)
+//                            .scaleEffect(x: -1)
                             .offset(x: -30, y: -20)
                         
                         Text("أحسنت عمل جميل ، إستمر يامبدع")
@@ -104,6 +104,8 @@ struct CelebrationScreen: View {
                         }
                     }
             }
+            .navigationBarBackButtonHidden(true) // 1
+
         }
     }
     
